@@ -16,6 +16,9 @@ public class Quiz04 {
 	      else if (num1 ==2) {
 	    	  System.out.print("\n보");
 	      }
+	      else 
+	    	  System.out.print("\n장난하지 마세요!");
+	      
 	      sc.close();
 }
 }

@@ -10,7 +10,7 @@ public class Quiz03 {
 	      int num2 = sc.nextInt();
 	      System.out.print("수학 점수를 입력하세요. : ");
 	      int num3 = sc.nextInt();
-	      int avg = (num1 + num2 + num3)/3 ;
+	      double avg = (num1 + num2 + num3)/3.0 ;
 	      if (num1>avg) 
 	      { System.out.println("국어점수는 평균 이상입니다.");
 	      }
