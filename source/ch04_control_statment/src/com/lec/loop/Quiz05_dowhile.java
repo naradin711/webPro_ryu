@@ -12,13 +12,13 @@ public class Quiz05_dowhile {
 			  System.out.print("당신은 가위 바위 보 중 하나를 내세요.: ");
 			  you = sc.nextInt(); // 정수를 입력받음.
 			  if (you ==0) {
-				  System.out.print("당신은 가위\t") ;
+				  System.out.print("당신은 가위  ") ;
 			  }
 			  else if (you ==1) {
-				  System.out.print("당신은 바위\t") ;
+				  System.out.print("당신은 바위  ") ;
 			  }
 			  else if (you ==2) {
-				  System.out.print("당신은 보\t") ;
+				  System.out.print("당신은 보  ") ;
 			  }else {
 				  System.out.println("당신은 잘못냈어요. 잘가!") ;
 			      you = 3; // 끝내기 위한 조건
@@ -38,5 +38,6 @@ public class Quiz05_dowhile {
 			  }
 		  }while(true); 
 		  System.out.println("안녕히 가세요.");
+		  sc.close();
 	   }
 	}
