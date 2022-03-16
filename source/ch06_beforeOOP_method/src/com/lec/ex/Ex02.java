@@ -2,8 +2,8 @@ package com.lec.ex;
 // 1~10까지 정수의 합을 출력하고 그 합이 짝수인지 홀수인지 출력하기
 public class Ex02 {
    public static void main(String[] args) {
-	  int tot = sum(10);
-	  System.out.println("1~10까지 정수의 합은 "+tot+" 입니다.");
+	  int tot = sum(777); // 함수의 오버로딩
+	  System.out.println("1~777까지 정수의 합은 "+tot+" 입니다.");
 	  System.out.println(evenOdd(tot));
 	  
 	  // from~to까지 누적하는 로직
@@ -23,7 +23,7 @@ public class Ex02 {
 	  		 return "홀수입니다.";  
 	       }
 	   }
-   private static int sum(int to) {
+   private static int sum(int to) { // 함수의 오버로딩
 	   int result = 0 ;
 	   for(int i=1; i<=to ; i++) {
 	       result += i;
