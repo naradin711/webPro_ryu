@@ -1,0 +1,26 @@
+ 220323 
+ abstract 추상 클래스를 상속받는
+
+ 속성자 클래스는 추상클래스여서는 안된다.
+
+ 추상클래스는 속성자, 매개변수를 가지지 않는다.
+
+ final을 가진 매개변수는 맨 처음 클래스에 놓고 건드리지 않는다
+
+ final을 가진 매개변수 메소드는 오버라이드가 불가능하다.
+
+ public final int computeIncentive() { // 월급이 200이상일 경우 10%
+	   int temp = computePay();
+	   if(temp >= 2000000) {
+		   return (int)(temp*0.1);
+	   }
+	   return 0;
+   }
+ 
+위의 해당 함수를 TestMain 클래스에 
+
+ int incen = temp.computeIncentive(); <- 이렇게 적용시킨다.
+	          if(incen !=0) {
+	          System.out.println("상 여  : " +incen+"원");
+                       }
+ 
