@@ -10,6 +10,7 @@ public class Vol_TestMain {
 			temp.volumeDown(14);
 			temp.volumeUp(10);
 			temp.volumeUp(45);
+			temp.setMute(true); //default method
 			System.out.println("~~~~~~~~~~~~~~~~~~~~");
 		}
 		}
