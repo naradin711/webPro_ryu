@@ -1,0 +1,12 @@
+ 220404 
+
+ Collection?
+
+ 배열과 비슷한 구조에 다수의 데이터를 쉽게 처리할 수 있는 방법(method)을 제공하는 API
+ List 계열, Map 계열, Set 계열  /  Iterator(반복자) 자료구조 살펴보기
+ 
+ ArrayList ; 배열과 매우 비슷. 인덱스가 존재하며 데이터는 중복을 허용. 인덱스가 가장 중요
+              add(객체) add(index, 객체) set(index, 객체) get(index)
+              size()	remove(index) remove(객체)
+-	contains(객체) 주어진 객체가 저장되어 있는지 여부를 boolean 값으로 반환
+-	isEmpty()  	clear()
