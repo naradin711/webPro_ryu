@@ -1,0 +1,92 @@
+ 220408
+
+1.  데이터란 현실세계에서 관찰이나 측정을 통해 수집된 사실이나 값을 말하고 
+    정보는 그 데이터를 가공하여 의사결정에 도움이 되도록 부가가치를 높인 것. 데이터와 정보의 관계는 상대적이다
+2.  데이터베이스는 데이터의 저장소이고 DBMS는 데이터베이스를 관리하기 위한 소프트웨어들의 집합
+3.  데이터베이스는 실시간 처리, 지속적인 변화, 동시공유, 값에 의한 참조, 
+     최소한의 중복 허용등과 같은 특성을 지닌다.
+4.   DBMS는 정의(Definition Language; DDL), 조작 (Manipulation Language ; DML), 
+     제어(Control Language; DCL)기능을 갖는다.
+5.   데이터 베이스는 여러 경로를 통해 다양한 방법으로 Access되어 진다.
+6.   데이터 베이스를 사용하면 여러 가지 장점이 있는 반면 유지비가 많이 들고 처리방법이 복잡해지며 
+     더 많은 기술 수준을 요구하게 되는 등의 단점도 있다.
+7.   DBA는 데이터베이스를 최적의 상태로 운영, 관리할 책임이 있으며 
+     데이터베이스 사용자들의 요구와 불편 사항을 해결해야 한다.
+  
+1.  Oracle install - cmd창을 띄워서 다음을 실행
+
+2.  C:\Users\user>sqlplus "/as sysdba - 시스템으로 들어감
+    sqlplus system/oracle 시스템권한으로 오라클디비에 접근
+
+3.  User ID 생성
+     SQL> create user scott identified by tiger;
+
+4. scott에 dba 권한을 부여 
+   SQL> grant dba to scott
+
+5. SQL> exit; - 권한에서 빠져나오기
+
+6. scott으로 접속
+   C:\Users\user>sqlplus scott/tiger
+   SQL>SELECT * FROM TAB; 현 계정의 테이블들 세팅
+
+7. 기본 데이터를 넣기 위해 demo.sql 통째로 실행 
+   (기본 데이터 넣는 명령들 모음)
+    SQL>@d:/webPro_ryu/note/002.DBMS/demo.sql;
+    C:\Users\user>
+
+8. scott 계정에 demo.sql이 성공적으로 수행되어있는지 확인
+   C:\Users\user>sqlplus scott/tiger - 다시 접속
+   SQL>SELECT * FROM TAB; 
+   SQL>SELECT * FROM DEPT; DEPT 테이블 4장.
+   SQL>SELECT * FROM EMP; DEPT 테이블 14장
+
+
+SELECT : 원하는 컬럼 선택
+*	: 테이블의 모든 column 출력
+alias	: 해당 column에 대한 다른 이름 부여
+DISTINCT: 중복 행 제거 옵션
+FROM  : 원하는 데이터가 저장된 테이블 명을 기술
+WHERE : 조회되는 행을 제한하기 위한 조건 추가
+condition : column, 표현식, 상수 및 비교연산자
+ORDER BY:정렬을 위한 옵션 (ASC :오름차순이며 default, DECS 내림차순)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
