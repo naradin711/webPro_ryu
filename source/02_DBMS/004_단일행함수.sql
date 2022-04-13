@@ -246,7 +246,7 @@ SELECT SYSDATE "Current Date" FROM DUAL;
 SELECT EMPNO, ENAME, JOB, SAL, ROUND(SAL*1.15) "New Salary", ROUND(SAL*0.15) "Increase" FROM EMP;
 
 --3. 이름, 입사일, 입사일로부터 6개월 후 돌아오는 월요일 구하여 출력하는 SELECT 문장을 기술하시오.
-SELECT ENAME, HIREDATE, TRUNC (HIREDATE+180, 'DAY')+1  FROM EMP;
+SELECT ENAME, HIREDATE, NEXT_day(ADD_MONTHS(HIREDATE, 6), '월') "수습기간종료일"  FROM EMP;
 
 --4. 이름, 입사일, 입사일로부터 현재까지의 개월수, 급여, 입사일부터 현재까지의 받은 급여의 총계를 출력
 SELECT ENAME, HIREDATE, FLOOR(MONTHS_BETWEEN(SYSDATE, HIREDATE))|| '개월' "근무월수", SAL, 
@@ -271,7 +271,7 @@ SELECT SUBSTR (ENAME, 2, 3) FROM EMP;
 --  시스템에 따라 DATEFORMAT 다를 수 있으므로 아래의 방법도 알아보자
 SELECT EMPNO, ENAME, HIREDATE FROM EMP
   WHERE HIREDATE LIKE '__/12/__';
-
+SELECT EMPNO, ENAME, HIREDATE FROM EMP WHERE TO_CHAR (HIREDATE, 'MM')=12; -- 이걸 추천
 
 --11. 다음과 같은 결과를 검색할 수 있는 SQL 문장을 작성하시오
 --EMPNO		ENAME		급여
