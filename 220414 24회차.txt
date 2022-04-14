@@ -1,0 +1,91 @@
+ 220414
+ 3 다중행 서브쿼리 : IN, ALL, ANY=SOME, EXISTS
+
+--(1) IN : 서브쿼리 결과 중 하나라도 일치하면 참.
+    -- EX. 부서번호별로 입사일이 가장 늦은 사람의 이름, 입사일, 부서변호
+
+SELECT DEPTNO, MAX(HIREDATE) FROM EMP GROUP BY DEPTNO; -- 서브쿼리 (다중행)
+SELECT ENAME, HIREDATE, DEPTNO                                        -- 메인쿼리
+     FROM EMP
+     WHERE (DEPTNO, HIREDATE) IN (SELECT DEPTNO, MAX(HIREDATE) FROM EMP GROUP BY DEPTNO);
+
+
+
+(2) ALL : 서브쿼리 결과가 모두 만족해야 함.
+  -- EX. 30번 부서 급여들 모두보다 큰 경우 = 30번 부서 최대 급여보다 큰 경우 의 모든 필드
+SELECT SAL FROM EMP WHERE DEPTNO = 30;
+SELECT * FROM EMP 
+     WHERE SAL > ALL (SELECT SAL FROM EMP WHERE DEPTNO = 30);
+
+-- 위 다중행 서브쿼리를 단일행 서브쿼리로
+SELECT SAL FROM EMP WHERE DEPTNO = 30;
+SELECT * FROM EMP 
+     WHERE SAL > (SELECT MAX(SAL) FROM EMP WHERE DEPTNO = 30);
+
+
+
+-- (3) ANY = SOME : 서브쿼리 결과가 하나라도 만족하면 참.
+  -- EX. 30번 부서 급여들 중 한 사람보다도 급여가 큰 경우 출력 = 최소급여보다 큰경우 
+SELECT SAL FROM EMP WHERE DEPTNO = 30;  -- 서브쿼리
+SELECT * FROM EMP                                    -- 메인쿼리 
+     WHERE SAL > ANY (SELECT SAL FROM EMP WHERE DEPTNO = 30);  
+
+ -- 위 다중행 서브쿼리를 단일행 서브쿼리로  
+SELECT SAL FROM EMP WHERE DEPTNO = 30;
+SELECT * FROM EMP 
+    WHERE SAL > (SELECT MIN(SAL) FROM EMP WHERE DEPTNO = 30) ORDER BY SAL DESC;
+
+
+-- (4) EXISTS ; 서브쿼리 결과가 존재하면 참.
+
+  -- EX. 직속부하가 있는 직원들의 사번, 이름, 급여
+  SELECT EMPNO, ENAME, SAL  -- MAIN
+     FROM EMP M
+     WHERE EXISTS (SELECT * FROM EMP WHERE M.EMPNO = MGR ); -- SUB
+
+     -- 위 다중행 서브쿼리를 단일행 서브쿼리로  
+  SELECT DISTINCT M.EMPNO, M.ENAME, M.SAL
+  FROM EMP W, EMP M
+  WHERE W. MGR = M.EMPNO;
+  
+  -- EX. 말단 사원들의 모든 필드
+ SELECT *  -- MAIN
+     FROM EMP M
+     WHERE NOT EXISTS (SELECT * FROM EMP WHERE M.EMPNO = MGR ); -- SUB   
+
+   -- 위 다중행 서브쿼리를 단일행 서브쿼리로   
+  SELECT M.*  -- MAIN
+     FROM EMP M , EMP W
+     WHERE W.MGR(+) = M.EMPNO AND W.ENAME IS NULL;
+
+
+
+
+
+[ VII ] DDL, DCL, DML
+
+<SQL문의 종류>
+DML  :  Data Manipulation Language ; 데이터 검색, 수정 등
+	           INSERT : 데이터베이스 객체에 데이터를 입력
+	           DELETE : 데이터베이스 객체에 데이터를 삭제
+	           UPDATE : 기존에 존재하는 데이터베이스 객체 안의 데이터수정
+	            SELECT : 데이터베이스 객체로부터 데이터를 검색
+DDL  :  Data Definition Language ; 데이터와 그 구조를 정의
+                         CREATE : 데이터 베이스 객체 생성
+		DROP : 데이터 베이스 객체를 삭제
+		ALTER : 기존에 존재하는 데이터베이스 객체를 다시 정의
+		TRUNCATE : 데이터베이스 객체 내용 삭제
+DCL  :  Data Control Language ; 데이터베이스 사용자의 권한 제어
+                           GRANT : 데이터 베이스 객체에 권한 부여
+		REVOKE : 이미 부여된 데이터베이스 객체의 권한을 취소
+		COMMIT : 트랜잭션 확정 (TCL)
+		ROLLBACK : 트랜잭션 취소 (TCL)
+		SAVEPOINT : 복귀지점 설정 (TCL)
+
+
+
+
+
+
+
+
