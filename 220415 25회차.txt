@@ -1,0 +1,135 @@
+ 220415
+
+[ VII ] DDL, DCL, DML
+
+<SQL문의 종류>
+DML  :  Data Manipulation Language ; 데이터 검색, 수정 등
+	           INSERT : 데이터베이스 객체에 데이터를 입력
+	           DELETE : 데이터베이스 객체에 데이터를 삭제
+	           UPDATE : 기존에 존재하는 데이터베이스 객체 안의 데이터수정
+	            SELECT : 데이터베이스 객체로부터 데이터를 검색
+DDL  :  Data Definition Language ; 데이터와 그 구조를 정의
+                         CREATE : 데이터 베이스 객체 생성
+		DROP : 데이터 베이스 객체를 삭제
+		ALTER : 기존에 존재하는 데이터베이스 객체를 다시 정의
+		TRUNCATE : 데이터베이스 객체 내용 삭제
+DCL  :  Data Control Language ; 데이터베이스 사용자의 권한 제어
+                           GRANT : 데이터 베이스 객체에 권한 부여
+		REVOKE : 이미 부여된 데이터베이스 객체의 권한을 취소
+		COMMIT : 트랜잭션 확정 (TCL)
+		ROLLBACK : 트랜잭션 취소 (TCL)
+		SAVEPOINT : 복귀지점 설정 (TCL)
+
+*** DDL ***
+-- 1. 테이블 생성 (CREATE TABLE)
+CREATE TABLE BOOK(
+  BOOKID NUMBER(4),         -- 도서번호 BOOKID 필드 타입은 숫자 4자리
+  BOOKNAME VARCHAR2(300),   -- 도서제목 BOOKNAME 필드는 문자 300 바이트
+  PUBLISHER VARCHAR2(300),  -- 출판사 PUBLISHER 필드는 문자 300 바이트
+  RDATE     DATE,           -- 출판일 RDATE 필드는 DATE형
+  PRICE     NUMBER(8),      -- 가격 PRICE 필드는 숫자 8자리
+  PRIMARY KEY(BOOKID));     -- BOOKID 는 주키/PRIMARY KEY 설정 - NOT NULL, 유일한 값 입력.
+  
+SELECT * FROM BOOK; -- 만들어 놓은 테이블 필드와 필드값 확인.
+
+-- 서브쿼리를 이용한 테이블 생성
+SELECT * FROM TAB ; -- SCOTT이 생성한 테이블 조회
+CREATE TABLE EMP02 AS SELECT * FROM EMP; 
+--서브쿼리 결과만 EMP02 테이블 생성후 들어감 (제약조건은 미포함.)
+
+
+2. 테이블 구조변경 (ALTER TABLE)
+-- ALTER TABLE 테이블명 ADD || MODIFY || DROP -
+-- 2. 1. 필드 추가 (ADD)
+SELECT * FROM EMP03; -- EMPNO, ENAME, DEPTNO
+ALTER TABLE EMP03 ADD (JOB VARCHAR2 (30), SAL NUMBER(7,2));
+ALTER TABLE EMP03 ADD (COMM NUMBER(7, 2));
+SELECT * FROM EMP03;
+
+--2. 2. 필드 수정 (MODIFY)
+SELECT * FROM EMP03; -- EMPNO, ENAME, DEPTNO, / JOB, SAL, COMM = NULL
+DESC EMP03;
+ALTER TABLE EMP03 MODIFY (EMPNO VARCHAR2 (4)); 
+                                            -- 숫자데이터가 들어가 있는 상태에서 숫자로만 변경 가능
+ALTER TABLE EMP03 MODIFY (EMPNO NUMBER (3)); -- 에러, 기존 필드보다 자리수가 적음
+ALTER TABLE EMP03 MODIFY (EMPNO NUMBER (6)); -- 가능
+SELECT MAX(LENGTH(ENAME)) FROM EMP;
+ALTER TABLE EMP03 MODIFY (ENAME VARCHAR2 (300));
+DESC EMP03;
+
+--2. 3. 필드 삭제 (DROP) : 필드 자체를 삭제.
+ALTER TABLE EMP03 DROP COLUMN JOB;
+SELECT * FROM EMP03;
+
+--3. 테이블 삭제 (DROP TABLE)
+DROP TABLE EMP01;
+DROP TABLE DEPT; -- 다른 테이블엥서 참조하는 데이터가 있을 경우 DROP 안됨.
+
+--4. 테이블의 모든 행을 제거 (TRUNCATE)
+SELECT * FROM EMP03;
+TRUNCATE TABLE EMP03; -- EMP03안의 모든 데이터가 제거. (취소불가.)
+SELECT * FROM EMP03;
+
+--5. 테이블명 변경 (RENAME 전이름 TO 새이름)
+SELECT * FROM EMP02;
+RENAME EMP02 TO EMP2;
+
+--6. 데이터 딕셔너리 (오라클 시스템만 액세스 가능 ) VS 데이터 딕셔너리 뷰 (사용자 접근용)
+-- 종류
+-- USER_XXX : 현 계정이 소유하고 있는 객체 (TABLE INDEX CONSTRAINT VIEW) 
+--       EX. USER_TABLES   USER_INDEXES  USER_CONSTRAINTS  USER_VIEWS
+-- ALL_XXX : 현 계정이 접근 가능한 객체 TABLE INDEX CONSTRAINT VIEW)
+--       EX. ALL_TABLES   ALL_INDEXES  ALL_CONSTRAINTS  ALL_VIEWS
+-- DBA_XXX : DBA권한자만 접근 가능. DBMS의 모든 객체
+--       EX. DBA_TABLES   DBA_INDEXES  DBA_CONSTRAINTS  DBA_VIEWS
+
+
+
+--- *** DCL (사용자계정생성, 사용자권한부여, 권한박탈, 사용자 계정삭제) ***
+
+CREATE USER scott2 IDENTIFIED BY 1234;
+-- 권한부여 (세션권한, scott.EMP, scott.DEPT 테이블에 대한 모든 권한)
+
+GRANT CREATE SESSION TO scott2; 
+GRANT ALL ON EMP TO scott2; -- EMP 테이블에 대한 모든 권한 (검색, 추가, 수정, 삭제) 
+GRANT ALL ON DEPT TO scott2; -- DEPT 테이블에 대한 모든 권한 (검색, 추가, 수정, 삭제)
+SHOW USER;
+
+-- 권한 박탈 (권한을 박탈할 계정이 접속해제가 된 상태에서 가능)
+REVOKE ALL ON EMP FROM SCOTT2; -- SCOTT에 있던 EMP 모든 권한 박탈.
+REVOKE ALL ON DEPT FROM SCOTT2; -- SCOTT에 있던 DEPT 모든 권한 박탈.
+SHOW USER;
+
+-- 사용자 계정 삭제 (접속중인 계정 삭제 불가)
+DROP USER SCOTT2 CASCADE;
+
+
+-- *** DML (SELECT, INSERT, UPDATE, DELETE)***
+
+-- 1. INSERT INTO 테이블명 VALUES (값1, 값2, 값3, 값4, 값5 .....);
+--    INSERT INTO 테이블명 (필드명1, 필드명2, ....) VALUES (값1, 값2, 값3, 값4, 값5 .....);
+SELECT * FROM DEPT01;
+INSERT INTO DEPT01 VALUES (50, 'ACCOUNTING', 'NEW YORK');
+INSERT INTO DEPT01 (DEPTNO, DNAME, LOC) VALUES (60, 'IT', 'SEOUL');
+INSERT INTO DEPT01 (DEPTNO, DNAME) VALUES (70, 'OPERATION');
+INSERT INTO DEPT01 (DEPTNO, DNAME, LOC) VALUES (80, 'HR', NULL); -- 명시적으로 NULL 추가
+INSERT INTO DEPT01 VALUES (90, 'SALES', NULL); -- 명시적으로 NULL 추가
+
+-- 서브쿼리를 이용한 INSERT
+INSERT INTO DEPT01 SELECT * FROM DEPT;
+
+SELECT * FROM DEPT01 ORDER BY DEPTNO;
+
+-- 트랜잭션 명령어 (DML 명령어만)
+COMMIT;
+
+
+
+
+
+
+
+
+
+
+
