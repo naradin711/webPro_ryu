@@ -284,7 +284,73 @@ SELECT * FROM MY_DATA;
 
 
 
+-- ★ ★ ★ 제약조건 : 부적합한 데이터가 테이블에 삽입, 수정되는 것을 방지하기 위해 
+SELECT * FROM EMP;
+INSERT INTO EMP VALUES (7369, '홍', NULL, NULL, SYSDATE, NULL, NULL, 40); -- SMITH 사번과 중복 에러
+UPDATE EMP SET EMPNO=7369 WHERE ENAME='ALLEN'; -- SMITH 사번과 중복 에러
+-- (1) PRIMARY KEY : 유일하게 테이블의 각 행을 식별. NOT NULL
+        INSERT INTO EMP (EMPNO, ENAME, DEPTNO) VALUES (7369, '홍', 40); -- 중복된 사번 입력 불가
+-- (2) NOT NULL : NULL값을 포함하지 않음
+-- (3) UNIQUE   : 모든 행에 대하여 유일해야. NULL값을 허용(NULL은 여러행 입력 가능)
+-- (4) FOREIGN KEY : 테이블의 열은 다른 테이블의 열을 참조 (ex. EMP테이블의 DEPTNO는 DEPT 테이블의 DEPTNO를 참조)
+        -- 비식별관계 : 부모테이블의 주키가 자식테이블의 일반속성에 속한 필드로 관계 (exERD에서 빨간점선화살표)
+        -- 식별관계   : 부모테이블의 주키가 자식테이블의 주키(주키군)에 속한 필드로 관계 (exERD에서 초록점선화살표)
+        INSERT INTO EMP (EMPNO, ENAME, DEPTNO) VALUES (1111, '홍', 90); -- 외래키로 90번 입력 불가
+-- (5) CHECK(조건) : 해당 조건이 만족 (NULL값 허용)
+-- DEFAULT : 기본값 설정(해당 열의 데이터 입력값이 없으면 NULL이 들어감)
+DROP TABLE DEPT1;
+CREATE TABLE DEPT1(
+    DEPTNO NUMBER(2)    PRIMARY KEY,
+    DNAME  VARCHAR2(14) UNIQUE,
+    LOC    VARCHAR2(13) NOT NULL );
+DROP TABLE EMP1;
+CREATE TABLE EMP1(
+    EMPNO    NUMBER(4)    PRIMARY KEY,
+    ENAME    VARCHAR2(10) NOT NULL,
+    JOB      VARCHAR2(9),
+    MGR      NUMBER(4),
+    HIREDATE DATE          DEFAULT SYSDATE,
+    SAL      NUMBER(7,2)   CHECK(SAL>0),
+    COMM     NUMBER(7,2),
+    DEPTNO   NUMBER(2)     REFERENCES DEPT1(DEPTNO)  );
+DROP TABLE EMP1; -- 자식테이블(참조하는 테이블) 먼저 DROP
+DROP TABLE DEPT1; -- 다른 테이블에서 참조하는 필드가 있을 때(부모테이블은 ) 먼저 DROP 안 됨.
+DROP TABLE DEPT1 CASCADE CONSTRAINTS; -- 비추 (참조하는 테이블이 있어도 무시하고 DROP)
 
+CREATE TABLE DEPT1(
+    DEPTNO NUMBER(2),
+    DNAME  VARCHAR2(14),
+    LOC    VARCHAR2(13) NOT NULL,
+    PRIMARY KEY(DEPTNO),
+    UNIQUE(DNAME) );
+CREATE TABLE EMP1(
+    EMPNO    NUMBER(4),
+    ENAME    VARCHAR2(10) NOT NULL,
+    JOB      VARCHAR2(9),
+    MGR      NUMBER(4),
+    HIREDATE DATE DEFAULT SYSDATE,
+    SAL      NUMBER(7,2),
+    COMM     NUMBER(7,2),
+    DEPTNO   NUMBER(2),
+    PRIMARY KEY(EMPNO),
+    CHECK(SAL>0),
+    FOREIGN KEY(DEPTNO) REFERENCES DEPT1(DEPTNO) );
+INSERT INTO DEPT1 SELECT * FROM DEPT;
+SELECT * FROM DEPT1;
+INSERT INTO DEPT1 VALUES (40, 'IT', 'SEOUL'); -- PK 제약조건
+INSERT INTO DEPT1 VALUES (50, 'SALES', 'SEOUL'); -- UNIQUE 제약조건
+INSERT INTO DEPT1 VALUES (50, 'IT', NULL); -- NOT NULL제약조건
+
+INSERT INTO EMP1 (EMPNO, ENAME, DEPTNO)
+    VALUES (1001, '홍',10);
+SELECT * FROM EMP1; -- HIREADTE에 설정된 기본값 입력
+INSERT INTO EMP1 (EMPNO, ENAME, DEPTNO)
+    VALUES (1001, '김', 10); -- PK 제약조건
+INSERT INTO EMP1 (EMPNO, DEPTNO)
+    VALUES (1002, 20); -- ENAME인 NOT NULL 제약조건
+INSERT INTO EMP1 (EMPNO, ENAME, SAL)
+    VALUES (1002, '박', -1); -- SAL>0 제약조건
+INSERT INTO EMP1 VALUES (1002, '윤', NULL, NULL, TO_DATE('95/01/01', 'YY/MM/DD'),900,NULL,99);--PK 제약조건 
 
 
 
