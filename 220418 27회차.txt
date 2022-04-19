@@ -1,0 +1,69 @@
+ 220418
+
+    [X] VIEW , INLINE VIEW, TOP N 구문
+-- 10.1 VIEW : 가상의 테이블 (1) 단순위 (2) 복합행
+-- 10.1.(1) 단순뷰 : 하나의 테이블로 구성한 VIEW
+-- EMPV0이라는 가상의 VIEW를 생성 또는 수정 = EMP 테이블 일부를 갖는 가상의 테이블
+
+       SELECT * FROM USER_VIEWS; -- 데이터 딕셔너리 VIEW 확인
+       CREATE OR REPLACE VIEW EMPV0 
+       AS SELECT EMPNO, ENAME, JOB, MGR, HIREDATE, DEPTNO FROM EMP; -- VIEW EMPV0 생성하기
+       -- DDL을 수행하면 데이터 딕셔너리 자동 수정
+
+-- VIEW의 제한 조건 (1)VIEW의 조건 (2) 읽기전용
+-- WITH CHECK OPTION을 설정한 VIEW는 VIEW 조건에 해당하는 데이터만 삽입, 수정, 삭제 가능
+-- WITH READ ONLY를 설정한  VIEW는 읽기 전용 VIEW
+
+-- EMPv0 : EMP 테이블에서 30번 부서만 빼오기
+
+ CREATE OR REPLACE VIEW EMPv0
+       AS SELECT * FROM EMP WHERE DEPTNO = 30
+       WITH CHECK OPTION;
+
+-- EMPv0 읽기 전용 VIEW
+
+CREATE OR REPLACE VIEW EMPv0
+       AS SELECT EMPNO, ENAME, JOB, MGR, DEPTNO FROM EMP
+       WITH READ ONLY;
+
+10. 2. INLINE VIEW : 
+    FROM절 상의 서브쿼리를 INLINE VIEW라고 하며, FROM절에 오는 서브퀘리는 VIEW처럼 적용
+-- EX. 급여가 2000을 초과하는 사원의 평균 급여.
+SELECT AVG(SAL) FROM (SELECT SAL FROM EMP WHERE SAL> 2000); 
+   -- 여기서 FROM 이하 SELECT 절은 INLINE VIEW 
+
+10. 3. TOP-N구문 (TOP 1~10등/ TOP 11~20등 / TOP 6~10등)
+
+
+-- 함수를 이용한  RANK 출력
+SELECT RANK () OVER (ORDER BY SAL DESC) RANK,              -- RANK 중복 등수 있음
+       DENSE_RANK () OVER (ORDER BY SAL DESC) DENSE_RANK,  -- DENSE_RANK  중복 등수 있음
+       ROW_NUMBER () OVER  (ORDER BY SAL DESC) ROW_NUMBER, -- ROW_NUMBER 중복 등수 없음
+       ENAME, SAL FROM EMP;
+
+-- SAL 기준으로 1~5등 까지만 출력
+ SELECT ROWNUM, ENAME, SAL 
+        FROM (SELECT * FROM EMP ORDER BY SAL DESC)
+        WHERE ROWNUM <=5;
+
+-- ** TOP N 구문 1단계
+SELECT ROWNUM RN, ENAME, SAL 
+       FROM(SELECT ENAME, SAL FROM EMP ORDER BY SAL DESC);
+
+-- ** TOP N 구문 2단계 -- (완성된 TOP-N구문)
+SELECT ROWNUM, RN, ENAME, SAL
+       FROM(SELECT ROWNUM RN, ENAME, SAL FROM (SELECT ENAME, SAL FROM EMP ORDER BY SAL DESC)) "A"
+       WHERE RN BETWEEN 6 AND 10;
+
+
+1. 요구사항을 보고 테이블 설계
+1-1. 해당 EXR을 엑셀에 넣어보기
+2. SQL문 (테이블생성, 시퀀스생성, 데이터 INSERT)
+
+MEMBER - mID, mNAME, mADDR, mTEL
+PRODUCT - pCODE, pNAME, PRICE, pSTOCK
+CART - SEQ, mID, pCODE1, QTY1, COST1
+ORDERS - oNO(PK), mID, oADDR, oTEL, oDATE
+ORDER_DETAIL - oNO, pCODE, QTY, COST (수량*단가)
+
+
