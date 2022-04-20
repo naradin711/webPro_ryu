@@ -1,0 +1,109 @@
+ 220428
+
+인덱스 : 문서 내 검색 및 조회를 빠르게 하기 위한 방법
+
+CREATE TABLE EMP01 AS SELECT * FROM EMP; --EMP 테이블과 똑같은 EMP01 생성
+NSERT INTO EMP01 SELECT * FROM EMP01; -- 1번 수행 28 2번 수행 56행 / 12번 수행
+INSERT INTO EMP01 (EMPNO, ENAME) VALUES (1111,'HONG'); --HONG 일부
+INSERT INTO EMP01 SELECT * FROM EMP01; -- 3번 수행(20만 ROW정도)
+SELECT * FROM EMP01 WHERE ENAME = 'HONG'; -- 인덱스 생성 이전 0.116초
+CREATE INDEX IDX_EMP_ENAME ON EMP01(ENAME);
+SELECT * FROM EMP01 WHERE ENAME = 'HONG'; -- 인덱스 생성 이후 0.002초
+COMMIT;
+
+-- [XII] TRANSACTION 명령어
+-- COMMIT; (트랜잭션 반영) : TRANSACTION에 있는 정보를 데이터베이스에 등록
+-- ROLLBACK (트랜잭션 취소) : commit 되지 않은 TRANSACTION에 있는 정보를 이전으로 되돌림
+-- SAVEPOINT (트랜잭션 분할) ; rollback할 수 있는 분기점을 제공
+-- 새로운 트랜잭션 시작 
+SELECT * FROM DEPT01; -- 40번 지워진채로 출력 10, 20, 30
+DELETE FROM DEPT01 WHERE DEPTNO=30;
+SELECT * FROM DEPT01; -- 10, 20
+SAVEPOINT C1; -- 10, 20
+DELETE FROM DEPT01 WHERE DEPTNO=20;
+SAVEPOINT C2; -- 10
+DELETE FROM DEPT01 WHERE DEPTNO=10;
+SELECT * FROM DEPT01; -- 아무것도 없음.
+ROLLBACK TO C2;
+SELECT * FROM DEPT01; -- 10
+ROLLBACK TO C1;
+SELECT * FROM DEPT01; -- 20, 10
+
+-- * * * DCL of MySQL (계정생성, 권한부여, 권한박탈, 계정삭제) * * *
+create user user01 identified by 'password';
+grant all privileges on *.* to user01; -- 권한부여
+revoke all on *.* from user01; -- 권한박탈
+drop user user01;
+show tables; -- 오라클의 select * from tab)
+
+show databases;
+create database kimdb; --새로운 데이터베이스 영역 생성
+use kimdb; -- kimdb 데이터베이스로 들어감
+select database();
+use world;
+use kimdb; -- kimdb 데이터베이스로 들어감 수업시간에 모든 수업은 kimdb로 진행
+
+MySQL에서의 outer join, nvl
+
+-- ex. 사번, 이름, 상사이름(상사가 없는 사람도 출력, 상사가 없으면 null 대신 'ceo')
+
+select p1.pNo, p1.pName, ifnull(p2.pName, 'ceo') "mName"
+	from personal p1 left outer join personal p2
+    on p1.manager = p2.pNo; -- left outer join.
+
+from 테이블 outer join 테이블
+on 필드 = 필드 여기에서 숨은 값을 출력하고자 하는 쪽으로 left right를 넣어준다.
+nvl () = ifnull(필드값, '입력값')
+
+
+-- Oracle에서의 단일행함수와 MySQL 컬럼함수의 다른 부분
+select round(789.56, 1); -- from절 없어도 실행 가능
+select pName || '은' || job || '이다' from personal; -- || 은 OR 연산자.
+select concat(pname, '은 ', job, '이다') 설명 from personal; -- concat을 적극적으로 써주도록 하자
+
+-- 날짜 포맷용 컬럼함수
+select startdate from personal;
+-- extract 형 함수
+select year(startdate), month(startdate), day(startdate),
+	hour(startdate), minute(startdate), second(startdate) from personal;
+
+-- date_format(날짜나 시간데이터, '포맷') -- 날짜를 숫자로 변환하는 것
+	-- 포맷 글자 : %y - 연도 두자리, %Y - 연도 네자리, 
+    -- %M 월이름, %b 짧은 월이름 , %m 2자리 개월수, %c (개월수)
+    -- %d 01,02,03 두자리수 날짜, %e 날짜만 나옴
+    -- %H 24시간 %h 12시간, %p 오전오후, %i 분, %s 초
+
+-- 시스템으로부터 현재 날짜와 시간을 받음
+select sysdate();
+select now();
+
+-- 시스템으로부터 현재 날짜만 가지고 옴
+	select current_date();
+	select curdate();
+
+-- 시스템으로부터 현재 시간만 가지고 옴
+	select current_time();
+	select curtime();
+    
+select date_format(now(), '%Y년%m월%e일 %p %h시 %i분') nowtime ;
+
+-- format(숫자데이터) ; 3자리 콤마 추가
+-- format(숫자데이터, 소수점자리수) ; 소수점 확보되면서 3자리 콤마 추가
+select format(pay, 1) from personal;
+
+
+-- workbench에서 데이터 삭제하고 수정 (where절에 primary key이용한 비교)
+insert into personal (pNo, pName, job, manager, startdate, pay, bonus, dNo)
+	values (1000, 'hong', 'manager', 1001, curdate(), 9000, 900, 40);
+commit;
+set sql_safe_updates = 0; -- commit 이후 업데이트 막아 놓은 것 풀어버리기
+delete from personal where pName = 'hong'; -- 퍼스널에서 홍 빼기 
+
+-- * * * TOP - N 구문
+-- MySQL에서 Top-N 구문 꼭 써보기
+select rownum, pNo from personal; -- rownum에 없음
+select pname, pay from personal order by pay desc;
+-- limit n  1등부터 N등까지 가져와라.
+select pname, pay from personal order by pay desc limit 5;
+-- limit 5,4 6등부터 9등까지 가져오라 6,7,8,9
+select pname, pay from personal order by pay desc limit 5,4;
