@@ -48,10 +48,10 @@ SELECT TEST_SEQ.NEXTVAL FROM DUAL;
 
 -- EX(C7.PP 4~5 AND C8 EX1)
 
---EX 7강 4번 연습문제 C7 PP4 BOOKEXERD
+--EX 7강 4번 연습문제 C7 PP4 BOOKEXERD 
 DROP TABLE BOOKCATEGORY;
 DROP TABLE BOOK;
-
+-- EXERD로 테이블 설계 먼저하기
 CREATE TABLE BOOKCATEGORY (
    CATEGORYCODE NUMBER(3) PRIMARY KEY,
    CATEGORYNAME VARCHAR2(50) UNIQUE,
@@ -130,7 +130,7 @@ COMMIT;
 --<총연습문제1> 다음과 같은 구조의 테이블을 생성하고 데이터를 입력하는 SQL문을 조건에 맞게 작성하여 ex1.sql파일과 실행 캡처파일(ex1.jpg나 ex1.png)을 제출하시오.
 --[요구사항]
 --(1) 같은 이름의 테이블이나 시퀀스가 있을 수 있으니 먼저 삭제하고 테이블을 생성하시오
---(2) MEMBER 테이블은 필드 별로 다음의 조건을 지켜 생성하시오.
+--(2) MEMBER 테이블은 필드 별로 다음의 조건을 지켜 생성하시오. 단 테이블 생성하기 이전 EXERD로 해당 테이블을 설계하시오.
 	--① mNO(번호) : 주키
 	--② mNAME(이름) : NULL값을 입력할 수 없다
 	--③ mPW(비밀번호) : 반드시 1~8글자 이내의 문자를 입력한다
