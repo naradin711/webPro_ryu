@@ -1,0 +1,59 @@
+SELECT * FROM DEPT;
+DELETE FROM DEPT WHERE DEPTNO = 55;
+ROLLBACK;
+
+INSERT INTO DEPT VALUES (77, 'IZONE', 'WIZONE');
+SELECT * FROM DEPT;
+
+--부서명을 입력받아 해당 부서의 사원의 사번, 이름, 직책, 급여를 출력
+
+SELECT EMPNO, ENAME, JOB, SAL
+    FROM EMP E, DEPT D
+    WHERE E.DEPTNO = D.DEPTNO AND DNAME=UPPER('SALES');
+    
+SELECT * FROM DEPT;    
+
+-- 1을 누르면 데이터 입력
+-- 이름, 직업명, 국어, 영어, 수학점수를 입력받아 
+-- 데이터 베이스에 번호를 포함하여 입력한다.
+-- 번호는 시퀀스를 이용하여 순차적으로 입력한다. 데이터베이스의 내용은 다음과 같다
+
+DROP TABLE JOB;
+CREATE TABLE JOB (
+    jNo NUMBER (10) PRIMARY KEY,
+    jName VARCHAR2(100)
+    );
+INSERT INTO JOB VALUES (10, '배우');
+INSERT INTO JOB VALUES (20, '가수');
+
+
+SELECT * FROM JOB;    
+
+COMMIT;
+
+DROP TABLE PERSON;
+CREATE TABLE PERSON(
+    pNO NUMBER(10) PRIMARY KEY,
+    pNAME VARCHAR2(50),
+    jNo NUMBER(10) REFERENCES JOB(jNO),
+    KOR NUMBER(10) NOT NULL,
+    ENG NUMBER(10) NOT NULL,
+    MAT NUMBER(10) NOT NULL
+    );
+
+ 
+
+DROP SEQUENCE PERSON_SEQ;
+CREATE SEQUENCE PERSON_SEQ
+  MAXVALUE 9999     -- 최대값
+  MINVALUE 1        -- 최소값
+  NOCACHE           -- 새로운 시퀀스를 시작할때 캐시 메모리를 초기화 하는 행.
+  NOCYCLE   ;
+
+INSERT INTO PERSON VALUES (PERSON_SEQ.nextval, '정우성', 10, 90, 80, 81);
+
+SELECT * FROM PERSON; 
+
+
+
+

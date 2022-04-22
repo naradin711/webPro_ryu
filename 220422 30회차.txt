@@ -1,0 +1,55 @@
+ 220422
+
+(7)	PreparedStatement 인터페이스 이용
+	String sql_query = “insert into dept values (?,?,?);
+	PreparedStatement pstmt = conn.preparedStatement(sql_query);
+	setXXX(int 순서, 실제 데이터나 변수);
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+public class PreparedInsertOracle {
+	public static void main(String[] args) {
+		String driver = "oracle.jdbc.driver.OracleDriver";
+		String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
+		Scanner sc = new Scanner(System.in);
+		System.out.print("입력할 부서번호는 ? ");
+		int deptno = sc.nextInt();
+		System.out.print("부서명은 ? ");
+		sc.nextLine();
+		String dname = sc.nextLine();
+		System.out.print("부서위치는 ? ");
+		String loc = sc.nextLine();
+		String query = "INSERT INTO DEPT VALUES (?, ?, ?)"; 
+                                                                        - 입력하기 전 변수를 ?로 불특정화
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try{
+			Class.forName(driver);
+			conn = DriverManager.getConnection(url,"scott","tiger");
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, deptno);    - 첫번째 물음표에 변수값 입력
+			pstmt.setString(2, dname); - 두번째 물음표에 변수값 입력
+			pstmt.setString(3, loc);      - 세번째 물음표에 변수값 입력
+			int result = pstmt.executeUpdate();
+			if(result>0)
+				System.out.println(deptno+" 입력 성공");
+			else
+				System.out.println("입력 실패");
+		}catch(ClassNotFoundException e){
+			System.out.println(e.getMessage()+"Driver 검색 오류");
+		}catch (SQLException e) {
+			System.out.println(e.getMessage()+"SQL 오류");
+		}finally {
+			try{
+				if(pstmt!=null) pstmt.close(); -- statement close
+				if(conn!=null)  conn.close(); -- connection close
+			}catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
+}
