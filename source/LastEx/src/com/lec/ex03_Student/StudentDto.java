@@ -11,15 +11,13 @@ public class StudentDto {
 	public StudentDto () {}
 	// 입력용 sname, mname, score
 	// 출력용 rank, sname, mname, score
-	public StudentDto(String sname, String mname, int score, int expel) {
-		super();
+	public StudentDto(String sname, String mname, int score ) {
 		this.sname = sname;
 		this.mname = mname;
 		this.score = score;
-		this.expel = expel;
+		 
 	}
 	public StudentDto(int rank, String sname, String mname, int score) {
-		super();
 		this.rank = rank;
 		this.sname = sname;
 		this.mname = mname;
@@ -40,6 +38,15 @@ public class StudentDto {
 		this.sname = sname;
 		this.mname = mname;
 		this.score = score;
+	}
+	public StudentDto(int sno) {
+		super();
+		this.sno = sno;
+	}
+	public StudentDto(int sno, String sname) {
+		super();
+		this.sno = sno;
+		this.sname = sname;
 	}
 	@Override
 	public String toString() {
