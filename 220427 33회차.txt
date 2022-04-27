@@ -1,0 +1,36 @@
+ 220427
+
+ 오늘 가장 어려웠던 파트.
+ 중복쿼리에 셀프쿼리 
+
+--5. 물품구매 int buy(int CID, int CAMOUNT)
+-- 물품구매 업데이트에는 CPOINT, CAMOUNT, LEVELNO
+
+-- 5-1 누적금액이랑 포인트 변경
+
+	UPDATE CUSTOMER SET CPOINT = CPOINT + (60000*0.05),
+                    CAMOUNT = CAMOUNT +60000                     
+                    WHERE CID = 6;
+
+
+-- 5-2. LEVELNO 변경하기 전 현레벨 번호와 수정될 레벨 번호  
+
+   	 SELECT CID. CNAME, C.LEVELNO 현레벨, L.LEVELNO 바뀐레벨
+           		FROM CUSTOMER C, CUS_LEVEL L
+           		WHERE CAMOUNT BETWEEN LOW AND HIGH;
+
+
+-- 5-3. 레벨번호를 수정!
+
+	UPDATE CUSTOMER SET LEVELNO = (SELECT L.LEVELNO FROM CUSTOMER C, CUS_LEVEL L
+                            WHERE CAMOUNT BETWEEN LOW AND HIGH);             
+
+
+ -- 5-4. 5-1과 5-3을 합쳐서 완성시키기        
+           
+	UPDATE CUSTOMER SET CPOINT = CPOINT + (60000*0.05),
+                   		      CAMOUNT = CAMOUNT +60000,
+                    		      LEVELNO = (SELECT L.LEVELNO FROM CUSTOMER C, CUS_LEVEL L
+                            		WHERE CAMOUNT+60000 BETWEEN LOW AND HIGH AND CID=6)
+                            		-- CAMOUNT에 변경값을 넣어 변수를 창출!
+                                              WHERE CID =6;

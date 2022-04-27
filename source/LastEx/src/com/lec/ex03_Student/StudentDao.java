@@ -63,7 +63,7 @@ public class StudentDao {
     } 
     // 2. 이름검색
     public ArrayList<StudentDto> snamegetStudent(String sname){
-    	ArrayList<StudentDto> dtos = new ArrayList<StudentDto>();;
+    	ArrayList<StudentDto> dtos = new ArrayList<StudentDto>();
     	Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
