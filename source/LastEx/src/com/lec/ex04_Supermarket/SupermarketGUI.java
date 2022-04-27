@@ -282,10 +282,14 @@ public class SupermarketGUI extends JFrame implements ActionListener{
 			try {
 				ctel = txtCtel.getText().trim();
 				cname = txtCname.getText().trim();
+				if(cname.length()<2) {
+					txtCname.setText("");
+					txtPool.setText("올바른 이름을 입력하시오 ");
+					return;
 				 int result = dao.insertCustomer (ctel, cname); //DAO에서 포인트 함수 가져오기
 					if(result ==CustomerDao.SUCCESS) { //DAO의 값이 성공이면!
 						
-						txtPool.setText("회원가입 성공!"); //회원가입 성공메시지
+						txtPool.setText("회원가입 성공!\n 포인트 1000점을 가입선물로 드립니다"); //회원가입 성공메시지
 
 					}else {
 						txtPool.setText("유효한 입력값이 아닙니다.");
@@ -305,6 +309,10 @@ public class SupermarketGUI extends JFrame implements ActionListener{
 			try {
 				cid = Integer.parseInt(txtCid.getText().trim());
 				ctel = txtCtel.getText().trim();
+				if(ctel.length()<8) {
+					txtPool.setText("입력하신 전화번호를 다시한번 확인해주세요");
+					return;
+				}
 				 int result = dao.updateCustomerCtel(cid, ctel); //DAO에서 포인트 함수 가져오기
 					if(result ==CustomerDao.SUCCESS) { //DAO의 값이 성공이면!
 						
@@ -319,7 +327,7 @@ public class SupermarketGUI extends JFrame implements ActionListener{
 				txtCname.setText(""); 
 				txtCpoint.setText(""); 
 				txtCamount.setText("");
-				txtPool.setText("유효한 값을 입력해주시기 바랍니다. ");
+				txtPool.setText("유효한 ID 값을 입력해주시기 바랍니다. ");
 			}
 		}else if(e.getSource() == btnDelete) { // 회원 탈퇴
 			String ctel;
