@@ -1,0 +1,114 @@
+	220428
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<!-- HEAD 부분에는 웹문사의 디자인, 동적인 부분, 설정부분 -->
+<head>
+    <meta charset="utf-8" /> <!-- 한글코드 : EUC-KR(CP949) / UTF-8 -->
+    <title> 첫번째 예제 </title>
+    <style>/* 디자인 부분 (CSS) */
+        body {background-color:cornflowerblue;
+              font-size : 30pt;
+        }
+    </style>
+    <script> /*동적인 부분 (javaScript)*/
+    
+        name = prompt("너 이름이 뭐니?", "홍길동이요!");
+        if (name != 'null') {
+        document.write(name + " 우리 길동이에게 호부호형을 허락하노라!  <br>");
+        }
+    </script>
+</head>
+<body>
+    <!-- BODY 부분에는 웹문서에 출력될 정보 -->
+    <!-- BODY 부분안에서는 스페이스, 엔터 모든게 스페이스 하나로 출력-->
+    안녕하세요! <br /> <!-- br/ 은 줄바꿈 -->
+    오늘부터 웹 표준 수업시작합니다!<br />
+    Let's get it!<br />
+</body>
+</html>
+
+--
+
+이하 외부 파일 css파일을 html로 삽입하기
+
+    2.css
+
+    body {
+        background-color: cornflowerblue;
+        font-size: 45pt;
+    }
+
+  위 스타일 시트를 아래와 같이 html 문서에 삽입
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<!-- HEAD 부분에는 웹문사의 디자인, 동적인 부분, 설정부분 -->
+<head>
+    <meta charset="utf-8" /> <!-- 한글코드 : EUC-KR(CP949) / UTF-8 -->
+    <title> 첫번째 예제 </title>
+    
+    <!-- ***link href에 파일명 rel에 시트종류 type에 css 타입 ***-->
+    <link href="2.css" rel="stylesheet" type="text/css">
+    <script src="javascript2.js"></script>
+</head>
+<body>
+    <!-- BODY 부분에는 웹문서에 출력될 정보 -->
+    <!-- BODY 부분안에서는 스페이스, 엔터 모든게 스페이스 하나로 출력-->
+    안녕하세요! <br /> <!-- br/ 은 줄바꿈 -->
+    오늘부터 웹 표준 수업시작합니다!<br />
+    Let's get it!<br />
+</body>
+</html>
+
+아래는 외부이미지 가져오기!
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        /* 모든 색깔은 rgb값으로 만듬     
+            R(2) G(2) B(2)
+            10진수 0 1 2 3 4 5 6 7 8 9
+            16진수 0 1 2 3 4 5 6 7 8 9 A B C D E F
+
+        */
+        body{
+            background-color : #47bbf6;
+            color : mediumvioletred; /* 글자색은 그냥 컬러로 바꾸면 됨 */
+        }
+    </style>
+</head>
+<body>
+    <a href="http://www.daum.net">
+        <!-- 태그이름 속성=속성값/ 이런 태그는 닫는태그 (/태그)를 반드시 입력해야 한다-->
+        <!-- 열린 태그, 닫힌 태그는 쌍을 이루어야 함. 닫힌 태그가 없는 태그도 있다. ex) br-->
+        <!-- img src = "" 따옴표 안에 그림 파일 명을 입력 
+        alt = "" 따옴표 안의 문구에는 이미지가 출력되지 않을 경우 대신 출력된 문구 
+         보통은 해당 이미지의 경로및이름이 쓰인다 -->
+
+        <img src="parkseyoung.jpg" alt="독립유공자 박세영옹 사진" /> <br>
+
+글자 관련 태그 설정
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1> hx태그는 제목 태그입니다. 자동개행 </h1>
+    테스트
+</body>
+</html>
+
+    </a>
+    안녕
+</body>
+</html>

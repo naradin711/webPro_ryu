@@ -286,6 +286,7 @@ public class SupermarketGUI extends JFrame implements ActionListener{
 					txtCname.setText("");
 					txtPool.setText("올바른 이름을 입력하시오 ");
 					return;
+				}
 				 int result = dao.insertCustomer (ctel, cname); //DAO에서 포인트 함수 가져오기
 					if(result ==CustomerDao.SUCCESS) { //DAO의 값이 성공이면!
 						
