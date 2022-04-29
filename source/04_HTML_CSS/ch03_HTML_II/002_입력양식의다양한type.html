@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        td {
+            text-align: center; /* 글씨 가운데 정렬*/
+            padding: 5px; /* 안쪽에 여백*/
+        }
+    </style>
+</head>
+<body>
+    <form action="##" method="get">
+        <table>
+            <tr>
+                <td>아이디</td>
+                <td>
+                    <input type="text" name="id" size="9" />
+                    <input type="button" value="중복확인" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>비밀번호</td>
+                <td>
+                    <input type="text" name="pw" size="9" />
+                </td>
+            </tr>
+            <tr>
+                <td>전화번호</td>
+                <td>
+                    <input type="tel" name="pn001" size="2" />-<input type="tel" name="pn002" size="2" />-<input type="tel" name="pn003" size="2" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>경력</td>
+                <td><input type="number" name="experience" size="3" min="1" max="50" />년</td>
+            </tr>
+
+            <tr>
+                <td>이메일</td>
+                <td><input type="email" name="email" /></td>
+            </tr>
+            <tr>
+                <td>사진</td> <!-- 파일 업로드 하는 세팅-->
+                <td><input type="file" name="filename" /></td>
+            </tr>
+
+
+            <tr>
+
+                <td>성별</td> <!-- 라디오 버튼 네임을 같이 해줘야지 중복 선택을 방지-->
+                <td>
+                    <input type="radio" name="gender" value="m" checked="checked" /> 남
+                    <input type="radio" name="gender" value="fm" /> 여
+                </td>
+            </tr>
+
+            <tr>
+                <td>사용언어</td> <!-- 파일 업로드 하는 세팅-->
+                <td>
+                    <input type="checkbox" name="uselang" value="kor" checked="checked" />한국어
+                    <input type="checkbox" name="uselang" value="jpn" />일본어
+                    <input type="checkbox" name="uselang" value="eng" />영어
+                    <br>
+                    <input type="checkbox" name="uselang" value="chn" />중국어
+                    <input type="checkbox" name="uselang" value="tkn" />톨킨어
+                    <input type="checkbox" name="uselang" value="drg" />용어
+                </td>
+            </tr>
+            <tr>
+                <td>국적</td>
+                <td>
+                    <select name="nation">
+                        <option>대한민국  </option>
+                        <option value="usa">영어 </option>
+                        <option value="mnd">몬드 </option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>좋아하는 음식</td>
+                <td>
+                    <select name="food" multiple="multiple" size="3">
+                        <option>간짜장 </option>
+                        <option value="ksoup">김치찌개 </option>
+                        <option value="ssoup">된장찌개 </option>
+                        <option>탕수육 </option>
+                        <option>난자완스 </option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>자 기 소 개</td> <!-- textarea 문자, 숫자를 입력할 수 있는 대화 상자 생성-->
+                <td><textarea name="intro" cols="25" rows="3"> 하고 싶은 말을 자유롭게 적어주세요!</textarea></td>
+            </tr>
+
+            <tr>
+                <td>생 년 월 일</td><!-- date 년월일을 설정할 수 있는 상자 생성-->
+                <td><input type="date" name="birthdate" /></td>
+            </tr>
+
+            <tr>
+                <td>sns url</td><!-- url 체크하는 상자-->
+                <td>
+                    <input type="url" name="sns" />
+                  
+                </td>
+            </tr>
+
+            <tr>
+                <td>선호색상 <br> <br> 좋아하는 정도</td><!-- date 년월일을 설정할 수 있는 상자 생성-->
+                <td>
+                    <input type="color" name="color" /><br /> <br>
+                    <input type="range" name="range" min="0" max="100" step="10" />
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="회원가입" />
+                </td>
+            </tr>
+
+
+        </table>
+
+    </form>
+</body>
+</html>

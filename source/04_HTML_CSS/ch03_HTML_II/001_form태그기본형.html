@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+        <style>
+            td {
+                text-align: center; /* 글씨 가운데 정렬*/
+                padding: 5px; /* 안쪽에 여백*/
+            }
+        </style>
+    </head>
+    <body>
+        form 태그 밖의input은 넘어가지 않습니다.  : <input type="text" name="nickname" />
+        <form action="https://www.naver.com"><!-- method = "get"값은 기본이니 다른걸 쓰지 않아도 됩니다.-->
+            <table>
+                <caption> 로그인 </caption>
+                <tr><!-- 행열기-->
+                    <td><!-- 열 열기-->아 이 디</td>
+                    <td><!-- 열 열기--><input type="text" name="uid" /></td>
+                </tr>
+                <tr>
+                    <td>비 밀 번 호</td>
+                    <td><input type="password" name="upw" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" value="로그인" />
+                        <!-- submit 타입의 버튼을 누르면 form action에 걸린 주소로 이동한다-->
+                        <!-- value는 해당 타입에 변수값을 입력-->
+                    </td>
+                </tr>
+            </table>
+</form>
+</body>
+</html>

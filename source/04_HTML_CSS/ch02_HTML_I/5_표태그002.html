@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        table {
+            background-color: red; /* 표의 선 색*/
+        }
+
+        tr {
+            background-color: yellow; /* 표의 바탕색 색*/
+        }
+
+        caption {
+            background-color: lightyellow; /* 표의 주석 색*/
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <caption>table ex1</caption>
+        <tr>
+            <th>국어</th>
+            <th>영어</th>
+            <th>수학</th>
+        </tr>
+        <tr>
+            <td>90</td>
+            <td>100</td>
+            <td>95</td>
+        </tr>
+    </table>
+    <table>
+        <caption>table ex2</caption>
+        <tr>
+            <th>국어</th>
+            <th>영어</th>
+            <th>수학</th>
+        </tr>
+        <tr>
+            <td>90</td>
+            <td>100</td>
+            <td>95</td>
+        </tr>
+        <tr>
+            <th colspan="2">평균</th> <!-- colspan 해당 행에서 오른쪽으로 n만큼 합병-->
+            <td>95</td>
+        </tr>
+    </table>
+    <table>
+        <caption>table ex3</caption>
+        <tr>
+            <th rowspan="3">중간고사성적</th> <!-- rowspan 해당 열에서 아래로 n만큼 합병-->
+            <th>국어</th>
+            <th>영어</th>
+            <th>수학</th>
+        </tr>
+        <tr>
+            <td>100</td>
+            <td>98</td>
+            <td>99</td>
+        </tr>
+        <tr>
+            <th colspan="2">평균</th>
+            <td>99</td>
+        </tr>
+    </table>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
