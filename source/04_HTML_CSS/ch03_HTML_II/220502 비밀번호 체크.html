@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>비밀번호 체크하기 </title>
+    <style>
+        td {
+            padding: 5px; /* 안쪽에 여백*/
+            text-align: center;
+        }
+
+            td#btn {
+                text-align: center;
+                padding: 5px; /* 안쪽에 여백*/
+            }
+
+        caption {
+            text-align: center;
+        }
+    </style>
+    <script>
+
+        /* form안의 title은 한글자 이상, name은 2글자 이상 입력되었는지 여부 판단*/
+        /*form title value가 ""거나 fm name value length=1이면 떼끼! submit! 불가*/
+        function chk() { /*임의의 평션을 만들어서 title과 writer에 조건을 입력하시오*/
+            
+            if (!frm.pw.value) {
+                alert('유효한 비밀번호를 입력하세요')
+                frm.pw.focus();
+                return false; 
+            } else if (frm.id.value.length < 4) {
+                alert('4자리 이상의 아이디를 입력하세요.')
+                frm.id.focus();
+                return false;
+            } else if (frm.pw.value != frm.pwChk.value) { /* // 빈스트링 혹은 0은 false */
+                alert('입력하신 비밀번호가 동일하지 않습니다.') /* alert로  경고메시지 입력*/
+                frm.title.focus();   /* frm title에 커서가 깜빡인다. focus가 가도록*/
+                return false;
+            }
+            return true;
+        };
+
+    </script>
+</head>
+<body>
+    <form name="frm" onsubmit="return chk()">
+        <table>
+            <caption><h2>게 시 판</h2> </caption>
+            <tr>
+                <th>I D</th>
+                <td>
+                    <input type="text" name="id" size="15" />
+                </td>
+            </tr>
+
+            <tr>
+                <th>비밀번호</th>
+                <td>
+                    <input type="password" name="pw" size="15" />
+                </td>
+            </tr>
+            <tr>
+                <th>확인비밀번호</th>
+                <td>
+                    <input type="password" name="pwChk" size="15" />
+                </td>
+            </tr>
+
+            <tr>
+                <td id="btn" colspan="2">
+                    <input type="submit" value="전송" />
+                </td>
+            </tr>
+
+
+        </table>
+
+    </form>
+</body>
+</html>

@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title> 게시판 </title>
+    <style>
+        td {
+            padding: 5px; /* 안쪽에 여백*/
+            border-top: 2px solid lightblue;
+            text-align: center;
+        }
+
+        td#btn {
+                text-align: center;
+                padding: 5px; /* 안쪽에 여백*/
+        }
+        caption{
+            text-align: center;
+        }
+    </style>
+    <script>
+
+        /* form안의 title은 한글자 이상, name은 2글자 이상 입력되었는지 여부 판단*/
+        /*form title value가 ""거나 fm name value length=1이면 떼끼! submit! 불가*/
+        function chk() { /*임의의 평션을 만들어서 title과 writer에 조건을 입력하시오*/
+            if (!frm.title.value) { /* // 빈스트링 혹은 0은 false */
+                alert('제목을 꼭 입력하세요') /* alert로  경고메시지 입력*/
+                frm.title.focus();   /* frm title에 커서가 깜빡인다. focus가 가도록*/
+                return false;
+            } else if (frm.writer.value.length < 2) {
+                alert('두 글자 이상 입력하시오.') /* alert로  경고메시지 입력*/
+                frm.writer.focus();   /* frm write에 커서가 깜빡인다. focus가 가도록*/
+                return false;
+            }
+            return true;
+        }
+
+    </script>
+</head>
+<body>
+    <form name="frm" onsubmit="return chk()">
+        <table>
+            <caption><h2>게 시 판</h2> </caption>
+            <tr>
+                <td>제목</td>
+                <td>
+                    <input type="text" name="title" size="35" required="required" autofocus="autofocus" />
+                    <!-- required="required : 필수 입력 사항" autofocus 웹페이지를 실행했을때 해당 입력창에 커서가 자동으로 위치-->
+                </td>
+            </tr>
+
+            <tr>
+                <td>작성자</td>
+                <td>
+                    <input type="text" name="writer" size="35"  required="required"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>내 용</td> <!-- textarea 문자, 숫자를 입력할 수 있는 대화 상자 생성-->
+                <td><textarea name="intro" cols="37" rows="15"> 하고 싶은 말을 자유롭게 적어주세요!</textarea></td>
+            </tr>
+
+            <tr>
+                <td> 첨부파일</td> <!-- textarea 문자, 숫자를 입력할 수 있는 대화 상자 생성-->
+                <td><input type="file" name="filename" value="파일 선택" size="35" /></td>
+            </tr>
+
+            <tr>
+                <td id="btn" colspan="2">
+                    <input type="submit" value="입력완료" />
+                    <input type="reset" value="입력취소" />
+                </td>
+            </tr>
+
+
+        </table>
+
+    </form>
+</body>
+</html>

@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        td {
+            background-color: white;
+            text-align: center; /* 글씨 가운데 정렬*/
+            padding: 10px; /* 안쪽에 여백*/
+        }
+        table#top {
+            width: 30%;
+            border: 3px solid #444444;
+        }
+        th#line {
+            background-color: white;
+            text-align: left; /* 글씨 가운데 정렬*/
+        }
+
+    </style>
+</head>
+<body>
+    <form action="##" method="get">
+        <table id="top">
+            <caption> <h2>회 원 가 입</h2></caption>
+            <tr>
+                <td>아이디</td>
+                <td>
+                    <input type="text" name="id" size="15" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>비밀번호</td>
+                <td>
+                    <input type="password" name="pw" size="15" />
+                </td>
+            </tr>
+            <tr>
+                <td>확인비밀번호</td>
+                <td>
+                    <input type="password" name="checkpw" size="15" />
+                </td>
+            </tr>
+            <tr>
+                <td>전화번호</td>
+                <td>
+                    <input type="tel" name="pn001" size="15" />
+                </td>
+            </tr>
+            <tr>
+                <td>이 름</td>
+                <td>
+                    <input type="text" name="name" size="15" />
+                </td>
+            </tr>
+            <tr>
+                <td> 전 화</td>
+                <td>
+                    <input type="text" name="tel" size="15" />
+                </td>
+            </tr>
+
+            <tr>
+
+                <td>성별</td> <!-- 라디오 버튼 네임을 같이 해줘야지 중복 선택을 방지-->
+                <td>
+                    <input type="radio" name="gender" value="m" checked="checked" /> 남
+                    <input type="radio" name="gender" value="fm" /> 여
+                </td>
+            </tr>
+
+            <tr>
+                <td>생년월일</td><!-- date 년월일을 설정할 수 있는 상자 생성-->
+                <td><input type="date" name="birthdate" /></td>
+            </tr>
+
+
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="제출" />
+
+                </td>
+            </tr>
+
+
+            <tr>     
+                <th id="line" colspan="2">
+
+                    <hr color="black" ; width : 100%;>
+                    <br />
+                    ㆍ주민등록 없이 전화번호로 회원가입 <br />
+                    ㆍ대부분 서비스가 이용가능합니다 <br />
+                    &emsp;(단, 일부 실명확인후 이용가능) <br />
+                    ㆍ정보변경은 추후 가능 <br />
+                    <br />
+
+                </th>
+            </tr>
+
+        </table>
+
+    </form>
+</body>
+</html>

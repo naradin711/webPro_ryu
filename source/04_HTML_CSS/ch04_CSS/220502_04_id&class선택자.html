@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <style> /* 위부터 아래로 차근차근히 함 header부터 footer까지*/
+        * /* 전체선택자는 * : 모든 태그에 적용 : 전체 페이지 디자인 초기화 용도*/ {
+            margin: 0; /* 바깥 여백*/
+            padding: 0; /* 안쪽 여백*/
+            /*페이지 내 기본 폰트 설정*/
+        }
+        header,footer {
+            width : 600px;
+            background-color: yellow;
+            border: 1px solid gray;
+            text-align: center;
+            margin : 0 auto;
+            text-decoration : underline;
+        }
+        #wrap {
+            width: 600px;
+            background-color: deepskyblue;
+            border: 1px solid gray;
+            margin: 0 auto;
+            overflow: hidden;
+            text-align: center;
+        }
+            #wrap #content {
+                width: 344px; /*content 영역 = 가로(350px) + 테두리(2px)*/
+                border: 1px solid gray;
+                float: left;
+            }
+            #wrap #banner { /*content 영역 = 가로(250px) + 테두리(2px)*/
+                width: 244px;
+                float: left;
+            }
+            #wrap h2 {
+                text-align: center;
+            }
+        .menu01 {
+         font-size: 1.5em;
+        }
+        .menu02 .menu04 {
+            font-style :italic;
+        }
+        footer{
+            clear : both;
+        }
+    </style>
+
+</head>
+<body>
+    <header>
+        <br />
+        <h1> HEADER</h1>
+        <br />
+        <br />
+    </header>
+    <div id="wrap">
+        <div id="content">
+            <h2>  contents</h2>
+            <ul>
+                <li class="menu01">menu01</li>
+                <li class="menu02">menu02</li>
+                <li class="menu03">menu03</li>
+                <li class="menu04">menu04</li>
+                <li class="menu05">menu05</li>
+            </ul>
+        </div>
+        <div id="banner">
+            <h2>BANNER</h2>
+            <br/>
+            <a href="http://www.daum.net" target="_blank"> 
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Daum_communication_logo.svg/150px-Daum_communication_logo.svg.png"; 
+                 alt="다음 로고 사진" /></a>
+        </div>     
+    </div>
+    <footer>
+        <br />
+        <br />
+        <h1>FOOTER</h1>
+        <br />
+        <br />
+    </footer>
+</body>
+</html>

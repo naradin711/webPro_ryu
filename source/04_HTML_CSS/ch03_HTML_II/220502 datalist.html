@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>data list</title>
+</head>
+<body>
+    전송 되지 않는 파라미터 <input type="text" name="noMsg" />
+                  <form>
+                      <p>
+                          <!-- placeholder 해당 입력창에 반투명한 상태로 나타남-->
+                          전화 <input type="text" placeholder="000-0000-0000"
+                                    name="tel" required="required" />
+                      </p>
+                      <p>
+                          카드 <input type="text" placeholder="0000-0000-0000-0000"
+                                    name="card" required="required" />
+                      </p>
+                      <p>
+                          업무 <!-- select로 콤보박스 만들고 datalist 로 선택 범위 책정 이후 option으로 선택항목 생성-->
+                          <input type="text" name="job" list="joblist" />
+                      </p>
+                         <datalist id="joblist">
+                          <option value="분석">분석</option>
+                          <option value="설계">설계</option>
+                          <option value="구현">구현</option>
+                          <option value="테스트">테스트</option>
+                          <option value="유지보수">유지보수</option>
+                        </datalist>
+                      <p>
+                          업무 <!-- select로 콤보박스 만들고 option으로 선택항목 생성-->
+                          <select name="job2">
+                              <option value="분석">분석</option>
+                              <option value="설계">설계</option>
+                              <option value="구현">구현</option>
+                              <option value="테스트">테스트</option>
+                              <option value="유지보수">유지보수</option>
+                          </select>
+                      </p>
+                      <p>
+                          <input type="hidden" name="no" value="90" />
+                          <input type="submit" value="전송합니다" />
+                      </p>
+                  </form>
+
+</body>
+</html>

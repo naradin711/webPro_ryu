@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        b {color:red;}
+    </style>
+</head>
+<body>
+    <form action="" method="get">
+        <fieldset width = 50% >
+            <legend> 회원정보</legend> <!-- field 셋에서의 테두리 -->
+            <ul>
+                <li>
+                    <label for="name"> 이 름 <b>*</b> </label><input type="text" name="name" id="name" />
+                </li>
+                <li>
+                    <label for="id"> 아이디 <b>*</b> </label>
+                    <input type="text" name="id" id="id" required="required" />
+                </li>
+                <li>
+                    <label for="pw"> 비밀번호 <b>*</b> </label>
+                    <input type="password" name="pw" id="pw" required="required" />
+                </li>
+                <li>
+                    <label for="tel"> 전화번호 <b>*</b> </label>
+                    <input type="tel" name="tel" id="tel" required="required" />
+                </li>
+                <li>
+                    사용기술
+                    <label for="java"> 자바</label>
+                    <input type="checkbox" name="tech" id="java" required="required" />
+                    <label for="dbms"> DBMS</label>
+                    <input type="checkbox" name="tech" id="dbms" required="required" />
+                    <label for="html"> HTML</label>
+                    <input type="checkbox" name="tech" id="html" required="required" />
+                    <label for="jsp"> JSP</label>
+                    <input type="checkbox" name="tech" id="jsp" required="required" />
+
+                </li>
+                <li>
+                    <label for="java"> 남자</label>
+                    <input type="radio" name="gender" id="male" required="required" />
+                    <label for="java"> 여자</label>
+                    <input type="radio" name="gender" id="female" required="required" />
+
+                </li>
+                <li>
+                    <center> <input type="submit" value="제출" /> </center>                
+                </li>
+            </ul>
+        </fieldset>
+
+
+    </form>
+</body>
+</html>
