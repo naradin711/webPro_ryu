@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>속성 선택자</title>
+    <style>
+        input{color: blue;}
+            /*속성선택자와 []는 반드시 붙여쓴다. 띄어쓰기 절대 안됨*/
+        input[type="password"]{
+            color : black;
+        }
+        input[type^='te'] {
+            color : orange; width : 300px;
+        }
+        input[name$='me'] /*input 태그중에 name 속성이 me로 끝나는 경우*/
+        {
+           background-color:yellow; border: 1px solid black; padding: 10px;
+        }
+        img[alt] { /*img 태그중에 alt가 붙은 경우*/
+                   width : 250px;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        이름 <input type="text" name="name" /><br />
+        아이디 <input type="text" name="id" /><br />
+        비밀번호 <input type="password" name="pw" /><br />
+        전화번호 <input type="tel" name="tel" /><br />
+        <img src="0503/sulhyun.jpg" />
+        <img src="0503/sulhyun.jpg"  alt="설현사진"/><br />
+        <input type="submit" />
+
+    </form>
+</body>
+</html>

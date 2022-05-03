@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>r객실안내최종</title>
+    <style>
+        #header, #section, #footer {
+            width: 350px;
+            margin: 0px auto;
+        }
+
+        #header {
+            text-align: center; /*가운데 정렬*/
+            color: orange; /*글씨 색깔 오렌지*/
+        }
+
+        #section {
+            border-top: 2px solid lightgrey;
+            border-bottom: 2px solid lightgrey;
+            padding: 10px 20px;
+        }
+
+            #section h4[title^="남자"] {
+                background: url('0503/man.png') no-repeat;
+                padding: 0 0 0 25px; /* 왼쪽 안 여백만 주고있음*/
+            }
+
+            #section h4[title^="여자"] {
+                background: url('0503/woman.png') no-repeat;
+                /*padding: 0 0 0 25px; /*왼쪽 안 여백만 주고있음*/
+                padding-left: 25px;
+            }
+
+            #section a {
+                text-decoration: none; /*텍스트에 어떤 효과도 주지 않기*/
+            }
+
+                #section a[href$='docx'], #section a[href$='doc'] {
+                    background: url('0503/word.png') right no-repeat; /*백그라운드 유알엘로 해당 이미지 링크 오른쪽 정렬 반복금지*/
+                    padding-right: 25px; /*오른쪽 안 여백만 주고있음*/
+                }
+
+                #section a[href$='xlsx'] {
+                    background: url('0503/excel.png') right no-repeat; /*백그라운드 유알엘로 해당 이미지 링크 오른쪽 정렬 반복금지*/
+                    padding-right: 25px; /*오른쪽 안 여백만 주고있음*/
+                }
+        #footer {
+            text-align: center; /*가운데 정렬*/
+            color : grey;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1> 객실안내 </h1>
+    </div>
+    <div id="section">
+        <h4 title="남자 도미토리"> 남자 도미토리 </h4>
+        <ul>
+
+            <li>
+                공동취사실 및 욕실 (화장실)
+            </li>
+            <li>
+                1인 20,000원(비수기), 25,000원 (성수기)
+            </li>
+
+        </ul>
+        <h4 title="여자 도미토리"> 여자 도미토리 </h4>
+        <ul>
+
+            <li>
+                취사 기구 완비 실내 욕실
+            </li>
+            <li>
+                1인 30,000원(비수기), 40,000원 (성수기)
+            </li>
+
+
+        </ul>
+        <p><a href="0503/intro.docx">유의사항 다운로드</a></p>
+        <p><a href="0503/intro.xlsx">객실자료 다운로드</a></p>
+    </div>
+    <div id="footer">
+        <p> 서울시 마포구 노고산로 430-10</p>
+    </div>
+</body>
+</html>

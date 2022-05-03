@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>제목</title>
+    <style>
+        table {
+            background-color : greenyellow; width:100%
+
+        }
+        tr {
+            background-color: lightyellow;
+        }
+        td, th {
+            padding: 10px 20px;
+        }
+        
+        /*연산자의 순서에 따라 반응 연산자의 반응이 달라짐. 반응하고자 하는 tr 연산자에 입력한 값을 td, th에 새로 지정하지 말것! 덮어쓰기 됨*/
+        tr:hover { /*줄에 마우스를 갖다대면 배경색과 폰트가 달라짐!*/
+            background-color: forestgreen; color : yellow;
+            
+        }
+        td:hover { /*해당 섹션에 마우스를 갖다 대면 밑줄이 그어짐*/
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>글번호</th>
+            <th>글제목</th>
+            <th>글쓴이</th>
+            <th>조회수</th>
+        </tr>
+        <tr>
+            <td>9 </td>
+            <td>테스트 제목 1 </td>
+            <td>꽃길동  </td>
+            <td>1231 </td>
+        </tr>
+        <tr>
+            <td>9 </td>
+            <td>테스트 제목 2 </td>
+            <td>정길동 </td>
+            <td>4535  </td>
+        </tr>
+        <tr>
+            <td>7 </td>
+            <td>테스트 제목 3 </td>
+            <td> 대길동 </td>
+            <td>3423  </td>
+        </tr>
+        <tr>
+            <td>6 </td>
+            <td>테스트 제목 4 </td>
+            <td>소길동 </td>
+            <td>4353  </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>문자선택자</title>
+    <style>
+        div#wrap{
+            width : 800px; margin : 0 auto;
+        }
+        div#header{
+            text-align : center;
+            border-bottom : 2px solid lightgray;
+        }
+        #content p:nth-child(2)::first-line, /* 첫줄의 형식 바꾸기*/
+        #content p:nth-child(3)::first-line{
+            color : blue;
+            font-weight : bold;
+            font-size : 1.3em;
+        }
+        #content p:nth-child(2)::first-letter, /* 첫 글자의 형식 바꾸기*/
+        #content p:nth-child(3)::first-letter {
+            font-size: 2.0em;
+        }
+        #content p:nth-child(2)::selection { /* 드래그 했을때 배경색 글꼴색 바꾸기*/
+            background-color :aquamarine;
+            color : yellow;
+        }
+        div#footer {
+
+        }
+        #footer ul {
+            overflow: hidden;
+            width: 650px;
+            margin: 0 auto;
+        }
+        #footer ul li{
+            float :left;
+            list-style : none;
+            padding : 20px;
+        }
+        #footer ul li:first-child{ padding-top : 30px; }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header">
+            <h1>T1 Esports</h1>
+        </div>
+        <div id="content">
+            <p>영락과 꽃이 풍부하게 할 것이다. 살았으며, 품으며, 있음으로써 수 눈이 청춘이 크고 이상의 피다.</p>
+            <p>이 인생을 부패를 생의 황금시대를 하는 앞이 우리 교향악이다. 스며들어 가슴에 방황하여도, 어디 가치를 같은 보라. 낙원을 영락과 뭇 피고 밝은 살 힘있다. 같으며, 역사를 하였으며, 반짝이는 품었기 있는 피어나기 석가는 쓸쓸하랴? 두기 방황하였으며, 그들의 품에 평화스러운 이것이다.</p>
+            <p>청춘의 얼음 없는 우리는 용기가 노래하며 방황하여도, 있음으로써 쓸쓸하랴? 사라지지 피가 새가 용기가 동산에는 예가 끓는 싹이 그리하였는가? 사람은 풀밭에 눈에 아름다우냐? 그림자는 찾아다녀도, 이상 있는 천고에 실현에 따뜻한 방황하여도, 동산에는 보라. 이상, 같은 청춘을 아름답고 아름다우냐? 인도하겠다는 이것을 역사를 눈에 긴지라 인생의 구할 보라. 품었기 천자만홍이 인간의 것이다.</p>
+        </div>
+        <div id="footer">
+            <ul>
+                <li><img src="0503/logo.png" alt="회사로고" /></li>
+                <li><img src="0503/add01.png" width="350" alt="회사주소" /></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

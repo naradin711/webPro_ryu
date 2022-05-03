@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>후손선택자, 자손선택자</title>
+    <style>
+        #header, #wrap, #footer{
+            width : 600px; 
+            margin : 0 auto; 
+            border: 1px solid gray;
+        }
+        #header {overflow: hidden;}
+            #header .logo{ /*후손선택자 (아랫단)*/
+                float:left;
+                padding : 4px 30px 0px 100px;
+            }
+            #header > .name { /*자손선택자(바로아랫단)*/
+                float: left;
+                padding: 10px 30px 0px 50px;
+            }
+        div p{ /*후손선택자(div 밑에 있는 p)*/
+           font-size : 20px;/*default 는 16px*/
+        }
+        div > p { /*자손선택자(바로아랫단)*/
+            color: red;
+            font-size: 15px;
+        }
+        footer{
+            text-align : center;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <div class="logo">
+            <h1>LOGO</h1>
+        </div>
+        <div class="name">
+            <h2>서브라임엔터테인먼트</h2>
+        </div>
+
+    </div>
+    <div id="wrap">
+        <p>
+            시기다른 래퍼들을 바라보던 래퍼들의 배포 그건 마치
+        </p>
+        <ul>
+            <li><p> 래퍼들 굿판 싹 다 망치는게 내 악취미</p></li>
+            <li><p> 래퍼들 굿판 싹 다 망치는게 내 악취미</p></li>
+            <li><p> 래퍼들 굿판 싹 다 망치는게 내 악취미</p></li>
+        </ul>
+    </div>
+    <div id="footer">
+        <p>서울시 가남구 감사동 좋은빌딩 502호</p>
+    </div>
+
+</body>
+</html>
