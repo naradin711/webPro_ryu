@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>visibility</title>
+    <style>
+        #display > div , #visibility > div{
+            width : 200px ;
+            height : 200px ;
+            border : 2px solid orange;
+        }
+        #visibility div:nth-child(2) {
+            visibility : hidden; /*안보이게 공간이 확보*/
+        }
+        #display div:nth-child(2) {
+            display: none; /*안보이게 공간마저 삭제*/
+        }
+    </style>
+</head>
+<body>
+    <div id="visibility">
+        <div>div1</div><div>div2 안보이게할파트</div><div>div3</div>
+    </div>
+    <div id="display">
+        <div>div1</div><div>div2 안보이게할파트</div><div>div3</div>
+    </div>
+</body>
+</html>

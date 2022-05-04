@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>display 속성</title>
+    <style>
+        div{
+            width : 200px;
+            height : 200px;
+            border : 1px solid black;
+            text-align : center;
+            font-weight : bold;
+        }
+            div:nth-child(1){
+                background-color :red; display:block;
+            }
+            div:nth-child(2) {
+                background-color: forestgreen;
+            }
+            div:nth-child(3) {
+                background-color: blue;
+                display: inline;
+                margin: 10px 10px 10px 10px; /*인라인 블록은 위 아래 마진이 존재하지 않는다*/
+            }
+            div:nth-child(4) {
+                background-color: yellow;
+                display: inline; /*인라인으로 변했기 때문에 3번째 div와 붙어서 출력된다*/
+            }
+            div:nth-child(5) {
+                background-color: lightskyblue; 
+                display : none; /*아예 공간까지 사라짐*/ 
+            }
+            div:nth-child(6) {
+                background-color: palevioletred;
+                display : inline-block; /*인라인블록 위, 아래 여백 지정가능*/
+            }
+            div:nth-child(7) {
+                background-color: lightskyblue; 
+                display : inline-block;
+            }
+            div:nth-child(8) {
+                background-color: mediumpurple;
+            }
+    </style>
+</head>
+<body>
+    <div> content1 </div>
+    <div> content2 </div>
+    <div> content3 </div>
+    <div> content4 </div>
+    <div> content5 </div>
+    <div>content6</div>
+    <div>content7</div>
+    <div> content8 </div>
+</body>
+</html>

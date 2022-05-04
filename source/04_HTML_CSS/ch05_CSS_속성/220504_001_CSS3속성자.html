@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>CSS3 단위들</title>
+    <style>
+        #wrap {
+            width : 600px;
+            margin : 10px auto;
+            padding : 7px;
+            border : 2px solid gray;
+        }
+            #wrap p:nth-child(2n){
+                background-color : lightyellow;
+            }
+            #wrap p:nth-child(1) {
+                font-size : 0.8em; /*원래 사이즈(16픽셀)의 0.8배 http://pxtoem.com*/
+            }
+            #wrap p:nth-child(2) {
+                font-size: 16px; /*원래 사이즈(16픽셀)의 0.8배 http://pxtoem.com*/
+            }
+            #wrap p:nth-child(3) {
+                font-size: 100%;
+            }
+            #wrap p:nth-child(4) {
+                font-size: 150%;
+            }
+            #wrap p:nth-child(5) {
+                font-size: 2.0em;
+            }
+    #wrap > p > span{
+        color : deepskyblue;
+        display : block; /*디스플레이 속성을 블록형으로 바꿈 / block형 태그로 전환*/
+        font-size : 0.7em; /*span은 p의 영향을 받아 0.7em p의 폰트사이즈를 따라가서 0.7배 사이즈 출력완료*/
+    }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <p>
+            1970년대 아시아최고의 스트라이커로 각광받은 축구선수 차범근은 1953년 경기도 화성 출생, 화산초등학교, 경신중, 경신고, 고려대를 졸업하였다.
+            <span>입력 2022년 5월 4일</span>
+        </p>
+        <p>
+            1970년대 아시아최고의 스트라이커로 각광받은 축구선수 차범근은 1953년 경기도 화성 출생, 화산초등학교, 경신중, 경신고, 고려대를 졸업하였다.
+            <span>입력 2022년 5월 4일</span>
+        </p>
+        <p>
+            1970년대 아시아최고의 스트라이커로 각광받은 축구선수 차범근은 1953년 경기도 화성 출생, 화산초등학교, 경신중, 경신고, 고려대를 졸업하였다.
+            <span>입력 2022년 5월 4일</span>
+        </p>
+        <p>
+            1970년대 아시아최고의 스트라이커로 각광받은 축구선수 차범근은 1953년 경기도 화성 출생, 화산초등학교, 경신중, 경신고, 고려대를 졸업하였다.
+            <span>입력 2022년 5월 4일</span>
+        </p>
+        <p>
+            1970년대 아시아최고의 스트라이커로 각광받은 축구선수 차범근은 1953년 경기도 화성 출생, 화산초등학교, 경신중, 경신고, 고려대를 졸업하였다.
+            <span>입력 2022년 5월 4일</span>
+        </p>
+    </div>
+</body>
+</html>

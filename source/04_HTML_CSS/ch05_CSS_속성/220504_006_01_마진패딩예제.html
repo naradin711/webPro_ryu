@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>마진패딩공지사항</title>
+    <style>
+        div#wrap{
+            width : 815px;
+            height : 270px;
+            margin : 0 auto;
+            background-color : lightgray;
+        }
+        .left , .center , .right{
+            width : 250px;
+            height : 250px;
+            border-radius : 25px;
+            display : inline-block;
+            background-color : white;
+            margin : 10px;
+        }
+        #wrap .left > p > a, #wrap .center > p > a, #wrap .right > p > a {
+            color: blue;
+            text-decoration: none;
+            font-size : 1.5em;
+            padding : 5px;
+        }
+        #wrap .left ul li, #wrap .center ul li, #wrap .right ul li {
+            list-style : none;
+        }
+            #wrap .left ul li a, #wrap .center ul li a, #wrap .right ul li a {
+                color: blue;
+                text-decoration: none;
+            }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div class="left">
+            <p>
+                <a href="#">공지사항</a>
+            </p>
+            
+            <ul>
+                <br />
+                <li><a href="#">게시물_01</a></li>
+                <li><a href="#">게시물_02</a></li>
+                <li><a href="#">게시물_03</a></li>
+                <li><a href="#">게시물_04</a></li>
+                <li><a href="#">게시물_05</a></li>
+            </ul>
+        </div>
+
+        <div class="center">
+            <p>
+                <a href="#">공지사항</a>
+            </p>
+
+            <ul>
+                <br />
+                <li><a href="#">게시물_01</a></li>
+                <li><a href="#">게시물_02</a></li>
+                <li><a href="#">게시물_03</a></li>
+                <li><a href="#">게시물_04</a></li>
+                <li><a href="#">게시물_05</a></li>
+            </ul>
+        </div>
+
+        <div class="right">
+            <p>
+                <a href="#">공지사항</a>
+            </p>
+
+            <ul>
+                <br />
+                <li><a href="#">게시물_01</a></li>
+                <li><a href="#">게시물_02</a></li>
+                <li><a href="#">게시물_03</a></li>
+                <li><a href="#">게시물_04</a></li>
+                <li><a href="#">게시물_05</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

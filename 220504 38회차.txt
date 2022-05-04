@@ -1,0 +1,290 @@
+ 220504
+
+#content ul li a::after{                /*링크 선택자 주소 출력*/
+            content: ' - ' attr(href);
+        }
+
+#content ul li .nate { /*클래스 명이 nate 요소가 있는 링크*/
+
+        }
+
+#content ul li:not(.nate) a { /*클래스 명이 nate 요소가 있는 디자인 제외한 나머지 요소 링크에만 걸 때*/
+            background-color : aquamarine;
+        }
+
+
+글꼴이 달라지는 순서
+
+	#wrap p:nth-child(2n){
+                background-color : lightyellow;
+            }
+            	#wrap p:nth-child(1) {
+                font-size : 0.8em; /*원래 사이즈(16픽셀)의 0.8배 http://pxtoem.com*/
+            }
+            	#wrap p:nth-child(2) {
+                font-size: 16px; /*원래 사이즈(16픽셀)의 0.8배 http://pxtoem.com*/
+            }
+            	#wrap p:nth-child(3) {
+                font-size: 100%;
+            }
+            	#wrap p:nth-child(4) {
+                font-size: 150%;
+            }
+            	#wrap p:nth-child(5) {
+                font-size: 2.0em;
+            }
+
+    	#wrap > p > span{
+       		 color : deepskyblue;
+        		display : block; /*디스플레이 속성을 블록형으로 바꿈 / block형 태그로 전환*/
+       		font-size : 0.7em; 
+		/*span은 p의 영향을 받아 0.7em p의 폰트사이즈를 따라가서 0.7배 사이즈 출력*/
+    	}
+
+CSS url의 쓰임새
+
+<style> /*url() 용도 : 백그라운드 이미지 가져올 때, font 가져올 때*/
+        
+	@font-face { /*로컬폰트 설정*/
+            font-family: 'Nanum';
+            src: url('NanumWaIrDeu.ttf');
+        }
+        * {
+            font-family: 'Nanum', 'Trebuchet MS', sans-serif
+        }
+        #wrap {
+            width : 800px; height : 500px; margin : 10px auto; border : 2px solid gray;
+        }
+            #wrap #content {
+                width: 80%;
+                height: 100%;
+                border: 2px solid red;
+                margin: 0 auto;
+                background: url('0504/sul.jpg') center center no-repeat ; - 중앙정렬 반복없음
+                background-size: 100%; - 가로길이 백퍼센트
+                font-size : 3.5em;
+                color : yellow;
+                text-align : center;
+            }
+    </style>
+
+Display 속성
+
+<style>
+        div{
+            width : 200px;
+            height : 200px;
+            border : 1px solid black;
+            text-align : center;
+            font-weight : bold;
+        }
+            div:nth-child(1){
+                background-color :red; display:block;
+            }
+            div:nth-child(2) {
+                background-color: forestgreen;
+            }
+            div:nth-child(3) {
+                background-color: blue;
+                display: inline;
+                margin: 10px 10px 10px 10px; /*인라인 블록은 위 아래 마진이 존재하지 않는다*/
+            }
+            div:nth-child(4) {
+                background-color: yellow;
+                display: inline; /*인라인으로 변했기 때문에 3번째 div와 붙어서 출력된다*/
+            }
+            div:nth-child(5) {
+                background-color: lightskyblue; 
+                display : none; /*아예 공간까지 사라짐*/ 
+            }
+            div:nth-child(6) {
+                background-color: palevioletred;
+                display : inline-block; /*인라인블록 위, 아래 여백 지정가능*/
+            }
+            div:nth-child(7) {
+                background-color: lightskyblue; 
+                display : inline-block;
+            }
+            div:nth-child(8) {
+                background-color: mediumpurple;
+            }
+    </style>
+
+ Opacity 투명도 차이
+
+<style>
+        * {
+            margin : 0;
+            padding : 0;
+        }
+        ul {
+            
+        }
+        ul li{
+            width : 200px;
+            height : 100px;
+            background-color : lightskyblue;
+            margin : 10px;
+            list-style : none;
+            display : inline-block; /*자동으로 우로 정렬*/
+
+        }
+            ul li:nth-child(1){
+                opacity : 1; /*디폴트 완전불투명*/
+            }
+            ul li:nth-child(2) {
+                opacity: 0.5; /*opacity 속성값은 1 완전불투명 0 완전투명*/
+            }
+            ul li:nth-child(3) {
+                opacity: 0.2;
+            }
+    </style>
+
+line-height를 통해서 글자 가운데 정렬
+
+<head>
+    <meta charset="utf-8" />
+    <title>글자관련</title>
+    <style>
+        div {
+            width: 300px;
+            height: 300px;
+            background-color : red;
+            color :aliceblue;
+            font-size :3.4em;
+            border-radius : 150px;
+            text-align : center;
+            line-height : 300px; /*글자열이 입력되는 라인의 높이를 맞춰서 해당 글자가 가운데에 오게끔 한다*/
+        }
+
+    </style>
+</head>
+<body>
+    <div> BUTTON</div>
+</body>
+</html>
+
+
+Postion 속성
+
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        div { /*가로세로100 투명도70퍼*/
+            width: 100px;
+            height: 100px;
+            opacity : 0.7;
+        }
+        #div1 {
+            position:absolute; /*절대좌표*/
+            left : 0px; top: 0px;
+            background-color:red;
+        }
+        #div2 {
+            position: absolute; /*절대좌표*/
+            left: 50px;
+            top: 50px;
+            background-color: forestgreen;
+        }
+        #div3 {
+            position: absolute; /*절대좌표*/
+            left: 100px;
+            top: 100px;
+            background-color: blue;
+        }
+        #div4 {
+            position: absolute; /*절대좌표*/
+            left: 200px;
+            top: 200px;
+            background-color: yellow;
+            width: 200px;
+            height: 200px;
+            opacity : 1;
+        }
+        #div5 {
+            position: absolute; /*절대좌표 이때 부모 좌표인 div4 기준인 200 200 이 기준점이 된다*/
+            left: 50px;
+            top: 50px;
+            background-color: royalblue;
+        }
+    </style>
+
+웹폰트와 로컬폰트 이용하기
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
+    <!-- 위 링크는 스타일 바깥에 넣어서 웹 폰트를 활성화 시킨다-->
+    <style>
+        @font-face {
+            font-family: 'Na';
+            src: url('WaterBrush.ttf');
+        }
+
+        p {
+            font-size: 40px;
+        }
+
+            p:nth-child(1) {
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+            }
+
+            p:nth-child(2) {
+                font-family: 'Na'
+            }
+
+            p:nth-child(3) {
+                font-family: 'Pacifico', cursive;
+            }
+
+            p:nth-child(4) {
+                font-family: 'Gugi', cursive;
+            }
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>문자선택자</title>
+    <style>
+        #wrap {width : 1000px; margin : 0 auto;}
+        #header { /*h1 태그처럼*/
+            font-size: 25px;
+            font-weight: bold;
+            padding: 20px 0px; /*상 우 하 좌 순서 여기는 20 0 20 0 값으로 상하에만 여백*/
+            border-bottom: 2px solid gray;
+            text-align: center;
+            text-decoration: underline;
+        }
+        #content ul li a{
+            text-decoration : none;
+            color : blue;
+        }
+        #content ul li a::after{ /*링크 선택자 주소 출력*/
+            content: ' - ' attr(href);
+        }
+        #content ul li .nate { /*클래스 명이 nate 요소가 있는 링크*/
+
+        }
+        #content ul li:not(.nate) a { /*클래스 명이 nate 요소가 있는 디자인 제외한 나머지 요소 링크에만 걸 때*/
+            background-color : aquamarine;
+        }
+        #footer ul {
+            overflow: hidden;
+            width: 800px;
+            margin: 0 auto;
+        }
+
+            #footer ul li {
+                float: left;
+                list-style: none;
+                padding: 20px;
+            }
+
+                #footer ul li:first-child {
+                    padding-top: 30px;
+                }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header">
+            Weekly connect Website
+        </div>
+        <div id="content">
+            <ul>
+                <li class="google"><a href="https://google.com">구글 </a> </li>
+                <li class="naver"><a href="https://naver.com">네이버 </a> </li>
+                <li class="daum"><a href="https://daum.net"> 다음 </a> </li>
+                <li class="nate"><a href="https://nate.com"> 네이트 </a> </li>
+            </ul>
+        </div>
+        <div id="footer">
+            <ul>
+                <li><img src="0503/logo.png" alt="회사로고" /></li>
+                <li><img src="0503/add01.png" alt="회사주소" width="450"/></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

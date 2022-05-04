@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        #header, #footer{
+            width : 1000px;
+            height : 100px;
+            background-color : gray;
+            padding : 5px;
+            margin : 0 auto;
+            line-height : 100px;
+            text-align : center;
+            font-size : 1.5em;
+        }
+        #content {
+            width: 1000px;
+            height: 300px;
+            margin: 0 auto;
+            position : relative; /* 부모생산자에서 좌표값이 기준을 제공*/
+        }
+        #content #content1{ /* 왼쪽 10 10*/
+            width : 560px;
+            height: 260px;
+            background-color : palevioletred;
+            padding : 15px;
+            position : absolute; /* 부모의 좌표값이 기준이 되고 부모 디비전의 0,0에서 절대값으로 움직인다*/
+            left : 10px ; top : 10px;
+            z-index : 99; /*z값이 큰것이 위로 간다*/
+        }
+        #content #content2 { /* 오른쪽 10 10*/
+            width : 500px;
+            height: 250px;
+            background-color : yellow;
+            padding : 15px;
+            position : absolute;  /* 부모의 좌표값이 기준이 되고 부모 디비전의 0,0에서 절대값으로 움직인다*/
+            right : 10px ; top : 10px;
+            z-index : 90;  /*z값이 큰것이 위로 간다*/
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h3>HEADER</h3>
+    </div>
+    <div id="content">
+        <div id="content1">
+            content1
+        </div>
+        <div id="content2">
+            content2
+        </div>
+    </div>
+    <div id="footer">
+        <h3>FOOTER</h3>
+    </div>
+</body>
+</html>

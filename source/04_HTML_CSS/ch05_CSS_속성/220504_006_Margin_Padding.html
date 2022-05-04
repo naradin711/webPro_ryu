@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>마진 패딩</title>
+    <style>
+        *{
+            margin : 0 ; padding : 0;
+        }
+        div {
+            width: 400px;
+            height: 400px;
+            font-weight : bold;
+            font-size : 20px;
+        }
+        #content0 {
+            border : 5px solid skyblue;
+        }
+        #content1{
+            background-color : yellow;
+        }
+        #content2 {
+            background-color: blue;
+            margin : 20px;
+            color :aliceblue;
+        }
+        #content3 {
+            background-color: aqua;
+            padding : 20px;
+        }
+        #content4 {
+            background-color: gold;
+            margin: 20px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="content0">410*410(border only)</div>
+    <div id="content1">400*400(default)</div>
+    <div id="content2">440*440(margin only)</div>
+    <div id="content3">440*440(padding only)</div>
+    <div id="content4">480*480(margin and padding)</div>
+</body>
+</html>
