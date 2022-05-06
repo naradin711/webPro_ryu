@@ -1,0 +1,94 @@
+﻿/**** 페이지 초기화****/
+*{
+    margin : 0;
+    padding : 0;
+}
+li {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+    width: 90px;
+    display: block;
+    color : black;
+}
+/***** 헤더 *****/
+#header {
+    width : 1600px;
+    height : 200px;
+    margin : 0px auto;
+}
+
+    /***** 헤더 메뉴*****/
+
+#header #header_nav{  
+    background-color : #2d1152;
+    height : 40px;
+    position : relative;
+}
+#header #header_nav .gnb ul{
+    line-height : 40px;
+     overflow: hidden;
+}
+#header #header_nav .gnb > ul > li{
+     float : left;
+}
+#header #header_nav .gnb > ul > li > a{
+    color : white;
+}
+
+    /***** 헤더 서바이벌*****/
+
+#header #header_nav .survivalFootball{
+    height : 40px;
+    line-height : 20px;
+    position : absolute;
+    top : 5px; right : 50px;
+}
+
+#header #header_nav .survivalFootball > p > a{
+    width : 300px;
+    color : white;
+}
+    /***** 헤더 인포메이션*****/
+#header #header_info{
+    width : 1600px;
+    height : 155px;
+    line-height : 150px;
+    overflow: hidden;
+}
+ #header #header_info .logo {
+     margin-left : 300px;
+     float : left;
+ }
+ #header #header_info .search {
+     line-height : 150px;
+      float : left;
+ }
+ #header #header_info .service{
+     line-height : 150px;
+      float : left;
+ }
+ #header #header_info .service > ul{
+ margin-left :100px;
+ }
+#header #header_info .service > ul > li{
+     float : left;
+ }
+#header #header_info .service > ul > li > a{
+     width: 150px;
+     font-size : 1.5em;
+     font-weight: bold;
+ }
+/***** 콘텐트 *****/
+#header {
+    width: 1600px;
+    height: 920px;
+    margin: 0px auto;
+}
+/***** 푸터 *****/
+#footer {
+    width: 1600px;
+    height: 100px;
+    margin: 0px auto;
+}

@@ -1,0 +1,150 @@
+﻿/**페이지 초기화**/
+*{
+   margin : 0 ;
+   padding : 0;
+}
+div {
+    border: 1px solid gray;
+    text-align: center;
+}
+li {
+    list-style : none;
+}
+a {
+    text-decoration: none;
+    color: cadetblue;
+    width: 90px;
+    display: block;
+    text-align: center;
+}
+/* * * 헤더 부분 설정하기 * * */
+#header {
+    border: none;
+    width: 1060px;
+    height: 465px;
+    margin: 0 auto;
+}
+
+#header .gnb, #header .lnb{
+    height : 30px;
+    overflow : hidden;
+}
+#header .gnb > ul > li , #header .lnb > ul > li, #header .logo .hit_menu > ul > li{
+    float : left;
+}
+/* * * gnb 부분 설정하기 * * */
+#header .gnb{
+    background-color :dimgray;
+   
+}
+#header .gnb ul li a{
+     color : ghostwhite;
+}
+#header .gnb ul {
+    width : 900px;
+    margin : 0 auto;
+}
+
+    /* * * lnb 부분 설정하기 * * */
+
+#header .lnb ul {
+    width : 750px;
+    margin : 0 auto;
+}
+#header .lnb ul li a{
+     color : black;
+     font-weight : bold;
+}
+    /* * * logo 부분 설정하기 * * */
+#header > .logo{
+     height : 400px;
+     position : relative;
+}
+#header .logo p {
+    line-height : 400px;
+}
+#header .logo .hit_menu{
+    width : 370px;
+    height : 40px;
+    line-height : 40px;
+    position : absolute;
+    bottom : 5px; right : 20px;
+    border : none;
+}
+ .hit_menu > ul > li > a{
+     color : black;
+     font-weight : bold;
+ }
+
+/* * *  content 정리하기 * * */
+#content {
+    width : 1004px;
+    height : 1230px;
+    margin : 0 auto;
+    
+}
+    /* * * section 01* * */
+#content .section01{
+    width : 1004px;
+    height : 402px;
+    border : none;
+    overflow : hidden;
+}
+#content .section01 .slide_banner {
+     width : 700px;
+    height : 400px;
+    float : left;
+}
+#content .section01 .side_banner {
+    width : 300px;
+    height: 400px;
+    float : left;
+    
+}
+    /* * * section02 * * */
+#content .section02{
+    border : none;
+    width : 1004px;
+    overflow : hidden;
+}
+#content .section02 .hit_product, #content .section02 .md_product{
+    width : 240px;
+    height :400px;
+    float :left;
+    margin : 5px 3.5px 5px 3.5px;
+}
+#content p{
+    line-height: 398px;
+    text-align : center;
+    color : dimgrey;
+}
+
+/* * * footer 정리* * */
+#footer {
+    border : none;
+    width: 1000px;
+    height: 180px;
+    margin: 0 auto;
+    overflow : hidden;
+}
+#footer .office_logo, #footer .office_address, #footer .shopping_info{
+    padding : 0px;
+    width: 331px;
+    height: 150px;
+    float : left;
+    margin-bottom: 3px;
+    text-align : left;
+}
+#footer > .copyright{
+    width: 998px;
+    background-color : black;
+    text-align : center;
+    clear : both;
+}
+#footer > .copyright p{
+    color : white;
+}
+/* * * * * */    
+/* * * * * */    
+/* * * * * */
+/* * * * * */
