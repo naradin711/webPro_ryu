@@ -4,8 +4,17 @@
 <head>
     <meta charset="utf-8" />
     <title>YAHOO!</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+
+    <!-- 웹폰트는 css보다 반드시 위에 해야 함!-->
+
     <link href="css/220509_Yahoo.css" rel="stylesheet" type="text/css">
     <script src="css/220509_Yahoo.css"></script>
+
+
 </head>
 <body>
     <div id="header">
@@ -38,14 +47,10 @@
                 </p>
             </div>
             <div class="search">
-                <table>
-                    <tr>
-                        <td>
-                            <input type="text" name="id" />
-                            <input type="submit" name="button" value="search web"/>
-                        </td>
-                    </tr>
-                </table>
+                <form action="https:www.naver.com">
+                       <input type="text" name="id" id="sctext" />
+                       <input type="submit" name="button" id="scbtn" value="search web" />
+                </form>
             </div>
             <div class="service">
                 <ul>

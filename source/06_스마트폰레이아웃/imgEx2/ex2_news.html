@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=yes,
+          maximum-scale=3.0, minimum-scale=0.3" />
+    <title>ex02</title>
+    <style>
+        /***페이지 초기화***/
+        *{
+            padding: 0;
+            margin: 0;
+            font-family :'Gill Sans', 'Gill Sans MT';
+        }
+        li{
+            list-style : none;
+        }
+        a{
+            text-decoration : none;
+            color : black;
+        }
+        /***header***/
+        #header {
+            background-color: #ea8f00;
+            height: 100px;
+        }
+        /***header #logo_wrap***/
+        #header #logo_wrap {
+            height : 50px; line-height : 50px; text-align : center;
+            overflow : hidden;
+            position : relative;
+        }
+            #header #logo_wrap .menu {
+                position: absolute;
+                bottom : 5px; left : 5px;
+            }
+            #header #logo_wrap .myinfo {
+                position: absolute;
+                bottom : 5px; right : 5px;
+            }
+            #header #logo_wrap a{
+                color : azure;
+                font-size : 1.1em;
+                font-weight : bold;
+            }
+        /***header #search***/
+    </style>
+</head>
+<body>
+    
+    <div id="header">
+        <div id="logo_wrap">
+            <img src="menu.png" class="menu" alt="메뉴 아이콘"/>
+            <a href="ex2_news.html" class="logo"> <h3>mobile logo</h3></a>
+            <img src="myinfo.png" class="myinfo" alt="내정보 아이콘" />
+        </div>
+        <div id="search">
+            <form action="../ex1_mobile.html">
+                <input type="text" name="query_word" id="searchtxt"/>
+                <input type="submit" name="schbtn" id="searchbtn" />
+                <label for="searchbtn"><img src="search.png" /></label>
+            </form>
+        </div>
+    </div>
+    <div id="content"></div>
+    <div id="footer"></div>
+</body>
+</html>

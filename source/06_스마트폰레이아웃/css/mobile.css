@@ -1,0 +1,125 @@
+﻿/******기본 리셋*****/
+/******WIDTH는 무조건 퍼센트로*****/
+/*BOXINGSIZE = BORDERBOX로 안쪽으로 들여서 공간확보*/
+* {
+    margin : 0;
+    padding : 0;
+}
+li {
+    list-style : none;
+    text-align : center;
+}
+a{
+    text-decoration : none;
+    display : block;
+    color : black;
+}
+/*************헤더파트*************/
+#header {
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    background: url('../imgEx1/bg_header.png') center;
+    position: relative;
+}
+#header .left {
+    position : absolute;
+    left : 5px;
+    top : 7px;
+}
+#header .right{
+     position : absolute;
+     right : 5px;
+     top : 7px;
+}
+/**********checkbox나 메뉴를 클릭할경우 gnb를 토글시키는 기능**********/
+#toggle{
+    display : none;
+}
+#toggle:checked ~ #gnb {
+    display: block;
+}
+/*******gnb 디자인******/
+#gnb {
+    background-color : lightskyblue;
+    border-radius : 5px;
+    display : none;
+}
+#gnb > ul {
+    overflow : hidden;
+}
+#gnb > ul > li {
+    float : left;
+    width : 10%;
+    margin : 1.1%;
+    box-sizing: border-box;
+    text-align : center;
+}
+/*******lnb 디자인******/
+#lnb ul{
+    overflow : hidden;
+}
+#lnb ul li{
+     background-color : #137163;
+    float : left;
+    height : 60px;
+    line-height : 60px;
+    width : 20%;
+    border : 1px solid white;
+    box-sizing : border-box; /*border를 width 안으로 넣음*/
+}
+#lnb ul li:first-child {
+    border-left : none;
+}
+#lnb ul li:last-child {
+    border-right : none;
+}
+#lnb ul li a{
+    color : white;
+    text-align : center;
+}
+/********content**********/
+#content {
+    padding : 10px; color:#333333;
+}
+#content .content_header{
+    padding : 10px;
+    border-bottom : 1px solid gray;
+}
+#content .content_body {
+
+}
+#content .content_body p:first-child {
+    color : deepskyblue;
+    padding : 10px;
+    white-space : nowrap; overflow : hidden; text-overflow :ellipsis;
+}
+#content .content_body p:last-child{
+    background : url('../imgEx1/bg_image.png') -400px -200px;
+    color : deepskyblue;
+    padding : 10px;
+    font-weight : bold;
+}
+/****footer****/
+#footer .logo {
+    text-align: center;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+    #footer .logo img {
+        width: 150px;
+    }
+#footer .info {
+    height: 75px;
+    line-height: 75px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5em;
+    border-bottom: 1px solid gray;
+}
+#footer .address {
+    margin-top : 20px;
+    text-align: center;
+    font-size : 0.9em;
+}
+    
