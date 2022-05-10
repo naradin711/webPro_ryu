@@ -1,0 +1,33 @@
+﻿/*css/title.css*/
+/********************페이지 초기화**************************/
+* {
+    margin: 0px;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+#wrap {
+    width: 600px;
+    margin: 10px auto;
+    border: 1px solid lightgray;
+    padding: 10px;
+}
+
+    #wrap .title {
+        text-align: center;
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+    }
+
+    #wrap h1 {
+        border: 1px solid red;
+    }

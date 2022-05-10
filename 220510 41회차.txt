@@ -1,0 +1,46 @@
+ 220510
+
+ <link href="css/content-pc.css" rel="stylesheet" type="text/css" media="screen"/>
+ 화면에 출력되는 스타일
+
+<link href="css/content-prn.css" rel="stylesheet" type="text/css" media="print" />
+웹상에서 인쇄할때 출력되는 스타일
+
+@import url('css/title.css');
+링트 대신에 스타일 시트에 바로 넣기
+
+        @media screen {
+            #wrap #content {
+                background-color: darkgreen;
+                color: yellow;
+                padding: 30px 10px;
+                margin: 10px 0;
+            }
+                       }
+        @media print {
+            #wrap #content {
+                color: darkgreen;
+                padding: 10px;
+                margin: 10px 0;
+            }
+        }
+
+@media에 출력되고자 하는 기기/형식 선택자를 넣고
+해당 css 전문을 입력해준다
+
+/* 기종의 출력너비로 각각의 출력할 스타일을 기기별로 체크 */
+
+       /*** 스마트 ***/
+        @media screen and (max-width:1000px){ /*** 스마트 1000px 이하***/
+            h1 {
+                color : red;
+            }
+        }
+        /*** 태블릿 ***/
+        @media screen and (min-width:2400px) { /*** 태블릿 (2400)이상 ***/
+        
+        }
+        /*** 컴퓨터 ***/
+        @media screen and (min-width:1001px;) and ( max-width:2399px) { /*** 컴퓨터 (1001-2399)***/
+
+        }

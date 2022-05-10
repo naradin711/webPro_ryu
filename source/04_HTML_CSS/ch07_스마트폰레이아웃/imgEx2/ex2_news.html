@@ -1,0 +1,332 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=yes,
+          maximum-scale=3.0, minimum-scale=0.3" />
+    <title>ex02</title>
+    <style>
+        /***페이지 초기화***/
+        *{
+            padding: 0;
+            margin: 0;
+            font-family :'Gill Sans', 'Gill Sans MT';
+        }
+        li{
+            list-style : none;
+        }
+        a{
+            text-decoration : none;
+            color : black;
+        }
+
+        /***header***/
+
+        #header {
+            background-color: #ea8f00;
+            height: 100px;
+        }
+        /***header #logo_wrap***/
+
+        #header #logo_wrap {
+            height : 50px; line-height : 50px; text-align : center;
+            overflow : hidden;
+            position : relative;
+        }
+            #header #logo_wrap .menu {
+                position: absolute;
+                bottom : 5px; left : 5px;
+            }
+            #header #logo_wrap .myinfo {
+                position: absolute;
+                bottom : 5px; right : 5px;
+            }
+            #header #logo_wrap a{
+                color : azure;
+                font-size : 1.1em;
+                font-weight : bold;
+            }
+
+
+        /***header #search***/
+
+
+        #header #search {
+            height : 50px;
+            position : relative; /*돋보기 이미지를 서치 안에 넣기 위함*/
+        }
+            #header #search #searchtxt {
+                width: 100%;
+                height: 50px;
+                border: 3px solid #ea8f00;
+                box-sizing : border-box;
+                padding : 5px 55px 5px 5px;
+            }
+            #header #search #searchbtn {
+                width: 55px;
+                height: 50px;
+                position: absolute;
+                border: none;
+                outline: none;
+                background: url(search.png) center;
+                right: 2.5px;
+                bottom: 1px;
+            }
+
+
+    /**lnb**/
+
+
+        #lnb ul {
+            width : 100%;
+            overflow: hidden;
+        }
+
+            #lnb ul li {
+                float: left;
+                height: 60px;
+                line-height: 60px;
+                width: 16.55%;
+                border: 1px solid #ea8f00;
+                text-align: center;
+            }
+
+                #lnb ul li:first-child {
+                    border-left: none;
+                }
+
+                #lnb ul li:last-child {
+                    border-right: none;
+                }
+
+                #lnb ul li a {
+                    color: blue;
+                    font-size : 1.4em;
+                    font-weight : bold;
+                }
+
+
+        /***Content #section1***/
+
+
+    #section1 img{
+        width : 100%;
+        height : inherit;
+    }
+    #content #section1 .row1 {
+        border : 5px solid white;
+        margin : 5px;
+        box-sizing : border-box;
+        overflow : hidden;
+
+    }
+    #content #section1 .row1 > div {
+        border : 5px solid white;
+        box-sizing : border-box;
+        float : left;
+        width : 50%;
+        text-align : center;
+        height : 200px;
+    }
+    #content #section1 .row2 {
+        margin : 5px;
+        box-sizing : border-box;
+        overflow : hidden;
+
+    }
+    #content #section1 .row2 > div {
+        border : 5px solid white;
+        box-sizing : border-box;
+        float : left;
+        width : 50%;
+        text-align : center;
+        height : 200px;
+    }
+    #content #section1 .row3 {
+        
+        margin : 5px;
+        box-sizing : border-box;
+        overflow : hidden;
+
+    }
+    #content #section1 .row3 > div {
+        border : 5px solid white;
+        box-sizing : border-box;
+        float : left;
+        width : 50%;
+        text-align : center;
+        height : 200px;
+    }
+
+        /***Content #section2***/
+
+    #content #section2 {
+        margin : 7px 0px 7px 0px;
+    }
+        #content #section2 ul li {
+            border: 3px solid gray;
+            box-sizing: border-box;
+            padding: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #content #section2 ul li a{
+            color:red;
+
+        }
+
+        /***Content #section3***/
+
+    #content #section3 ul li{
+        border : 1px solid gray;
+        margin : 5px;
+        padding : 5px;
+        position : relative;
+    }
+    #content #section3 ul li p.img{
+        position : absolute;
+        top : 15px; left : 15px;
+    }
+    #content #section3 ul li p.txt{
+        width : 100%-120px;
+        padding :  5px 5px 5px 120px;
+    }
+     #content #section3 ul li p.txt span{
+        padding :  5px;
+     }
+    #content #section3 ul li p.txt span:first-child {
+        display:block;
+         white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+         font-size : 1.2em;
+         font-weight : bold;
+         color : darkblue;
+    }
+    /**footer**/
+    #footer {
+        background-color : orange;
+        text-align : center;
+    }
+    #footer p:last-child {
+        font-size : 0.8em;
+        padding-bottom : 10px;
+    }
+    </style>
+</head>
+<body>
+    
+    <div id="header">
+        <div id="logo_wrap">
+            <img src="menu.png" class="menu" alt="메뉴 아이콘"/>
+            <a href="ex2_news.html" class="logo"> <h3>mobile logo</h3></a>
+            <img src="myinfo.png" class="myinfo" alt="내정보 아이콘" />
+        </div>
+        <div id="search">
+            <form action="../ex1_mobile.html">
+                <input type="text" name="query_word" id="searchtxt"/>
+                <input type="submit" name="schbtn" value=" " id="searchbtn" />
+            </form>
+        </div>
+    </div>
+    <div id="lnb">
+        <ul>
+            <li><a href="##1">lnb1</a></li>
+            <li><a href="##1">lnb2</a></li>
+            <li><a href="##1">lnb3</a></li>
+            <li><a href="##1">lnb4</a></li>
+            <li><a href="##1">lnb5</a></li>
+            <li><a href="##1">lnb6</a></li>
+        </ul>
+    </div>
+    <div id="content">
+        <div id="section1">
+            <div class="row1">
+                <div>
+                    <a href="https://sports.news.naver.com/news?oid=477&aid=0000358236">
+                        <img src="https://imgnews.pstatic.net/image/477/2022/05/10/0000358236_001_20220510074302035.jpg?type=w647" alt="1행1열 기사 " />
+                    </a>                
+                </div>
+                <div>
+                    <a href="https://sports.news.naver.com/news?oid=108&aid=0003052138">
+                        <img src="https://imgnews.pstatic.net/image/108/2022/05/10/0003052138_001_20220510014501264.jpg?type=w647" alt="1행2열 기사 " />
+                    </a>
+                    
+                </div>
+            </div>
+            <div class="row2">
+                <div>
+                    <a href="https://sports.news.naver.com/news?oid=477&aid=0000358236">
+                        <img src="https://imgnews.pstatic.net/image/477/2022/05/10/0000358236_001_20220510074302035.jpg?type=w647" alt="2행1열 기사 " />
+                    </a>
+                </div>
+                    <div>
+                        <a href="https://sports.news.naver.com/news?oid=108&aid=0003052138">
+                            <img src="https://imgnews.pstatic.net/image/108/2022/05/10/0003052138_001_20220510014501264.jpg?type=w647" alt="2행2열 기사 " />
+                        </a>
+                    </div>
+            </div>
+            <div class="row3">
+                <div>
+                    <a href="https://sports.news.naver.com/news?oid=477&aid=0000358236">
+                        <img src="https://imgnews.pstatic.net/image/477/2022/05/10/0000358236_001_20220510074302035.jpg?type=w647" alt="3행1열 기사 " />
+                    </a>
+                </div>
+                <div>
+                        <a href="https://sports.news.naver.com/news?oid=108&aid=0003052138">
+                            <img src="https://imgnews.pstatic.net/image/108/2022/05/10/0003052138_001_20220510014501264.jpg?type=w647" alt="3행2열 기사 " />
+                        </a>
+                </div>
+            </div>
+            </div><!--섹션1 3행 2열 기사 이미지와 alink-->
+        <div id="section2">
+            <ul>
+                <li><a href="https://sports.news.naver.com/news?oid=477&aid=0000358236"> 맨시티, 홀란드 영입 </a></li>
+                <li><a href="https://sports.news.naver.com/news?oid=108&aid=0003052138">"토트넘 떠나세요" 청천벽력 소식... 새 팀 찾아야 하는 기대주 헤이스만과 토트넘의 계약기간은 다가오는 여름에 만료된다. 하지만 토트넘은 그를 붙잡지 않고 자유계약선수(FA)로 떠날 보낼 전망이다.</a></li>
+                <li><a href="https://sports.news.naver.com/news?oid=109&aid=0004610734">늦어도 한참 늦은 2군행, 복덩이를 사지로 내몬 한화 '오판'</a></li>
+                <li><a href="https://sports.news.naver.com/news.nhn?oid=236&aid=0000223615">T1, 세계에 ‘LCK 전승 우승’의 의미가 무엇인지 보여줄 차례, T1에게 있어 이번 국제대회는‘LCK 전승 우승’이라는 유의미한 기록이 갖고 있는 의미가 무엇인지 보여줄 순간</a></li>
+            </ul>
+        </div><!--기사 헤드라인 리스트와 alink-->
+        <div id="section3">
+            <ul>
+                <li>
+                    <p class="img">
+                        <img src="https://via.placeholder.com/100x100" />
+                    </p>
+                    <p class="txt">
+                        <span>말줄임 예정입니다   안녕 안녕 방가방가 어서와 테스트 스테으 </span>
+                        <span>다 나오는 텍스트 입니다. 2줄 이상이 되기도 합니다. 나머지는 ㅁㄴ ㅇ람넝ㄻ 니ㅏ ㅇ런매ㅑㅇ럼니ㅏㅇ런ㅁ애럄넝리ㅏㅁ넝래ㅑㅁ넝ㄹ미냐얾냉럼냥래ㅓㅁㄴ애ㅑㅇ럼내ㅑ럼내ㅑ럼ㄴㅇ애ㅑㄻ넝램</span>
+                    </p> 
+                </li>
+                <li>
+                    <p class="img">
+                        <img src="https://via.placeholder.com/100x100" />
+                    </p>
+                    <p class="txt">
+                        <span>말줄임 예정입니다 </span>
+                        <span>다 나오는 텍스트 입니다. 2줄 이상이 되기도 합니다. 나머지는 ㅁㄴㅇ람넝ㄻ니ㅏㅇ런매ㅑㅇ럼니ㅏㅇ런ㅁ애럄넝리ㅏㅁ 넝래ㅑㅁ넝 ㄹ미 냐얾냉 럼냥  래ㅓ ㅁㄴ애 ㅑㅇ럼 내ㅑ럼 내ㅑ럼 ㄴㅇ애 ㅑㄻ넝램</span>
+                    </p>
+                </li>
+                <li>
+                    <p class="img">
+                        <img src="https://via.placeholder.com/100x100" />
+                    </p>
+                    <p class="txt">
+                        <span>말줄임 예정입니다 asdf asd fa sdfj aslkd fjasld kfjaskldf jasd lk fjasd lkfjask ldfjs adlkfjasdlk fjasdklfjasdlfㅁㄴㅇㄹㄴㅇㅁㄻㄴㅇㄻㄴㅇㄹㅇㅁㄴㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㅇㄴㄹㅇㄴㅁㅇㄻㄴㅇㅇㄻㄴㅇㄻ </span>
+                        <span>다 나오는 텍스트 입니다. 2줄 이상이 되기도 합니다. 나머지는 ㅁㄴㅇ람넝ㄻ니ㅏㅇ런매ㅑㅇ럼니ㅏㅇ런ㅁ애럄넝리ㅏㅁ넝래ㅑㅁ넝ㄹ미냐얾냉럼냥래ㅓㅁㄴ애ㅑㅇ럼내ㅑ럼내ㅑ럼ㄴㅇ애ㅑㄻ넝램</span>
+                    </p>
+                </li>
+            </ul>
+        </div><!--100x100 이미지와 가변길이-->
+        
+    </div>
+    <div id="footer">
+        <div class="logo">
+            <p><img src="logo.png" /> </p>
+        </div>
+        <div class="address">
+            <p>서울시 화염구 리기동 저하늘위로번지 1557-1</p>
+        </div>
+    </div>
+</body>
+</html>

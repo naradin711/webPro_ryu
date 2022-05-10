@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=yes,
+          maximum-scale=3.0, minimum-scale=1.0" />
+    <title></title>
+    <style>
+        /*** 페이지 초기화 ***/
+        
+        * {
+            margin: 0px;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+            display : block;
+            font-weight : bold;
+            font-size : 1.3em;
+        }
+        /*** 공통  ***/
+        #wrap {
+            border : 1px solid gray;
+        }
+        #wrap #header {
+            height : 100px;
+            line-height : 100px;
+            text-align : center;
+        }
+        #wrap #nav {
+
+        }
+        #wrap #nav ul {
+            overflow : hidden;
+        }
+        #wrap #nav ul li{
+            float : left;
+            height : 50px; line-height: 50px;  text-align : center;
+            border : 1px solid gray; box-sizing : border-box;
+        }
+        #wrap #content {
+            padding : 10px;
+        }
+        #wrap #footer {
+            height : 100px;
+            line-height : 100px;
+            text-align : center;
+            font-size : 1.5em;
+            font-weight : bold;
+        }
+        /* 기종의 출력너비로 각각의 출력할 스타일을 기기별로 체크 */
+        /*** 스마트 ***/
+        @media screen and (max-width:1000px){ /*** 스마트 1000px 이하***/
+            #wrap{
+                background-color : palevioletred; margin : 3px;
+            }
+            h1 {
+                color : forestgreen;
+            }
+            #wrap #nav ul li:nth-child(2), 
+            #wrap #nav ul li:nth-child(4) {
+                display: none;
+            }
+
+            #wrap #nav ul li {
+                width: 33.3333%;
+            }
+            #wrap #footer {
+                background-color: palevioletred;
+            }
+        }
+        /*** 태블릿 ***/
+        @media screen and (min-width:2001px) { /*** 태블릿 (2001)이상 ***/
+            #wrap {
+                background-color: aqua;
+                margin: 3px;
+            }
+            #wrap #nav ul li:nth-child(4){
+            display : none;
+            }
+            #wrap #nav ul li{
+            width : 25%;
+            }
+            #wrap #footer {
+                background-color : dimgray;
+                color : white;
+            }
+        }
+        /*** 컴퓨터 ***/
+        @media screen and (min-width:1001px) and ( max-width:2000px) { /*** 컴퓨터 (1001-2399)***/
+            #wrap {
+                width : 800px;
+                margin: 3px auto;
+            }
+            #wrap #nav ul li{
+            width : 20%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header">
+            <h1> 웹표준 반응형</h1>
+        </div>
+        <div id="nav">
+            <ul>
+                <li><a href="#01">menu1</a></li>
+                <li><a href="#02">menu2</a></li>
+                <li><a href="#03">menu3</a></li>
+                <li><a href="#04">menu4</a></li>
+                <li><a href="#05">menu5</a></li>
+            </ul>
+        </div>
+        <div id="content">
+            <h2>What is Love?</h2>
+            <p>
+                국회에서 의결된 법률안은 정부에 이송되어 15일 이내에 대통령이 공포한다. 국회의 회의는 공개한다. 다만, 출석의원 과반수의 찬성이 있거나 의장이 국가의 안전보장을 위하여 필요하다고 인정할 때에는 공개하지 아니할 수 있다.
+                 
+                국무총리 또는 행정각부의 장은 소관사무에 관하여 법률이나 대통령령의 위임 또는 직권으로 총리령 또는 부령을 발할 수 있다. 평화통일정책의 수립에 관한 대통령의 자문에 응하기 위하여 민주평화통일자문회의를 둘 수 있다.
+            </p>
+        </div>
+        <div id="footer">
+            <p>홍길동 주식회사</p>
+        </div>
+    </div>
+</body>
+</html>

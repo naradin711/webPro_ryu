@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Check Error</title>
+    <script>
+        // int i =20
+        //   i = "hello" ;
+        var al_pha = 20;
+        alert(1);
+        alert('al_pha 값은' + al_pha); // 의도적인 에러 발생시킴 출력이 아예 안됨
+        alert(2);
+        al_pha = "Hello!";
+        al_pha = 5.9;
+        alert('바뀐 al_pha 값은' + alpha);
+        alert(3);
+        // 지금 들어오는 값이 그때그때 메모리에 채워지고 가장 마지막에 담긴 값이 마지막이다 
+    </script>
+</head>
+<body>
+    <script>
+        document.write('윗 블럭에서 선언된 변수 al_pha값은 ' + al_pha);
+        alert(4);
+    </script>
+</body >
+</html >

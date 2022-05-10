@@ -1,0 +1,8 @@
+﻿/**css/content-pc.css**/
+/**pc 화면용 컨텐츠**/
+#wrap #content {
+    background-color: darkgreen;
+    color: yellow;
+    padding: 30px 10px;
+    margin: 10px 0;
+}
