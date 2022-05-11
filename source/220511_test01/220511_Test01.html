@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="220511_Test01.css" rel="stylesheet" type="text/css">
+    <script>
+        function chk() {
+            if (!frm.pw.value) {
+                alert('유효한 비밀번호를 입력하세요')
+                frm.pw.focus();
+                return false;
+            } else if (frm.id.value.length < 4) {
+                alert('4자리 이상의 아이디를 입력하세요.')
+                frm.id.focus();
+                return false;
+            } else if (frm.name.value.length < 2) {
+                alert('2자리 이상의 이름를 입력하세요.')
+                frm.name.focus();
+                return false;
+            } else if (frm.pw.value != frm.pwck.value) {
+                alert('입력하신 비밀번호가 동일하지 않습니다.')
+                frm.title.focus();
+                return false;
+            }
+            return true;
+        };
+
+    </script>
+</head>
+<body>
+    <form name="frm" onsubmit="return chk()">
+        <fieldset>
+            <legend> 필수입력 </legend>
+            <table>
+                <tr>
+                    <th>
+                        이름 <b>*</b>
+                    </th>
+                    <td>
+                        <input type="text" name="name" id="name" placeholder="이름은 2글자 이상" size="20"  required="required"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        아이디 <b>*</b>
+                    </th>
+                    <td>
+                        <input type="text"  name="id" id="id" placeholder="ID는 4글자 이상" size="20"  required="required"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        비밀번호 <b>*</b>
+                    </th>
+                    <td>
+                        <input type="password" name="pw" id="pw" size="20"  required="required"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        비번확인 <b>*</b>
+                    </th>
+                    <td>
+                        <input type="password" name="pwck" id="pwck" size="20"  required="required"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        전화 <b>*</b>
+                    </th>
+                    <td>
+                        <input type="text" placeholder="xx-xxx-xxxx/000-0000-0000"
+                               pattern="[0-9]{2,3}-\d{3,4}-[0-9]{3,4}"
+                               title="전화번호 형식(00-000-0000)" id="tel"
+                               required="required" size="20" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        이메일 <b>*</b>
+                    </th>
+                    <td>
+                        <input type="text" placeholder="id@domain"
+                               pattern="\w{3,20}@[a-zA-Z]{3,20}.com|[a-zA-Z]{3,20}@[a-zA-Z]{3,20}.co.kr"
+                               title="이메일 형식 abcd@abcd.com or aaaa@dddd.co.kr" id="mail"
+                               required="required" size="20" />
+                    </td>
+                </tr>
+            </table>
+
+
+
+        </fieldset>
+        <fieldset>
+            <legend> 추가 입력 사항</legend>
+            <table>
+                <tr>
+                    <th>
+                        결혼유무
+                    </th>
+                    <td>
+                        <label for="marry"> 기혼</label>
+                        <input type="radio" name="marry" id="married" required="required" />
+                        <label for="marry"> 미혼</label>
+                        <input type="radio" name="marry" id="marriednot" required="required" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        자식
+                    </th>
+                    <td>
+                        <label for="son"> 아들</label>
+                        <input type="checkbox" name="son" id="son"   />
+                        <label for="daughter"> 딸</label>
+                        <input type="checkbox" name="daughter" id="daughter" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        지역
+                    </th>
+                    <td>
+                        <select name="location">
+                            <option value="경기">경기</option>
+                            <option value="서울">서울</option>
+                            <option value="강원">강원</option>
+                            <option value="경북">경북</option>
+                            <option value="경남">경남</option>
+                            <option value="전북">전북</option>
+                            <option value="전남">전남</option>
+                            <option value="제주">제주</option>
+                            <option value="충북">충북</option>
+                            <option value="충남">충남</option>
+                        </select>
+                    </td>
+                </tr>
+
+            </table>
+        </fieldset>
+        <center> <input type="submit" value="가입" /> <input type="submit" value="취소" /></center>
+    </form>
+   
+
+</body>
+</html>

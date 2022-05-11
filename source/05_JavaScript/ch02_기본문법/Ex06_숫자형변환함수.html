@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        str = "100";
+        i = Number(str);
+        document.write("<h3> i = Number('100') </h3>");
+        document.write("의 타입은 " + typeof (i) + " ~값 : " + i + "<br>");
+        i = parseInt(str);
+        document.write("<h3> i = parseInt('100') </h3>");
+        document.write("의 타입은 " + typeof (i) + " ~값 : " + i + "<br>");
+        document.write("<hr>")
+        str = "100점";
+        i = Number(str);
+        document.write("<h3> i = Number('100점') </h3>");
+        document.write("의 타입은 " + typeof (i) + " ~값 : " + i + "<br>");
+        i = parseInt(str);
+        document.write("<h3> i = parseInt('100점') </h3>");
+        document.write("의 타입은 " + typeof (i) + " ~값 : " + i + "<br>");
+        str = "10";
+        i = Number(str);
+        document.write("<h3> i = Number('10') </h3>");
+        document.write("의 타입은 " + typeof (i) + " ~값 : " + i + "<br>");
+        i = parseInt(str, 8); // parseInt(@@@, 16) 면 16진수로 바꾸게 된다
+        document.write("<h3> i = parseInt('10') </h3>");
+        document.write("의 타입은 " + typeof (i) + " ~값 : " + i + "<br>");
+    </script>
+</head>
+<body>
+
+</body>
+</html>

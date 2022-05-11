@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        scoreStr = prompt("점수를 입력하세요", "0~100점 사이!")   
+        if (scoreStr == null) { // 취소를 입력한 결과
+            alert("점수를 입력하세요")
+        } else {
+            // document.write(scoreStr + "의 타입은 " + typeof (scoreStr)); // prompt에 입력하는 입력값은 문자열로 인식
+            score = Number(scoreStr); //Number(""); = 0
+            // document.write(score + "의 타입은 " + typeof (score)); // 위 항목을 거쳐서 숫자값으로 변환
+            if (isNaN(score)) {
+                alert("0 이상의 정수를 입력하세요")
+            } else {
+                result = score > 70 ? "잘했다" : "못했다" // 조건부 ? 생성자 
+            }
+            document.write(result);
+        };
+       
+    </script>
+</head>
+<body>
+
+</body>
+</html>
