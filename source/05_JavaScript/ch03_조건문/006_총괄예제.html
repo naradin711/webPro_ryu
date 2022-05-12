@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>총괄예제
+    </title>
+    <style>
+        * {
+            margin : 0;
+            padding : 0;
+        }
+        #wrap {
+            width: 400px;
+            height: 300px;
+            line-height: 50px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+        #result {
+            width: 75px;
+            height: 40px;
+            line-height: 40px;
+            font-size : 1.2em;
+            font-weight: bold;
+            background-color: lightgray;
+            border : none;
+        }
+        table th {
+            text-align : right;
+            width : 150px;
+             
+            margin : 1px 10px 5px 30px;
+        }
+        table td {
+             
+            padding-left: 10px; 
+        }
+        table td .textin{
+            height : 22px;
+        }
+    </style>
+    <script>
+        function chk() {
+            var first = frm.first.value;
+            var second = frm.second.value;
+            if (!first || isNaN(Number(first))) {
+                alert('떼끼');
+                return false;
+            } else if (!second || isNaN(Number(second))) {
+                alert('떼끼');
+                return false;
+            }
+                
+            var n1 = Number(first);
+            var n2 = Number(second);
+
+            var diff = n1>n2 ? (n1-n2) : (n2-n1);
+            if (n1>n2) {
+                var msg = "<h3>첫번째 수가"+diff+"만큼 큽니다</h3>";
+            } else if (n1<n2) {
+                var msg = "<h3>두번째 수가"+diff+"만큼 큽니다</h3>";              
+            } else if (n1==n2) {
+                var msg = "<h3>두 수의 절대값은 같습니다</h3>";             
+            }
+
+            msg1 = msg.substring(4);
+            msg1 = msg1.substring(0, msg1.indexOf("</h3>"));
+            alert(msg1);
+            document.body.innerHTML += msg;
+            
+            frm.n1.value = n1;
+            frm.n2.value = n2;
+            // 
+            return false;
+        }
+    </script>
+</head>
+<body>
+    
+    <div id="wrap">
+        <form name="frm" onsubmit="return chk()"> 
+            <fieldset>
+                <table>
+                    <tr>
+                        <th>
+                            <h3>첫번째수</h3>
+                        </th>
+                        <td>
+                            <input type="text" name="first" class="textin"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h3>두번째수</h3>
+                        </th>
+                        <td>
+                            <input type="text" name="second" class="textin"/>
+                        </td>
+                    </tr>
+                </table>
+                <center><input type="submit" id="result" value="결과"></center>
+            </fieldset>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>000</title>
+    <script>
+        // JavaScript에서 배열 방의 갯수는 가변적이다.
+        var arr = [11, 111.2, "아르스란"];
+        document.write("배열방 갯수 : " + arr.length +"<br>") ;
+        arr[0] = "십일";
+        document.write(arr + "<br>");
+        arr.push("3번째 인덱스에 추가"); //추가할때마다 맨 마지막 방 뒤에 붙음
+        document.write("배열에 push 추가후 방 갯수 : " + arr.length + "<br>");
+        var temp = arr.pop();// 마지막 인덱스 배열방의 값을 return후 방 삭제;
+        document.write("배열에 pop 한 후 방 갯수 : " + arr.length + "<br>");
+        document.write("삭제된 배열방의 값 : " + temp + "<br>");
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

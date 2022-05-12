@@ -1,0 +1,46 @@
+220512
+
+var cnt = 0; //반복횟수가 저장되는 변수
+        var starttime = new Date().getTime(); // 현재 밀리세컨을 가져오는 변수
+반복횟수가 저장되는 변수
+while (new Date().getTime() <= starttime+1000) {
+            cnt++;
+        };
+        document.write("1초 동안 " + cnt + "회 반복됩니다.");
+
+총괄예제
+
+<script>
+        var cnt = 0; //누적횟수
+        var sum = 0; //누적점수
+        var right = 0; // 옳은 값
+        var wrong = 0; // 틀린값
+
+        while (confirm("누적하시겠습니까?")) { // while에 컨펌을 넣고 확인 이후에 해당 창이 작동
+                cnt++; // 누적횟수 카운트
+                score = Number(prompt("누적할 숫자를 입력하시오")) // 점수를 넘버형 프롬트로 입력
+                if (isNaN(score) || score < 0 || score > 101) { // 해당 스코어는 0미만 101미만 숫자열이 아닐때 오류값을 지닌다
+                        alert("올바른 숫자를 입력하시오!") // 얼럿으로 때끼
+                        wrong++; // 잘못된 횟수 카운트
+                 } else {
+                            sum += score; // score의 누적 점수는 sum
+                            right++; // 올바른 횟수 카운트
+                 }  
+                
+        } // confirm 창에서 취소 되었을때 
+        document.write(cnt + "번 입력<br>"); // 횟수 출력
+        document.write("누적점수 : " + sum + "<br>"); // 누적 점수 출력
+        document.write("점수를 제대로 입력한 횟수 : " + right + "<br>"); // 올바른 횟수 카운트 출력
+        document.write("점수를 잘못 입력한 횟수 : " + wrong + "<br>"); // 잘못된 횟수 카운트 출력
+        
+    </script>
+
+위 예제에서
+
+1 2 3 페이커 4 999 5를 입력했을 경우 출력값은 다음과 같다 
+
+7번 입력
+누적점수 : 15
+점수를 제대로 입력한 횟수 : 5
+점수를 잘못 입력한 횟수 : 2
+

@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>001</title>
+    <script>
+        var arr = [222, 22.2, "홍진호"];
+        // 1. 일반 for 문 이용한출력
+        document.write(arr + "<br>");
+        document.write("<h2> 1. 일반 for 문 이용한 출력 </h2>");
+        for (var i = 0; i < arr.length; i++) {
+            document.write(i + "번째 값 : " + arr[i] + "<br>")
+        };
+        document.write("<h2> 2. for - in 문 이용한 출력 </h2>");
+        for (var idx in arr) {
+            document.write(idx + "번째 값 : " + arr[idx] + "<br>")
+        };
+        document.write("<h2> 3. Index를 사용한 forEach문 이용한 출력 </h2>");
+        // 배열명 : arr
+        // 배열 안의 데이터 (data) : 222, 22.2, "홍진호"
+        // 배열의 인덱스 (idx) : 0, 1, 2
+         
+        arr.forEach(function (data, idx) {
+            document.write(idx + "번째 : " + data + "<br>");
+        });
+        document.write("<h2> 4. Index를 사용하지 않은 forEach문 이용한 출력 </h2>");
+        arr.forEach(function (data) {
+            document.write( data + "<br>");
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
