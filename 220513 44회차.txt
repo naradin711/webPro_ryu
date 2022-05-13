@@ -1,0 +1,138 @@
+ 220513
+
+<script>
+        // 이름이 없는 익명의 함수에 값을 지정!
+        var funvar = function () {
+            alert("웬투 왓쇼 웬투 왓쇼");
+        };
+        alert(funvar);
+        // 익명함수의 호출시에는 함수형 변수에 할당한 후 사용이 가능하다.
+        // 익명함수 호출은 변수의 이름뒤에 ();를 붙여서 호출이 가능하다.
+        funvar();
+        alert(prompt); //function prompt() { [native code] } 기본 함수는 프로그램에서 막아 놓음
+    </script>
+
+<script>
+        fun(); // 위치에 관계없이 어디서나 수행 가능
+        // 익명함수 var fun = function () { alert("익명함수") };
+         // 선언적 함수
+        function fun(){
+            alert("함수A");
+        };
+    </script>
+
+<script>
+        
+
+        var funVar = function () {
+            alert("함수A");
+        };
+        funVar();
+
+        // 익명 함수의 재정의
+        // 위에서 부터 아래로 순차적으로 제공이 된다
+
+        var funVar = function () {
+            alert("함수B");
+        };
+        funVar(); // 맨 마지막에 정의된 함수 값으로 나머지 함수 값이 출력됨
+    </script>
+
+
+
+	함수안에 매개변수를 삽입하여 변수에 따른 값을 출력하도록 한다.
+	가변함수란 : 매개변수의 갯수가 변할 수 있는 함수
+
+     <script> 
+        document.write(pow(4, 2) + "<br>");
+        document.write(pow(2, 10) + "<br>");
+        document.write("pow(3, 2, 2) " + pow(3, 2, 2) + "<br>"); // 선언된 매개변수보다 많은 매개변수를 넣으면 초과된 변수는 적용시키지 않는다.
+        document.write("pow(3, 2, 'a', 2) " + pow(3, 2, 'a', 2) + "<br>");
+        document.write("pow(2) " + pow(2) + "<br>"); // 매개변수가 적으면 그 다음 매개변수는 자동적으로 undefined로 처리된다.
+        document.write("pow( ) " + pow( ) + "<br>");
+        function pow(x, y) { //x의 y승을 리턴하는 함수 : ex) pow(4,2)
+            var result = 1;
+            for (var i = 1; i <= y; i++) { //y번 반복;
+                result *= x; //  result *=  result *x;
+            }; //x를 y번 곱함 == x의 y승
+           
+             return result; // 리턴값을 지우면 리턴값이 없기에 자동적으로 undefined로 처리된다.
+        };
+    </script>
+
+	
+	내부함수 : 함수 안에서만 작동하는 함수 
+
+
+<script>
+        // A가 만든 부분  
+        
+        
+        function pythagoras(width, height) { // 피타고라수함수 (제곱함수)
+            // 내부함수 : 함수내에 선언된 함수
+            // 내부함수 사용 이유 : 충돌을 피하기 위함;
+            function square(x) { // 제곱 함수
+                return x * x;
+            };
+            return Math.sqrt(square(width) + square(height)); // Math.sqrt() 괄호 안의 값의 제곱근을 구함
+        };
+      
+    </script>
+    <script>
+        // b가 만든 부분 : 밑변, 높이, 빗변 매개변수로 받아 직각삼각형 여부를 리턴
+        function square(w, h, hypotenuse) {
+            if (w * w + h * h == hypotenuse * hypotenuse ) {
+                return true;
+            } else {
+                return false;
+            };
+        };
+    </script>
+    <script>
+            // 내가 만든 부분
+        document.write("높이가 4이고, 밑변이 3인 직각삼각형의 빗변은 " + pythagoras(3, 4) + "<br>"); // 피타고라스 함수에 변수 넣고 도큐먼트라이트로 출력
+        document.write("높이가 4이고, 밑변이 3인  빗변의 5이면 직각삼각형? : " + square(3, 4, 5) + "<br>");
+    </script>
+
+
+여기서 A의 square와 B의 square의 충돌을 방지하기 위해
+A의 square를 pythagoras 함수 안에 삽입하여 내부함수로 처리했다.
+
+  
+
+객체와 배열 출력하는 법
+
+ <script>
+        var arr = [1, 2, 300];
+        for (var idx in arr) {
+            document.write(idx+" : "+ arr[idx] + "<br>");
+        };
+
+        var obj = { "name": "faker", "age": 20 }; // 출력 for in문
+        for (var key in obj) {
+            document.write(key + " : " + obj[key] + "<br>");
+        };
+    </script>
+
+
+0 : 1
+1 : 2
+2 : 300
+name : faker
+age : 20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

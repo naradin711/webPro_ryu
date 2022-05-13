@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>011_콜백함수</title>
+    <script>
+        //var i = function () { alert(1) };
+        //i();
+        //callTentimes();
+        function callTentimes (callBack) { // 매개변수로 받은 콜백함수를 10번 호출
+            for (var cnt = 0; cnt < 10; cnt++) {
+                callBack();
+            };
+        };
+        //var funVar = function () {
+        //    document.write(new Date() + "<br>"); // 지금 날짜 시 분 초 시험
+        //}
+        
+        //callTentimes(funVar);
+        callTentimes(function(){ //callTentimes 에서 시간 출력
+            document.write(new Date() + "<br>");
+        });
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

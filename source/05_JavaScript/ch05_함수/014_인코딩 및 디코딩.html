@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>014_인코딩 및 디코딩</title>
+    <script>
+        // 인코딩후  %EC%86%90%ED%9D%A5%EB%AF%BC 
+        // 받는 측에서는 받은 데이터를 디코딩해서 열람
+        var str = "손흥민";
+        var str1 = "%EC%86%90%ED%9D%A5%EB%AF%BC";
+        var encoderStr = encodeURIComponent(str);
+        document.write("인코딩된 str = " + encoderStr + "<br>");
+        document.write("인코딩된 str1 = " + str1 + "<br>");
+        var decodeStr = decodeURIComponent(encoderStr);
+        var decodeStr1 = decodeURIComponent(str1);
+        document.write("디코딩된 encoderStr = " + decodeStr + "<br>");
+        document.write("디코딩된 str1 = " + decodeStr1 + "<br>");
+    </script>
+</head>
+<body>
+
+</body>
+</html>

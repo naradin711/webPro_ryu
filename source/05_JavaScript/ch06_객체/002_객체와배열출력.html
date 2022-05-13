@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>객체와배열출력</title>
+</head>
+<body>
+    <script>
+        var arr = [1, 2, 300];
+        for (var idx in arr) {
+            document.write(idx+" : "+ arr[idx] + "<br>");
+        };
+
+        var obj = { "name": "faker", "age": 20 }; // 출력 for in문
+        for (var key in obj) {
+            document.write(key + " : " + obj[key] + "<br>");
+        };
+    </script>
+</body>
+</html>

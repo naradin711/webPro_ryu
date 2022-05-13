@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>객체속성</title>
+    <script>
+        var person = {
+            name: "FAKER", //객체안에 있는 변수
+            age: 23, //객체안에 있는 변수
+            eat: function (food) {
+                var msg = this.age + "살 " + this.name + "님은 " + food + "을(를) 먹습니다.<br>";
+                document.write(msg);
+            },
+        };
+        person.eat("갈비찜덮밥");
+        document.write(person);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

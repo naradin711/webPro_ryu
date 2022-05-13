@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>객체속성 및 toString 운영</title>
+    <script>
+        var person = {
+            name: "FAKER", //객체안에 있는 변수
+            age: 23, //객체안에 있는 변수
+            address: "서울시 강서구", //객체안에 있는 변수
+            eat: function (food) {
+                var msg = this.age + "살 " + this.name + "님은 " + food + "을(를) 먹습니다.<br>";
+                document.write(msg);
+            },
+            toString : function() {
+                var output = " ";
+                for (var key in this) {
+                    if (key != "eat" && key != "toString") {
+                        output += key + " : " + this[key] + "\n"; // 키인덱스 : 키값
+                    }
+                }// for문
+                return output;
+            }
+        };
+        person.eat("갈비찜덮밥"); // food 매개변수 넣고 출력하기
+       
+        alert(person.toString()); //alert은 html이 먹히지 않아 \n으로 줄바꿈
+        
+        document.write(replaceAll(person.toString(), "\n", "<br>"));
+
+        function replaceAll(str, oldone, newone) {
+            //document.write(str + "<br>");
+            var splitStr = str.split(oldone); // str.split(a) 해당 문자열을 a 기준으로 나눈다
+            //document.write(splitStr + "<br>");
+            var result = splitStr.join(newone);
+            //document.write(result);
+            return result;
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        body{
+            font-weight : bold;
+            background-image:url("");
+            color : black;
+            font-size : 3.0em;
+        }
+    </style>
+    
+</head>
+<body>
+    <script>
+        var col = ["yellow", "black", "red"]; // 색깔배열만들기
+        var img = ["img/img01.png", "img/img02.png", "img/img03.png"]; // 그림주소 넣기
+        var s = 0; // 카운팅할 변수 생성 및 초기화
+        //1초마다 백그라운드 이미지가 수정되면서 10초 동안 시간 출력
+        var id = setInterval(function () { // 시간마다 반복되는 타이머 함수 및 기능 함수 설정
+            document.write(new Date() + "<br>"); // 날짜
+            document.body.style.color = col[s % 3]; // 글꼴 색깔 3초마다 바꾸기 % 생성자 사용
+            document.body.style.backgroundImage = "url(" + img[s % 3] + ")"; // 그림 3초마다 바꾸기 % 생성자 사용
+            document.body.style.backgroundSize = "100%"; //그림사이즈 100퍼센트로 키우기
+            s++;
+        }, 1000); // 1000ms 1초 마다 현재시간 출력
+        setTimeout(function () { // 10초 후에 콜백함수 실행
+            clearInterval(id); // 인터벌 중지 
+            document.body.style.color = "gray"; // 마지막으로 글꼴 색깔 바꾸기
+            document.write("DONE<br>"); // 끝나고 남은 출력값
+        }, 10000); // 10초 후에 setInterval 중지
+    </script>
+</body>
+</html>

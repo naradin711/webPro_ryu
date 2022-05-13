@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>013_타이머함수02</title>
+</head>
+<body>
+    <script>
+        var id = setInterval(function () {
+            document.write(new Date()+"<br>");
+        }, 1000); // 1000mls 1초 마다 현재시간 출력
+        setTimeout(function () { // 10초 후에 콜백함수 실행
+            clearInterval(id);
+            document.write("DONE<br>"); // 끝나고 남은 출력값
+        }, 10000); // 10초 후에 setInterval 중지
+    </script>
+   
+</body>
+</html>

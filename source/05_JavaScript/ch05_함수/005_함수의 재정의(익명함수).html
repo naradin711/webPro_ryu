@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>004_함수의 재정의</title>
+
+    <script src="004_b.js"></script>
+    <script src="004_a.js"></script>
+    <script>
+        
+
+        var funVar = function () {
+            alert("함수A");
+        };
+        funVar();
+
+        // 익명 함수의 재정의
+        // 위에서 부터 아래로 순차적으로 제공이 된다
+
+        var funVar = function () {
+            alert("함수B");
+        };
+        funVar(2); //에러 안남 / 맨 마지막에 정의된 함수 값으로 나머지 함수 값이 출력됨
+    </script>
+</head>
+<body>
+
+</body>
+</html>

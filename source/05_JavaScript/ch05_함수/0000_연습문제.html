@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>0000_연습문제</title>
+</head>
+<body>
+    <script>
+        var sum = sumAll(); // -999 (매개변수가 없으면 -999를 리턴)
+        document.write('sumAll() = ' + sum + '<br>');
+        var sum = sumAll(1); // 1 (매개변수가 1개 이상이면 누적값리턴)
+        document.write('sumAll(1) = ' + sum + '<br>');
+        var sum = sumAll(1, 2, 3, 4, 5); // 15
+        document.write('sumAll(1, 2, 3, 4, 5) = ' + sum + '<br>');
+        function sumAll() { // 가변인자 함수 Array와 같은 값을 수행하는 array()
+
+          
+            var score = 0;
+            if (arguments.length == 0) { //매개변수(인자)가 1개 일때 실행할 명령어; 방의 갯수가 매개 변수 만큼 존재 array(3);
+                // alert("매개변수가 1개네! " + arguments[0] + " 넣고 호출했네?");
+                score = -999 ;
+            } else if (arguments.length >= 1) { //매개변수(인자)가 2개 이상 일때 실행할 명령어; 매개변수 자체가 배열 array(10,20,30);
+                //alert("매개변수가 2개네! " + arguments[1] + " 넣고 호출했네?");
+                //for (var idx = 0; idx < arguments.length; idx++) {
+                //result.push(arguments[idx]);
+                //}
+                // 확장 for문
+                for (var idx in arguments) {
+                    
+                    score = score + arguments[idx];
+                    
+                }
+            }
+            return score;
+        };
+    </script>
+</body>
+</html>

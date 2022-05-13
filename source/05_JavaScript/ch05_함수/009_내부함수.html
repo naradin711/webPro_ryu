@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>009_내부함수</title>
+    <script>
+        // A가 만든 부분  
+        
+        
+        function pythagoras(width, height) { // 피타고라수함수 (제곱함수)
+            // 내부함수 : 함수내에 선언된 함수
+            // 내부함수 사용 이유 : 충돌을 피하기 위함;
+            function square(x) { // 제곱 함수
+                return x * x;
+            };
+            return Math.sqrt(square(width) + square(height)); // Math.sqrt() 괄호 안의 값의 제곱근을 구함
+        };
+      
+    </script>
+    <script>
+        // b가 만든 부분 : 밑변, 높이, 빗변 매개변수로 받아 직각삼각형 여부를 리턴
+        function square(w, h, hypotenuse) {
+            if (w * w + h * h == hypotenuse * hypotenuse ) {
+                return true;
+            } else {
+                return false;
+            };
+        };
+    </script>
+    <script>
+            // 내가 만든 부분
+        document.write("높이가 4이고, 밑변이 3인 직각삼각형의 빗변은 " + pythagoras(3, 4) + "<br>"); // 피타고라스 함수에 변수 넣고 도큐먼트라이트로 출력
+        document.write("높이가 4이고, 밑변이 3인  빗변의 5이면 직각삼각형? : " + square(3, 4, 5) + "<br>");
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>006_매개변수</title>
+    <script> 
+        document.write(pow(4, 2) + "<br>");
+        document.write(pow(2, 10) + "<br>");
+        document.write("pow(3, 2, 2) " + pow(3, 2, 2) + "<br>"); // 선언된 매개변수보다 많은 매개변수를 넣으면 초과된 변수는 적용시키지 않는다.
+        document.write("pow(3, 2, 'a', 2) " + pow(3, 2, 'a', 2) + "<br>");
+        document.write("pow(2) " + pow(2) + "<br>"); // 매개변수가 적으면 그 다음 매개변수는 자동적으로 undefined로 처리된다.
+        document.write("pow( ) " + pow( ) + "<br>");
+        function pow(x, y) { //x의 y승을 리턴하는 함수 : ex) pow(4,2)
+            var result = 1;
+            for (var i = 1; i <= y; i++) { //y번 반복;
+                result *= x; //  result *=  result *x;
+            }; //x를 y번 곱함 == x의 y승
+           
+             return result; // 리턴값을 지우면 리턴값이 없기에 자동적으로 undefined로 처리된다.
+        };
+    </script>
+</head>
+<body>
+
+</body>
+</html>
