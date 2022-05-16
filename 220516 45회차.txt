@@ -1,0 +1,60 @@
+ 220516 
+
+ 생성자함수
+
+ function Rectangle(width, height) {
+            this.width = width;
+            this.height = height;
+        };
+        Rectangle.prototype.getArea = function () {
+            return this.width * this.height +"cm²"
+        };
+        var rect1 = new Rectangle(10, 20);
+        var rect2 = new Rectangle(7, 12);
+        document.write("rect1의 생성자 함수는 "+rect1.constructor + "<br>")
+        document.write("rect2의 생성자 함수는 " + rect2.constructor + "<br>")
+        if (rect1.constructor == rect2.constructor) {
+            document.write("rect1과 rect2의 타입은 같다");
+        } else {
+            document.write("rect1과 rect2의 타입은 같다");
+        }
+
+생성자 함수 - String
+
+<script>
+        String.prototype.replaceA = function (old1, new1) {
+            var s1 = this.split(old1);// 콜뱅이 지우고
+            var s2 = s1.join(new1); // - 입힌다
+            return s2;
+        };
+        var str = "abc@abc@abc";
+        var str1 = "0123456789";
+        document.write("@를 - 로 바꾸어라. " + str.replaceA('@', '-') + "<br>");
+        document.write("@를 없애기. " + str.replaceA('@', '  ') + "<br>");
+        document.write("글씨 길이는? " + str.length + "<br>");
+        document.write("글씨 연결 : " + str.concat(str) + "<br>");
+        // 문자 추출 str.substr(a); a번째부터 b개 글자추출 
+        document.write("3번째부터 5개 글자추출 : " + str1.substr(3, 5) + "<br>");
+        // str.substring(a, b); a번재부터 b번째 앞까지 추출
+        document.write("3번째부터 5번째 앞까지 글자추출 : " + str1.substring(3, 5) + "<br>");
+        document.write("앞부터 일치하는 위치까지 : " + str1.indexOf(3) + "<br>");
+        document.write("뒤에서부터 일치하는 위치까지 : " + str1.lastIndexOf(3) + "<br>");
+        document.write("없는 위치는? : " + str.indexOf('x') + "<br>"); // -1
+        document.write("___abc에서 양쪽 space 없애기 : " + "   abc  ".trim() + "<br>");
+        document.write("     abc  abc       ".replaceA("  ", "") + "<br>"); // 모든 공백없애기
+        document.write("대문자로 변환 : " + str.toUpperCase() + "<br>");
+        document.write("소문자로 변환 : " + str.toLowerCase() + "<br>");
+    </script>
+
+JavaScript에서의 정규표현식 방법과 쓰임새
+
+var str = "abcd@ef";
+        //패턴
+        var patternNum = /[0-9]/;            // 숫자 패턴
+        var patternEng = /[a-zA-Z]/;         // 알파벳 문자 패턴
+        var patternKor = /[가-힣ㄱ-ㅎㅏ-ㅣ]/;  // 한글 패턴
+        var patternSpc = /[~!@#$%^&*()-+=\\]/; // 특수문자 패턴
+        document.write('str에 숫자가 포함되어 있는지 : ' + patternNum.test(str) + "<br>"); = false
+        document.write('str에 특수문자가 포함되어 있는지 : ' + patternSpc.test(str) + "<br>"); = true
+        document.write('str에 한글 포함되어 있는지 : ' + patternKor.test(str) + "<br>"); == false
+        document.write('str에 알파벳이 포함되어 있는지 : ' + patternEng.test(str) + "<br>"); == true

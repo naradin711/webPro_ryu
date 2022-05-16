@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>String내장객체함수</title>
+    <script>
+        String.prototype.replaceA = function (old1, new1) {
+            var s1 = this.split(old1);// 콜뱅이 지우고
+            var s2 = s1.join(new1); // - 입힌다
+            return s2;
+        };
+        var str = "abc@abc@abc";
+        var str1 = "0123456789";
+        document.write("@를 - 로 바꾸어라. " + str.replaceA('@', '-') + "<br>");
+        document.write("@를 없애기. " + str.replaceA('@', '  ') + "<br>");
+        document.write("글씨 길이는? " + str.length + "<br>");
+        document.write("글씨 연결 : " + str.concat(str) + "<br>");
+        // 문자 추출 str.substr(a); a번째부터 b개 글자추출 
+        document.write("3번째부터 5개 글자추출 : " + str1.substr(3, 5) + "<br>");
+        // str.substring(a, b); a번재부터 b번째 앞까지 추출
+        document.write("3번째부터 5번째 앞까지 글자추출 : " + str1.substring(3, 5) + "<br>");
+        document.write("앞부터 일치하는 위치까지 : " + str1.indexOf(3) + "<br>");
+        document.write("뒤에서부터 일치하는 위치까지 : " + str1.lastIndexOf(3) + "<br>");
+        document.write("없는 위치는? : " + str.indexOf('x') + "<br>"); // -1
+        document.write("___abc에서 양쪽 space 없애기 : " + "   abc  ".trim() + "<br>");
+        document.write("     abc  abc       ".replaceA("  ", "") + "<br>"); // 모든 공백없애기
+        document.write("대문자로 변환 : " + str.toUpperCase() + "<br>");
+        document.write("소문자로 변환 : " + str.toLowerCase() + "<br>");
+    </script>
+</head>
+<body>
+
+</body>
+</html>

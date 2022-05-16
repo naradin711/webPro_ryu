@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var s = { name: "서지수", kor: 100, mat: 95, eng: 99, sci: 95 };
+        function makeStudent(name, kor, mat, eng, sci) {
+            var resultObj = {
+                //
+                name: name,
+                kor: kor,
+                mat: mat,
+                eng: eng,
+                sci: sci,
+                getSum: function () {
+                    return this.kor + this.mat + this.eng + this.sci;
+                },
+                getAvg: function () {
+                    return Math.round(this.getSum()/ 4);
+                },
+                toString: function () {
+                    var output = " ";
+                    for (var key in this) {
+                        if (key != "getSum" && key != "getAvg" && key != "toString") {
+                            output += key + " : " + this[key] + "<br>";
+                        } else if (key == "getSum" || key == "getAvg") {
+                            output += key.substring(3).toUpperCase() + " : " + this[key]() + "<br>";
+                        };
+                    };
+                    return output;
+                },
+            };
+            return resultObj;
+        }; // function
+        var s = makeStudent("서지수", 100, 95, 99, 95);
+        var students = [];
+        students.push(makeStudent("서지수", 100, 95, 99, 95)); //students 배열에 makeStudents 함수를 이용하여 데이터 추가
+        students.push(makeStudent("유지애", 100, 65, 55, 75));
+        students.push(makeStudent("정예인", 45, 77, 60, 47));
+        students.push(makeStudent("박지우", 55, 86, 99, 95));
+
+        students.forEach(function (data, idx) {
+            document.write(idx + "번째 : <br>" + data + "<hr>"); 
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

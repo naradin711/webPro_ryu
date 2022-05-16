@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>정규표현식</title>
+    <script>
+        var str = "abcd@ef";
+        //패턴
+        var patternNum = /[0-9]/;            // 숫자 패턴
+        var patternEng = /[a-zA-Z]/;         // 알파벳 문자 패턴
+        var patternKor = /[가-힣ㄱ-ㅎㅏ-ㅣ]/;  // 한글 패턴
+        var patternSpc = /[~!@#$%^&*()-+=\\]/; // 특수문자 패턴
+        document.write('str에 숫자가 포함되어 있는지 : ' + patternNum.test(str) + "<br>");
+        document.write('str에 특수문자가 포함되어 있는지 : ' + patternSpc.test(str) + "<br>");
+        document.write('str에 한글 포함되어 있는지 : ' + patternKor.test(str) + "<br>");
+        document.write('str에 알파벳이 포함되어 있는지 : ' + patternEng.test(str) + "<br>");
+    </script>
+</head>
+<body>
+    <!-- 정규표현식
+       [0-9] : 0-9 사이 중 숫자 하나
+       [a-zA-Z] : 알파벳 중 하나
+       [가-힣] : 한글 중 한문자
+       [가-힣ㄱ-ㅎㅏ-ㅣ] : 한글과 자모음 중 하나
+       [n,m] :최소 n번, 최대 m번 반복 (0<n<m)
+       \d : 숫자 [0-9] 동일
+       \w : 문자(숫자와 알파벳) 중 한문자
+       + : 1번 이상 반복
+       * : 0번 이상 반복
+       . : \n을 제외한 임의의 한문자 자리수
+       \. : . 문자
+
+    -->
+</body>
+</html>

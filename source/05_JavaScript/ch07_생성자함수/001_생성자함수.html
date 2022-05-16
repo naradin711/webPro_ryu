@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>생성자함수</title>
+    <script>
+        function Student(name, kor, mat, eng, sci) {
+            this.name = name;
+            this.kor = kor;
+            this.mat = mat;
+            this.eng = eng;
+            this.sci = sci;
+            this.getSum = function () {
+                return this.kor + this.mat + this.eng + this.sci;
+            };
+            this.getAvg = function () {
+                return Math.round(this.getSum()) / 4;
+            };
+            this.toString = function () {
+                var output = " ";
+                for (var key in this) {
+                    if (key != "getSum" && key != "getAvg" && key != "toString") {
+
+                        
+                        output += key + " : " + this[key] + "<br>";
+                    } else if (key == "getSum" || key == "getAvg") {
+                        output += key.substring(3).toUpperCase() + " : " + this[key]() + "<br>";
+                    };
+                }
+                return output;
+            };
+        } // 생성자함수
+            var students = [new Student("박지우", 55, 86, 99, 95),
+                            new Student("정예인", 45, 77, 60, 47),
+                            new Student("유지애", 100, 65, 55, 75)];
+
+            students.forEach(function (data, idx) {
+                document.write(idx + "번째 : <br>" + data.toString()+ "<hr>");
+            });
+            students.pop();
+            document.write("제거 이후 ");
+            students.forEach(function (data, idx) {
+                document.write(idx + "번째 : <br>" + data + "<hr>");
+            });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
