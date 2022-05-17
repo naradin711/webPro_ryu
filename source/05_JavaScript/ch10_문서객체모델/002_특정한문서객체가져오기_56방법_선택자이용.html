@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>선택자이용</title>
+    <script>
+        window.onload = function () {
+            //querySelector(선택자) : 선택자 중 첫번째 하나만 가져옴 5번째 방법
+            //querySelectorAll (선택자) : 해당하는 선택자 모두 가져옴 배열로 인식 6번째 방법
+            var header1 = document.querySelector('.header'); // 클래스 header 선택자
+            header1.innerHTML = '바꿔';
+            var head = document.querySelectorAll('.header'); // 배열로 받음
+            for (var idx in head) {
+                head[idx].style.backgroundColor = 'yellow';
+                head[idx].style.color = 'red';
+            };
+        }
+    </script>
+</head>
+<body>
+    <h1 class="header">HEADER1</h1>
+    <h1 class="header">HEADER2</h1>
+</body>
+</html>

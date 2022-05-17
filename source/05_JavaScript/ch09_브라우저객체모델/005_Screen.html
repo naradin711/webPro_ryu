@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Screen</title>
+    <script>
+        var child = open('005.html', '', 'width = 100, height = 100');
+        var w = screen.width / 2;       //child의 width값
+        var h = screen.height / 2;      //child의 height값
+        child.resizeTo(w, h); // child의 넓이 재정의
+        child.moveTo(w / 2, h/2); // child의 위치 재정의
+    </script>
+</head>
+<body>
+   
+</body>
+</html>

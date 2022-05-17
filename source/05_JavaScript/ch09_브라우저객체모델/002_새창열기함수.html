@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>새로운 창 열기</title>
+    <script>
+        var child = window.open(" ", " ", "width=450, height=500, left=100, top=100");;
+        /* open 속성1, 속성2, 속성3
+         * 속성 1 = 열릴 새창의 url
+         * 속성 2 = 윈도우의 이름
+         * 속성 3 = width=450, height=500, left=100, top=100 등등 여러 위치
+         * */
+        if (child) {
+            child.document.write("<h2>이것은 자바스크립트로 만든 새 창입니다</h2>")
+        } else {
+            alert("브라우저의 팝업 차단을 해제해주세요");
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

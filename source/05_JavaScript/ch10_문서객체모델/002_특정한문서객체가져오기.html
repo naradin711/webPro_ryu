@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var id; // 아이디 생성 및 초기화
+        var toggle1 = 0; // 토글1 생성 및 초기화
+        var toggle2 = 0; // 토글2 생성 및 초기화
+        var header1, header2
+        window.onload = function () {
+            header1 = document.getElementById("header-1"); //함수 헤더1과 학생 데이터 
+            header1.innerHTML = "시간";
+            header2 = document.getElementById("header-2");
+            header2.innerHTML = new Date().toLocaleString(); // 초당 한번 표시하기
+            id = setInterval(function () {
+                header2.innerHTML = new Date().toLocaleString();
+            }, 2000);
+        }
+        function change(n) { //function change() 안에 n 의 임의 변수를 넣어서 아래 버튼과 연동시킨다
+            if (n == 1) { //1번버튼 누를시
+                if (toggle1 == 0) {// 버튼이 눌러지지 않은 상태
+                    header1.innerHTML = " 현재";
+                    toggle1 = 1;
+                } else if (toggle1 == 1) { // 버튼이 눌러진 상태
+                    header1.innerHTML = "시간";
+                    toggle1 = 0;
+                }
+               
+
+            } else if (n == 2) { //2번버튼 누를시
+                if (toggle2 == 0) { // 버튼이 눌러지지 않은 상태
+                    clearInterval(id);
+                    toggle2 = 1;
+                } else if (toggle2 == 1) { // 버튼이 눌러진 상태
+                    id = setInterval(function () {
+                        header2.innerHTML = new Date().toLocaleString();
+                    }, 2000);
+                    toggle2 = 0;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1 id="header-1">HEADER - 1</h1>
+    <h1 id="header-2">HEADER - 2</h1>
+    <button onclick="change(1)">바꿔-1</button> <!-- 스크립트 체인지 펑션과 연관-->
+    <button onclick="change(2)">바꿔-2  (타이머 토글)</button> <!-- 스크립트 체인지 펑션과 연관-->
+</body>
+</html>

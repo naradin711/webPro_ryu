@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Class를 이용하여 문서객체 가져오기</title>
+    <script>
+        window.onload = function () {
+            //  getElementsByClassName 해당하는 클래스에서 가치값 가져오기
+            //  getElementsByClassName()의 return값은 배열로 인식 
+            var clock1 = document.getElementsByClassName("clock1");
+            clock1[0].innerHTML = new Date().toLocaleString(); //0번째 값
+            var clock2 = document.getElementsByClassName("clock2");
+            clock2[0].value = new Date().toLocaleString(); //0번째 값
+            clock2[0].style.color = 'red';
+            clock2[0].style.fontSize = '20px';
+            clock2[0].style.cssText = 'color:blue; font-size:15px;';
+        };
+    </script>
+</head>
+<body>
+    <h1 class="clock1">시간</h1>
+    <input type="text" class="clock2"/>
+</body>
+</html>

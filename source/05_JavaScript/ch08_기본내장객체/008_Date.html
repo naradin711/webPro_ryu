@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="intervalDay.js"></script>
+    <script>
+             var now = new Date();
+        document.write("지금 : " + now + "<br>");
+        document.write("지금 : " + now.toLocaleString() + "<br>"); // 해당 지역시간
+        document.write("날짜 : " + now.toLocaleDateString() + "<br>"); // 해당 지역날짜
+        document.write("시간 : " + now.toLocaleTimeString() + "<br>"); // 해당 지역시간만
+        var limitday = new Date(2022, 7, 18, 15, 20, 0); // 수료시점 8/18일 오후 3시 20분 월은 -1 해야함 0부터 시작해서 인식
+        var day = limitday.intervalDay(now);
+        //day = now.intervalDay(limitday);
+        document.write("수료일 : " + limitday.toLocaleString() + "<br>");
+        document.write("수료일까지 남은 날짜 : " + day + "일<br>");
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

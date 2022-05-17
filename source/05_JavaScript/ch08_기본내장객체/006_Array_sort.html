@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Array_Sort</title>
+    <script>
+        var arr1 = new Array("big", "apple", "carrot", "electric" ,"dice" ); // "big", "apple", "carrot", "dice", "electric"
+        var arr2 = new Array(52, 232, 45, 111, 67);
+        document.write("arr1 정렬 전 : " + arr1 + "<br>");
+        document.write("arr2 정렬 전 : " + arr2 + "<br>");
+        arr1.sort(); // 정렬 - ascii 코드 순으로 정렬
+        document.write("arr1 정렬 후 : " + arr1 + "<br>");
+        //arr2.sort(); // 오름차순 정렬 불가
+        arr2.sort(function (left, right) {
+            return left - right; // 오름차순 정렬
+            //return right - left // 내림차순
+        }); //
+        document.write("arr2 정렬 후 : " + arr2 + "<br>");
+        arr2.reverse(); // 배열 요소의 순서를 뒤집은 함수
+        document.write("arr2 정렬 후 : " + arr2 + "<br>");
+        var sliceArr2 = arr2.slice(0, 3); // 0번째부터 3번째 앞까지
+        document.write("arr2 top3 : " + sliceArr2);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

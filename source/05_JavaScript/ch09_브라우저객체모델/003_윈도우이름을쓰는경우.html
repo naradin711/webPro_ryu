@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>윈도우이름쓰고 새창띄우기</title>
+    <script>
+        function openWin() {
+            var child = open("", "childWin", "width=500, height=300, left=100, top=100");
+            if (child) {
+                child.document.write("<h2>이것은 자바스크립트로 만든 새 창입니다</h2>")
+            } else {
+                alert("브라우저의 팝업 차단을 해제해주세요");
+            };
+        };
+    </script>
+</head>
+<body>
+    <button onclick="openWin()">새창열기</button>
+    <hr/>
+    <a href="http://daum.net" target="childWin"> 다음으로 </a>
+</body>
+</html>

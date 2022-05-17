@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Small picture</title>
+    <script>
+        var child;
+        function openBig() {
+            // 새창열기 함수
+              child = open("004_Big.html", "", "width=850, height=750"); //새창은
+            if (!child) {  
+                alert("브라우저의 팝업 차단을 해제해주세요");
+            };
+        };
+        function closeBig() {
+            // 열린 새창 닫기 함수
+            child.close();
+        };
+    </script>
+</head>
+<body>
+    <h3> 작은 그림의 Parent창</h3>
+    <img src="img/small.jpg" alt="작은그림"
+         onmouseover="openBig()"
+         onmouseout="closeBig()" /> <!-- 마우스 올라갈때 새창열기 마우스 나가면 창 닫기 -->
+
+</body>
+</html>

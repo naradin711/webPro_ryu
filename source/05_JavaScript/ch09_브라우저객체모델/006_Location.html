@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>006 Location</title>
+    <script>
+        var sec = 0; // 1,2,3초 출력
+        var id = setInterval(function () {  // 셋인터벌에 펑션 집어넣기
+            sec++; // 1,2,3초 계속 증가시키기
+            document.body.innerHTML += "<h4>" + sec +"초 지남</h4>" //
+        }, 1000);
+        setTimeout(function () { // 셋타임아웃에 펑션 집어넣기
+            clearInterval(id); // clearInterval로 초 세는거 멈춤
+            //location.assign("007_History.html");
+            location = '007_History.html'; // 로케이션 3초 후 해당 페이지로 넘어가야 함
+        }, 3000); // 3초 시간설정
+    </script>
+</head>
+<body>
+    <h1> 잠시후 페이지 이동이 있을 예정입니다</h1>
+</body>
+</html>

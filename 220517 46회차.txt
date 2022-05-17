@@ -1,0 +1,130 @@
+ 220517 
+
+문서 객체 생성하기
+
+<script>
+        window.onload = function () {
+            // 방법 1. 1. h1태그와 그 내용값 생성 2. 태그에 들어갈 TextNode생성 3. h1태그와 textNode 연결 4. h1태그를 body에 추가
+            var h1 = document.createElement('h1'); // h1태그 생성
+            var textnode = document.createTextNode('Ah-choo 널 보면 재채기가 나올 거 같아');
+            h1.appendChild(textnode); //h1태그와 textNode 연결
+            document.body.appendChild(h1);  //h1태그와 Body 연결
+            // 방법 2. 1. img 태그 생성 2. src 속성 setting
+            var img = document.createElement('img'); //  img 태그 생성
+            img.setAttribute('src', 'img/red.jpg'); // src 속성 setting
+            document.body.appendChild(img);  //img태그와 Body 연결
+            // 방법 3. innerHTML을 이용
+            document.body.innerHTML += "<h1> 방법 3으로 추가</h1>"
+        };
+    </script>
+
+해당 값은 
+Ah-choo 널 보면 재채기가 나올 거 같아
+이미지
+방법 3으로 추가
+로 출력이 된다.
+
+문서 객체 가져오기
+
+<script>
+        var id; // 아이디 생성 및 초기화
+        var toggle1 = 0; // 토글1 생성 및 초기화
+        var toggle2 = 0; // 토글2 생성 및 초기화
+        var header1, header2
+        window.onload = function () {
+            header1 = document.getElementById("header-1"); //함수 헤더1과 학생 데이터 
+            header1.innerHTML = "시간";
+            header2 = document.getElementById("header-2");
+            header2.innerHTML = new Date().toLocaleString(); // 초당 한번 표시하기
+            id = setInterval(function () {
+                header2.innerHTML = new Date().toLocaleString();
+            }, 2000);
+        }
+        function change(n) { //function change() 안에 n 의 임의 변수를 넣어서 아래 버튼과 연동시킨다
+            if (n == 1) { //1번버튼 누를시
+                if (toggle1 == 0) {// 버튼이 눌러지지 않은 상태
+                    header1.innerHTML = " 현재";
+                    toggle1 = 1;
+                } else if (toggle1 == 1) { // 버튼이 눌러진 상태
+                    header1.innerHTML = "시간";
+                    toggle1 = 0;
+                }
+               
+
+            } else if (n == 2) { //2번버튼 누를시
+                if (toggle2 == 0) { // 버튼이 눌러지지 않은 상태
+                    clearInterval(id);
+                    toggle2 = 1;
+                } else if (toggle2 == 1) { // 버튼이 눌러진 상태
+                    id = setInterval(function () {
+                        header2.innerHTML = new Date().toLocaleString();
+                    }, 2000);
+                    toggle2 = 0;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1 id="header-1">HEADER - 1</h1>
+    <h1 id="header-2">HEADER - 2</h1>
+    <button onclick="change(1)">바꿔-1</button> <!-- 스크립트 change(n)과 연관 클릭시 change(1)-->
+    <button onclick="change(2)">바꿔-2  (타이머 토글)</button> <!-- 스크립트 change(n)과 연관 클릭시 change(2)-->
+</body>
+
+
+
+class값을 이용하여 문서 객체 가져오기 
+
+<script>
+        window.onload = function () {
+            //  getElementsByClassName 해당하는 클래스에서 가치값 가져오기
+            //  getElementsByClassName()의 return값은 배열로 인식 
+            var clock1 = document.getElementsByClassName("clock1");
+            clock1[0].innerHTML = new Date().toLocaleString(); //0번째 값
+            var clock2 = document.getElementsByClassName("clock2");
+            clock2[0].value = new Date().toLocaleString(); //0번째 값
+            clock2[0].style.color = 'red';
+            clock2[0].style.fontSize = '20px';
+            clock2[0].style.cssText = 'color:blue; font-size:15px;';
+        };
+    </script>
+</head>
+<body>
+    <h1 class="clock1">시간</h1>
+    <input type="text" class="clock2"/>
+</body>
+
+parameter 값을 이용하여 문서 객체 가져오기
+
+<script>
+        function login() {
+            //  getElementsByName()의 return값은 배열로 인식
+            var id = document.getElementsByName('id')[0].value;
+            var pw = document.getElementsByName('pw')[0].value;
+            var gender = document.getElementsByName('gender');
+            if (gender[0].checked) {
+                alert("남자" + id + "님 비번 " + pw);
+            } else if (gender[1].checked) {
+                alert("여자" + id + "님 비번 " + pw);
+            } else {
+                alert(" 성별을 반드시 체크하세요. " ) ;
+            }
+        };
+    </script>
+</head>
+<body>
+    <form action="##">
+        <h1>로그인</h1>
+        <p>ID <input type="text" name="id"/></p>
+        <p>PW <input type="password" name="pw"/></p>
+        <p> 
+            <input type="radio" name="gender" value="m"/> 남자
+            <input type="radio" name="gender" value="f" /> 여자
+        </p>
+        <p>
+            <input type="submit" name="submit" value="로그인" onclick="login()"/>          
+        </p> 
+    </form>
+    
+</body>

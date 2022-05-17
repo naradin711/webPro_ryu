@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        function locate(n) {
+            if (n == 1) {
+                location = 'http://naver.com';
+            } else if (n == 2) {
+                location = 'http://daum.net';
+            } else if (n == 3) {
+                location = 'http://google.com';
+            } else if (n == 4) {
+                location = 'http://youtube.com';
+            }
+        };
+    </script>
+</head>
+<body>
+    <form>
+        <table>
+            <caption><h1>메뉴</h1></caption>
+            <tr>
+                <td >
+                 <input type="button" id="naver" onclick="locate(1)" value="네이버"/> 
+                 <input type="button" id="daum" onclick="locate(2)" value="다음"/> 
+                 <input type="button"id="google" onclick="locate(3)" value="구글"/> 
+                 <input type="button" id="youtube" onclick="locate(4)" value="유튜브"/> 
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
