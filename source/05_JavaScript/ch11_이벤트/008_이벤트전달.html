@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        div {
+            padding : 30px;
+        }
+        #A {
+            border : 1px solid red;
+        }
+        #B {
+            border: 1px solid green;
+        }
+        #C {
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="A" onclick="alert('A영역');"> <!--   A 순으로 경고-->
+        A 영역
+        <div id="B" onclick="alert('B영역');"> <!--  B A 순으로 경고-->
+            B 영역
+            <div id="C" onclick="alert('C영역');"> <!-- C B A 순으로 경고-->
+                C 영역
+            </div>
+        </div>
+    </div>
+</body>
+</html>

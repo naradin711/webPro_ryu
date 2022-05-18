@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>아이디 중복 체크</title>
+    <style>
+        /* 스타일 체크에 커서 포인터*/
+        #using {
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        var idchk; // idchk를 밖으로 빼기
+        window.onload = function () { // 윈도우가 실행되었을때 자동으로 실행
+            var id = opener.document.getElementById('id').value; // id = 오프너의 id id 값을 가져온다
+            idchk = document.getElementById('idchk'); // idchk = 지금 문서의 id idchk 값을 가져온다
+            idchk.setAttribute('value', id); // setAttribute(a, b)를 사용하여 idchk.value 는 id(opener의 아이디값)을 가져온다
+        };
+        function closing() {
+            opener.document.getElementById('id').value = idchk.value; // 오프너의 id = 지금 문서의 id idchk 값을 보낸다.
+            opener.document.getElementById('confirmed').value = 1; // 오프너의 confirmed 값을 1로 바꾼다. 
+            close();// 닫기
+        }
+    </script>
+
+</head>
+<body>
+    <p>
+        <center>
+            ID <input type="text" name="idchk" id="idchk" size="20" /> <input type="button" id="cc" value="체크" />
+        </center>
+        <br />
+        <br />
+        <center><input type="button" id="using" value="아이디 사용" onclick="closing()"/></center>
+    </p>
+</body>
+</html>

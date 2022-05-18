@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>키보드 표 색깔</title>
+    <style>
+        table {
+            width : 500px;
+            margin : 50px auto;
+            background-color : darkgreen;
+        }
+        td {
+            background-color : white;
+            padding : 50px;
+            text-align : center;
+        }
+    </style>
+    <script>
+        window.onkeyup = function () {
+            var t0 = document.getElementById('0');
+            var t1 = document.getElementById('1');
+            var t2 = document.getElementById('2');
+            var t3 = document.getElementById('3');
+            var t4 = document.getElementById('4');
+            var t5 = document.getElementById('5');
+            var t6 = document.getElementById('6');
+            var t7 = document.getElementById('7');
+            var t8 = document.getElementById('8');
+            t0.style.backgroundColor = "white";
+            t1.style.backgroundColor = "white";
+            t2.style.backgroundColor = "white";
+            t3.style.backgroundColor = "white";
+            t4.style.backgroundColor = "white";
+            t5.style.backgroundColor = "white";
+            t6.style.backgroundColor = "white";
+            t7.style.backgroundColor = "white";
+            t8.style.backgroundColor = "white";
+        };
+        window.onkeydown = function () {
+            if (event.keyCode == 48) {
+                var t0 = document.getElementById('0');
+                t0.style.backgroundColor = "red";
+            } else if (event.keyCode == 96) {
+                var t0 = document.getElementById('0');
+                t0.style.backgroundColor = "yellow";
+            } else if (event.keyCode == 49) {
+                var t0 = document.getElementById('1');
+                t0.style.backgroundColor = "red";
+            } else if (event.keyCode == 97) {
+                var t0 = document.getElementById('1');
+                t0.style.backgroundColor = "yellow";
+            } else if (event.keyCode == 50) {
+                var t0 = document.getElementById('2');
+                t0.style.backgroundColor = "red";
+            } else if (event.keyCode == 98) {
+                var t0 = document.getElementById('2');
+                t0.style.backgroundColor = "yellow";
+            } else if (event.keyCode == 51) {
+                var t0 = document.getElementById('3');
+                t0.style.backgroundColor = "red";
+            } else if (event.keyCode == 99) {
+                var t0 = document.getElementById('3');
+                t0.style.backgroundColor = "yellow";
+            } else if (event.keyCode == 52) {
+                var t0 = document.getElementById('4');
+                t0.style.backgroundColor = "red";
+            } else if (event.keyCode == 100) {
+                var t0 = document.getElementById('4');
+                t0.style.backgroundColor = "yellow";
+            } else if (event.keyCode == 53) {
+                var t0 = document.getElementById('5');
+                t0.style.backgroundColor = "red";
+            } else if (event.keyCode == 101) {
+                var t0 = document.getElementById('5');
+                t0.style.backgroundColor = "yellow";
+            } else if (event.keyCode == 54) {
+                var t0 = document.getElementById('6');
+                t0.style.backgroundColor = "red";
+            } else if (event.keyCode == 102) {
+                var t0 = document.getElementById('6');
+                t0.style.backgroundColor = "yellow";
+            } else if (event.keyCode == 55) {
+                var t0 = document.getElementById('7');
+                t0.style.backgroundColor = "red";
+            } else if (event.keyCode == 103) {
+                var t0 = document.getElementById('7');
+                t0.style.backgroundColor = "yellow";
+            } else if (event.keyCode == 56) {
+                var t0 = document.getElementById('8');
+                t0.style.backgroundColor = "red";
+            } else if (event.keyCode == 104) {
+                var t0 = document.getElementById('8');
+                t0.style.backgroundColor = "yellow";
+            } else if (event.keyCode == 57) {
+                var t0 = document.getElementById('9');
+                t0.style.backgroundColor = "red";
+            } else if (event.keyCode == 105) {
+                var t0 = document.getElementById('9');
+                t0.style.backgroundColor = "yellow";
+            }
+        }
+        
+    </script>
+</head>
+<body>
+    <table>
+        <tr><td id="0">0</td><td id="1">1</td><td id="2">2</td></tr>
+        <tr><td id="3">3</td><td id="4">4</td><td id="5">5</td></tr>
+        <tr><td id="6">6</td><td id="7">7</td><td id="8">8</td></tr>
+    </table>
+</body>
+</html>

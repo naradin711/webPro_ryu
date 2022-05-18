@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>이벤트강제발생</title>
+    <script>
+        window.onload = function () {
+            var btnA = document.querySelector('#btnA');
+            var btnB = document.querySelector('#btnB');
+            var cntA = document.querySelector('#countA');
+            var cntB = document.querySelector('#countB');
+            //btnA를 클릭할 경우 강제로 btnB의 클릭이벤트 발생
+            btnA.onclick = function () {
+                cntA.innerHTML = Number(cntA.innerHTML) + 1; // 기존에 있는 cntA값은 문자열로 인식 숫자로 인식하기 위해서는 Number or ParseInt로 숫자값으로 변환 필수
+                btnB.onclick();
+            };
+            btnB.onclick = function () {
+                cntB.innerHTML = Number(cntB.innerHTML) + 1; // 기존에 있는 cntA값은 문자열로 인식 숫자로 인식하기 위해서는 Number or ParseInt로 숫자값으로 변환 필수
+            };
+        };
+        
+    </script>
+</head>
+<body>
+    <button id="btnA">Button A</button>
+    <button id="btnB">Button B</button>
+    <h1>Button A - <span id="countA">0</span></h1>
+    <h1>Button B - <span id="countB">0</span></h1>
+</body>
+</html>

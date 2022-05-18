@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>이벤트 객체</title>
+    <script>
+        window.onkeyup = function () { // 키보드를 눌렀다 뗄 때 해당 function 발동
+            // alert(event.keyCode); // 눌러진 키와 아스키코드
+            document.body.innerHTML +=    " 눌러진 키의  아스키코드: " + event.keyCode + "<br>";
+            // 오른쪽 숫자키패드의 아스키값 (96-105);
+            // 위 쪽 숫자키패드의 아스키값 (48-57)
+        };
+        window.onclick = function () {
+            document.body.innerHTML = '스크린 좌표 ' + event.screenX + ' : ' + event.screenY + '<br>' ;
+            document.body.innerHTML += 'offset 좌표 ' + event.offsetX + ' : ' + event.offsetY + '<br>' ;
+        };
+    </script>
+</head>
+<body>
+    <img src="img/car.gif" /> <br />
+</body>
+</html>

@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>클릭하는 대로 이미지가 이동</title>
+    
+    <script>
+        
+
+        window.onclick = function () {
+            document.body.innerHTML += 'x 좌표 : ' + event.offsetX + ' y 좌표 : ' + event.offsetY + '<br>';
+            var car1 = document.querySelector('#car');
+            car1.style.cssText = "position:absolute; left:" + Number(event.offsetX) + "px; top:" + Number(event.offsetY) + "px;";
+           
+        };
+    </script>
+</head>
+<body>
+    <p id="car"><img src="img/car.gif" /></p>
+</body>
+</html>

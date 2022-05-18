@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>회원가입</title>
+    <style>
+        /* 스타일 체크에 커서 포인터*/
+        #chk {
+            cursor : pointer;
+        }
+    </style>
+    <script>
+
+        function childOpen() { //자식 페이지 소환 기능
+            var child = open('004_confirm.html', ' ', 'width=800,height=700,left=200');  //자식 함수는 = 열기 ( 자식 페이지 주소, 자식 페이지 이름, 새창의 너비 높이 위치) 
+            if (!child) { // 만일 새창이 안뜨면!
+                alert('팝업 차단을 해제하세요.');
+            }
+           
+        }
+        function chk1() { // 아이디 확인 및 중복 확인 반드시 해주는 chk1 기능
+            if (!frm.id.value) { // 아이디 입력 안하면!
+                    alert('ID를 입력하십시오.');
+                    return false;
+             } else if (confirmed.value != 1) { // 중복체크를 하지 않으면!
+                    alert('ID 중복확인을 하셔야 회원가입이 가능합니다');
+                    return false;
+             }
+        }
+    </script>
+</head>
+<body>
+    <form name="frm" onsubmit="return chk1()"> <!--form 이름 서브밋할때 리턴 chk1()-->
+        <input type="hidden" name="confirmed" id="confirmed" value="0" />
+        <p>
+            아이디 <input type="text" name="id" id="id" size="30" /> 
+             <input type="button" id="chk" onclick="childOpen();" value="중복확인" />
+        </p>
+        <p>
+           <input type="submit"  value="회원가입" />
+        </p>
+    </form>
+</body>
+</html>

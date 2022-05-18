@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>그림색 버튼 바뀜</title>
+    <script>
+        var btn2 = "url(img/but2.gif)";
+        function tap() {
+            var bt1 = document.querySelector('p');
+            bt1.style.cssText = "background : " + btn2;
+        };
+    </script>
+</head>
+<body>
+    <p>
+        <img src="img/but1.gif" id="btn1" onmousedown="this.src='img/but2.gif'" onmouseup="this.src='img/but1.gif'"/>
+    </p>
+</body>
+</html>

@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>이벤트 제거</title>
+    <style>
+        /*빨강-초록-파랑-보라-검정 순으로 반복*/
+        span:nth-child(5n+1) {
+            color : red;
+        }
+        span:nth-child(5n+2) {
+            color: forestgreen;
+        }
+        span:nth-child(5n+3) {
+            color: blue;
+        }
+        span:nth-child(5n+4) {
+            color: blueviolet;
+        }
+        span:nth-child(5n) {
+            color: black;
+        }
+    </style>
+    <script>
+        var cnt = 0; // 클릭한 횟수
+        window.onload = function () {
+            document.querySelector('h1').onclick = function () {
+               
+                this.innerHTML += '<span>♥</span>'
+                cnt++;
+                // 클릭 이벤트는 5번만 가능하도록 하는 것은 cnt가 5가 되면 이벤트를 제거
+                if (cnt == 5) {
+                    this.onclick = null; //이벤트 제거
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <h1>좋아요</h1>
+</body>
+</html>
