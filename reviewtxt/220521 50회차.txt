@@ -1,0 +1,378 @@
+ 220521
+
+
+servlet 만들어보기
+
+servlet에 접속하기 위한 html
+
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="hw1" method ="post">
+	<input type="submit" value="Hello World 서블릿 요청!">
+</form>
+	
+</body>
+</html>
+
+servlet 클래스
+
+import javax.servlet.http.HttpServletResponse;
+  
+@WebServlet(name = "HelloWorld", urlPatterns = { "/HW" })
+public class Ex01_HW extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+      
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		  System.out.println("2. doGet호출");
+		  response.setContentType("text/html; charset=utf-8");
+		  // response.setContentType("text/html; charset=utf-8"); 한글로 연결하는 문자열
+		  PrintWriter out = response.getWriter(); // 스프링 객체 생성
+		  out.print("<html>");
+		  out.print("<head>");
+		  out.print("<style>");
+		  out.print("h1 {color : blue; size = 2.0em;}");
+		  out.print("</style>");
+		  out.print("</head>");
+		  out.print("<body>");
+		  out.print("<h1>안녕하세요. 첫 servlet 예제입니다. </h1>");
+		  out.print("</body>");		  
+		  out.print("</html>");
+	}
+ 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// form method post onclick submit
+		System.out.println("1. doPost호출");
+		doGet(request, response);
+	}
+
+}
+
+해당 클래스 이름은 Ex01_HW이며 HttpServlet을 상속받아 Servlet 역할을 한다
+
+위 HttpServlet의 출력값은 다음과 같다
+
+안녕하세요. 첫 servlet 예제입니다.
+
+
+
+servlet mapping
+
+해당 class의 web.xml의 소스에서 해당 servlet의 주소를 합당한 주소로 다시 mapping 해준다.
+
+
+<servlet>
+  	<servlet-name>HW</servlet-name>
+  	<servlet-class>com.lec.ex.Ex01_HW</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>HW</servlet-name>
+  	<url-pattern>/hw1</url-pattern>
+  </servlet-mapping>
+
+
+
+1부터 입력한 숫자까지의 누적합을 고르는 웹페이지를 만드시오 
+
+숫자 입력할 html은 아래와 같다.
+
+<body>
+	
+	<h2>1부터 얼마까지 누적할 지 자연수를 입력하세요</h2>
+	<form action="ex02sooOut" method="post">
+		<input type="number" min="1" max="999999" name="num" >
+		<input type="submit" value="누적결과">
+	</form>
+</body>
+
+해당 입력된 숫자가 출력될 Servlet은 아래와 같다
+
+@WebServlet( urlPatterns = { "/ex02sooOut" },  initParams = {  @WebInitParam(name = "Ex02", value = "") })
+public class Ex02 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String n1Str = request.getParameter("num");
+		if (n1Str==null || n1Str.equals("")) {
+			n1Str = "1";
+		};
+		int n1 = Integer.parseInt(n1Str); 
+		
+		int sum = 0;
+		for (int i = 0; i <= n1; i++) {
+			sum += i;
+		}
+		response.setContentType("text/html; charset = utf-8");
+		PrintWriter out = response.getWriter();
+		out.println("<h1>1부터 "+ n1 +"까지 누적합은 "+sum+"입니다. </h1>");
+		out.close();
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 // num값이 들어오는 곳
+		
+		doGet(request, response);
+	}
+
+
+먼저 직전 html에서 넘어오는 숫자는 모두 문자열 값을 가지므로
+str 함수로 받은 후에 해당 문자열이 빈칸이면 1로 바꾸는 계산 이후
+str 함수를 Integer.parseInt로 숫자로 치환하여
+누적값을 구하는 for문에 숫자로 넣어줘서 연산을 지속한다.
+해당 웹페이지의 출력 값은 아래와 같다.
+
+1부터 7까지 누적합은 28입니다.
+
+
+웹페이지로부터 단수를 받아 해당 구구단을 출력한다
+
+단수를 입력하는 웹페이지는 아래와 같다.
+
+
+<html>
+<head>
+<meta charset="UTF-8">
+<title>단수 입력</title>
+ <!--  <link href="http://localhost:8090/ch03_semiServlet/css/ex03.css" rel="stylesheet">-->
+ <link href="/ch03_semiServlet/css/ex03.css" rel="stylesheet">
+</head>
+<!-- Ex03.html 의 파라미터를 가지고 Ex03 Servlet의 요청 -->
+<body>
+	<form action="/ch03_semiServlet/Ex03" method="get">
+		<select name="su">
+			<option value="2">2단</option>
+			<option value="3">3단</option>
+			<option value="4">4단</option>
+			<option value="5">5단</option>
+			<option value="6">6단</option>
+			<option value="7" selected="selected">7단</option> <!-- selected="selected"는 기본 선택 -->
+			<option value="8">8단</option>
+			<option value="9">9단</option>
+		 </select>
+		 <br>
+		 <input type="submit" value="구구단 출력">
+	</form>
+</body>
+</html>
+
+selected="selected" 를 통해 기본으로 선택되는 단수를 7단으로 고정한다
+
+구구단을 출력하는 Servlet은 아래와 같다.
+
+@WebServlet("/Ex03")
+public class Ex03 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+    
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 response.setContentType("text/html; charset = utf-8");
+		 PrintWriter out = response.getWriter();
+		 int su = Integer.parseInt(request.getParameter("su"));
+		 out.println("<html>");
+		 out.println("<head>");
+		 out.println("<link href=\"/ch03_semiServlet/css/ex03.css\" rel=\"stylesheet\">");
+		 out.println("</head>");
+		 out.println("<body>");
+		 out.println("<h3>"+su+"단 구구단\n"+"</h3>");
+		 for (int i =1; i<=9 ; i++) {		 
+			 out.println("<p>"+su+"*"+i+"="+su*i+"</p>");
+			 
+		 }
+		 out.println("</body>");
+		 out.println("</html>");
+		 out.close();
+	}
+
+	 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
+
+Servlet의 get과 post method의 차이
+
+아이디와 비밀번호를 입력하는 웹페이지는 아래와 같다
+
+<form action="../Ex01" method="get">
+		<p>ID <input type="text" name = "id" value="한글"> </p>
+		<p>PW <input type="password" name = "pw"> </p>
+		<p><input type="submit" value="Ex01 서블릿에게 id pw 넘겨주기(GET)"></p>
+	</form>
+	<hr>
+	<form action="../Ex01" method="post">
+		<p>ID <input type="text" name = "id" value="한글"> </p>
+		<p>PW <input type="password" name = "pw"> </p>
+		<p><input type="submit" value="Ex01 서블릿에게 id pw 넘겨주기(POST)"></p>
+	</form>
+
+
+이를 출력하는 Servlet의 java는 아래와 같다.
+
+@WebServlet("/Ex01")
+public class Ex01 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+  
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 //id, pw 파라미터 받아서 브라우저 화면 뿌리기
+		
+		String id = request.getParameter("id");
+		String pw = request.getParameter("pw");
+		response.setContentType("text/html; charset=utf-8");// response 출력의 한글처리
+		PrintWriter out = response.getWriter();
+		out.println("<body>");
+		out.println("<h2>아이디 :  " +id+"</h2>");
+		out.println("<h2>비밀번호 :  " +pw+"</h2>");
+		out.println("</body>");
+		out.close();
+	}
+
+	 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8"); // request 입력값의 한글처리
+		String id = request.getParameter("id");
+		String pw = request.getParameter("pw");
+		response.setContentType("text/html; charset=utf-8");// response 출력의 한글처리
+		PrintWriter out = response.getWriter();
+		out.println("<body>");
+		out.println("<h2>아이디 :  " +id+"</h2>");
+		out.println("<h2>비밀번호 :  " +pw+"</h2>");
+		out.println("</body>");
+		out.close();
+	}
+
+}
+
+해당 값을 출력할때 한글값을 처리하기 위해서 response.setContentType("text/html; charset=utf-8"); 을 입력하고
+post method에서는 가져오는 request 값에서도 한글 값을 인식을 못하기 때문에 
+request.setCharacterEncoding("utf-8");와 같이 post로 입력한 값이 한글을 인식하도록 바꿔준다.
+
+
+다음은 웹페이지에서 다양한 입력 방식을 통해 개체값을 입력받고
+같은 속성의 값이 중복이거나 혹은 입력하지 않은 값을 출력하는 것을 실행하고자 한다.
+
+개체값을 받을 html방식은 아래와 같다.
+
+
+<body>
+	<h2>오늘의 식당 선택</h2>
+	<form action="../Ex02" method="get">
+		<p>
+			메뉴
+			<select name="menu" multiple="multiple" size="3">
+				<option>된장찌개</option>
+				<option>김치찌개</option>
+				<option>부대찌개</option>
+				<option>고추장찌개</option>
+			</select>
+		</p>
+		<p>
+			식당
+			<input type="checkbox" name="rest" value="강남" checked="checked"/>강남
+			<input type="checkbox" name="rest" value="역삼"/>역삼
+			<input type="checkbox" name="rest" value="선릉"/>선릉
+			<input type="checkbox" name="rest" value="서초"/>서초
+			<input type="checkbox" name="rest" value="논현"/>논현
+			<input type="checkbox" name="rest" value="삼성"/>삼성
+		</p>	
+		<p>
+		국적
+		<input type="radio" name="nation" value="한국" checked="checked"> 한국
+		<input type="radio" name="nation" value="중국"  > 중국
+		<input type="radio" name="nation" value="미국"  > 미국
+		<input type="radio" name="nation" value="일본"  > 일본
+		<input type="radio" name="nation" value="몽골"  > 몽골
+		<input type="radio" name="nation" value="그리스"  > 그리스
+		</p>	
+		<p>
+		<input type="submit" name="sub" value="제출!">
+		</p>
+	</form>
+</body>
+
+
+select type에서 size를 통해 한 번에 볼 수 있는 개체값의 숫자를 조절할 수 있으며 multiple="multiple" 다중 선택이 가능하다
+checkbox, radio type에서  checked="checked" 를 통해 기본 설정값을 넣었으며 radio는 중복 선택이 불가능하다.
+
+위에서 입력받은 개체값을 출력할 Servlet은 아래와 같다.
+
+@WebServlet("/Ex02")
+public class Ex02 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+     
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 //menu, rest : 파라미터가 안들어 올 수 있음. null 가능. => 배열로받음
+		//  같은 이름의 파라미터가 여러개 들어올 수 있음
+		 //nation 파라미터 : 반드시 하나는 선택함
+		String[] mn1  = request.getParameterValues("menu");
+		String[] rs1 = request.getParameterValues("rest");
+		String nt1 = request.getParameter("nation");
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println("<html>");
+		out.println("<body>");
+		if(mn1!=null) {
+			out.println("<h3>선택한 메뉴는" );
+			for (String m : mn1) {
+				out.println(m+". ");
+			}
+			out.println("</h3>" );
+		} else {
+			out.println("<h3>선택한 메뉴가 없습니다.</h3>");
+			 
+		}
+		out.println("<br>");
+		if(rs1!=null) {
+			out.println("<h3>선택한 지역은" );
+			for (String r : rs1) {
+				out.print(r+". ");
+			}
+			out.println("</h3>" );
+		} else {
+			out.println("<h3>선택한 지역이 없습니다.</h3>");
+			 
+		}
+		out.println("<br>");
+		out.println("<h3>선택한 국적은 "+nt1+"입니다.</h3>");
+		
+		out.println("</body>");
+		out.println("</html>");
+	}
+ 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 doGet(request, response);
+	}
+
+}
+
+
+String[] mn1  = request.getParameterValues("menu"); 를 통해 다중 선택값을 받도록 하며 
+for (String r : rs1) { out.print(r+". "); }를 입력하여 확장 for문을 통하여 배열이 된 값을 출력하도록 한다
+
+
+출력된 값은 아래와 같다
+
+선택한 메뉴는 김치찌개. 부대찌개.
+
+선택한 지역은 선릉. 서초.
+
+선택한 국적은 몽골입니다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

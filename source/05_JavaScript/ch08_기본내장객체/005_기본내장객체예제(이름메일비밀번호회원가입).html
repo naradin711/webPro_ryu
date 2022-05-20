@@ -59,7 +59,7 @@
         var patternEng = /[a-zA-Z]/;         // 알파벳 문자 패턴
         var patternKor = /[가-힣ㄱ-ㅎㅏ-ㅣ]/;  // 한글 패턴
         var patternSpc = /[~!@#$%^&*()-+=\\]/; // 특수문자 패턴
-        var patternMail = /\w{3,20}@[a-zA-Z]{3,20}.com|[a-zA-Z]{3,20}@[a-zA-Z]{3,20}.co.kr/
+        var patternMail = /\w{3,20}@[a-zA-Z]{3,20}.com|[a-zA-Z0-9]{3,20}@[a-zA-Z]{3,20}.co.kr/
 
         function chk() {
             if (!frm.pw.value) {

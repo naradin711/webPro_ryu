@@ -4,7 +4,14 @@
 <head>
     <meta charset="utf-8" />
     <title>클릭하는 대로 이미지가 이동</title>
-    
+    <style>
+        #car {
+            width : 200px;
+        }
+        img {
+            width: 450px;
+        }
+    </style>
     <script>
         
 
@@ -12,11 +19,11 @@
             document.body.innerHTML += 'x 좌표 : ' + event.offsetX + ' y 좌표 : ' + event.offsetY + '<br>';
             var car1 = document.querySelector('#car');
             car1.style.cssText = "position:absolute; left:" + Number(event.offsetX) + "px; top:" + Number(event.offsetY) + "px;";
-           
+            
         };
     </script>
 </head>
 <body>
-    <p id="car"><img src="img/car.gif" /></p>
+    <p id="car"><img src="https://image.fmkorea.com/files/attach/new2/20220519/2063168106/2918522394/4632350996/3685a1b149d83d25464d83a36b8498ba.jpg" /></p>
 </body>
 </html>
