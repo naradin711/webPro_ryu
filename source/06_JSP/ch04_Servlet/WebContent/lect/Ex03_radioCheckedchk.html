@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	window.onload = function () {
+		 
+		document.querySelector('form').onsubmit = function () {
+			 
+			// 디폴트 이벤트 제한 : 동의합니다 check하지 않으면 진행 x
+			var agreeYes = document.querySelector('input[name="agree"]');
+			 
+			if (! agreeYes.checked) {
+				alert("동의하셔야 진행합니다.");
+				return false;
+			};
+		};
+	};
+</script>
+</head>
+<body>
+	<fieldset>
+	 헌법재판소 재판관은 정당에 가입하거나 정치에 관여할 수 없다. 국정의 중요한 사항에 관한 대통령의 자문에 응하기 위하여 국가원로로 구성되는 국가원로자문회의를 둘 수 있다. 공개하지 아니한 회의내용의 공표에 관하여는 법률이 정하는 바에 의한다. 국가안전보장회의는 대통령이 주재한다. 국회는 상호원조 또는 안전보장에 관한 조약, 중요한 국제조직에 관한 조약, 우호통상항해조약, 주권의 제약에 관한 조약, 강화조약, 국가나 국민에게 중대한 재정적 부담을 지우는 조약 또는 입법사항에 관한 조약의 체결·비준에 대한 동의권을 가진다.
+	</fieldset>
+	<form action="#">
+		<input type="radio" name="agree" value="yes">동의합니다. 
+		<input type="radio" name="agree" value="no">동의하지 않습니다. 
+		<input type="submit" value="다음">
+	</form>
+</body>
+</html>

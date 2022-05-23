@@ -1,0 +1,489 @@
+ 220523 51회차
+
+soucer 폴더의 xml은
+
+톰캣/conf xml에 계속 정보를 보내는데 이를 Publisher라고 한다
+
+
+서블릿의 실행 순서
+
+새로운 서블릿을 생성할 시 해당 페이지를 출력하는 순서는 다음과 같다. 
+
+@WebServlet("/Ex03")
+public class Ex03_LifeCycle extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+     
+    public Ex03_LifeCycle() {
+       System.out.println("Ex03_LifeCycle 생성자 - 1");
+         
+    }
+ 
+	public void init(ServletConfig config) throws ServletException {
+		//  객체 생성될 때, 최초 한 번만 실행! -2
+		System.out.println("Ex03_LifeCycle init 서블릿 객체가 생성되었을 때 수행- 2");
+	}
+ 
+	
+ 
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 클라이언트의 요청이 들어왔을 때 수행(service 메소드가 있으면 doGet/doPost 실행되지 않습니다.) -3
+		System.out.println("service()실행 - 3 ");
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println("<h2>service()실행</h2>");
+		out.close();
+	}
+
+	 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 클라이언트 요청이 get 방식으로 들어왔을 때 실행 (service 메소드가 있으면 doGet/doPost 실행되지 않습니다.)
+		System.out.println("service()실행 - 3 ");
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println("<h2>doGet()실행</h2>");
+		out.close();
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 클라이언트 요청이 Post 방식으로 들어왔을 때 실행 (service 메소드가 있으면 doGet/doPost 실행되지 않습니다.)
+		System.out.println("service()실행 - 3 ");
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println("<h2>doPost()실행</h2>");
+		out.close();
+	}
+	public void destroy() {
+		// Ex03_LifeCycle 서블릿이 메모리가 해제될 때 
+	    System.out.println("destroy() 실행 (메모리해제) -1"  );
+	}
+	
+	@PreDestroy
+	private void preDestroy() {
+		System.out.println("@preDestroy() 실행 (메모리해제) -2");
+	}
+}
+
+이때 웹페이지의 출력값은
+Service실행() 이며
+
+해당 콘솔값은 아래와 같다.
+
+Ex03_LifeCycle 생성자 - 1
+Ex03_LifeCycle init 서블릿 객체가 생성되었을 때 수행- 2
+service()실행 - 3 
+5월 23, 2022 11:35:12 오전 org.apache.catalina.core.StandardServer await
+정보: 셧다운 포트를 통해 유효한 셧다운 명령을 받았습니다. 서버 인스턴스를 중지시킵니다.
+5월 23, 2022 11:35:12 오전 org.apache.coyote.AbstractProtocol pause
+정보: 프로토콜 핸들러 ["http-nio-8090"]을(를) 일시 정지 중
+5월 23, 2022 11:35:12 오전 org.apache.catalina.core.StandardService stopInternal
+정보: 서비스 [Catalina]을(를) 중지시킵니다.
+5월 23, 2022 11:35:12 오전 org.apache.catalina.core.ApplicationContext log
+정보: SessionListener: contextDestroyed()
+5월 23, 2022 11:35:12 오전 org.apache.catalina.core.ApplicationContext log
+정보: ContextListener: contextDestroyed()
+destroy() 실행 (메모리해제)
+@preDestroy() 실행 (메모리해제)
+5월 23, 2022 11:35:12 오전 org.apache.coyote.AbstractProtocol stop
+정보: 프로토콜 핸들러 ["http-nio-8090"]을(를) 중지시킵니다.
+5월 23, 2022 11:35:12 오전 org.apache.coyote.AbstractProtocol destroy
+정보: 프로토콜 핸들러 ["http-nio-8090"]을(를) 소멸시킵니다.
+
+
+회원가입 정보창 만들기
+
+회원가입을 위한 정보를 입력받을 HTML은 아래와 같다.
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link href="../css/join.css" rel="stylesheet">
+	<script type="text/javascript">
+	 	function chkJoin() {
+	 		// 두 비밀번호가 일치하고 메일 수신을 한개 이상 선택한 경우만 디폴트 이벤트 적용
+	 		if(frmJoin.pw.value != frmJoin.pwChk.value){
+	 			alert('비밀번호를 확인하세요')
+	 			pw.value ='';
+	 			pwChk.value ='';
+	 			pw.focus;
+	 			return false;
+	 		}
+	 		
+	 		var mailSendCnt = 0;	
+	 		
+	 		for (var i = 0; i<frmJoin.mailSend.length ; i++){
+	 			if (frmJoin.mailSend[i].selected){
+	 				mailSendCnt++
+	 			}//if 	
+	 		}//for
+	 		if(!mailSendCnt){
+	 			alert("메일 수신을 한 개 이상 선택하셔야 합니다.");
+	 			return false;
+	 		}
+	 	};// function
+	</script>
+</head>
+<body>
+	<div id="joinForm_wrap">
+		<form action="../Ex04" method="post" name="frmJoin" class="frmJoin" onsubmit="return chkJoin()">
+			<div id="join_title">회원가입
+			<input type="hidden" name="hiddenParam" value="보이지는 않으나 전달되는 값">
+			</div>
+			<table>
+				<tr>
+				   <th>
+				   <label for="name">이름</label>
+				   </th>
+				   <td>
+				   	<input type="text" name="name" id="name" class="name" required="required" autofocus="autofocus"/>
+				   </td> 
+				</tr>
+				<tr>
+				   <th>
+				   <label for="id">아이디</label>
+				   </th>
+				   <td>
+				   	<input type="text" name="id" id="id" class="id" required="required"/>
+				   </td> 
+				</tr>
+				<tr>
+				   <th>
+				   <label for="pw">비밀번호</label>
+				   </th>
+				   <td>
+				   	<input type="password" name="pw" id="pw" class="pw" required="required"/>
+				   </td> 
+				</tr>
+				<tr>
+				   <th>
+				   <label for="pwChk">비밀번호확인</label>
+				   </th>
+				   <td>
+				   	<input type="password" name="pwChk" id="pwChk" class="pwChk"/>
+				   </td> 
+				</tr>
+				  <tr>
+				   <th>
+				   <label for="birth">생일</label>
+				   </th>
+				   <td>
+				   	<input type="date" name="birth" id="birth" class="birth"/>
+				   </td> 
+				</tr>
+				<tr>
+				   <th>
+				   <label >취미</label>
+				   </th>
+				   <td>
+				   	<input type="checkbox" name="hobby" id="reading" class="hobby" value="독서"/>
+				   	<label for="reading" >독서</label>
+				   	<input type="checkbox" name="hobby" id="cooking" class="hobby" value="요리"/>
+				   	<label for="cooking" >요리</label>
+				   	<input type="checkbox" name="hobby" id="exercising" class="hobby" value="운동"/>
+				   	<label for="exercising" >운동</label>
+				   	<input type="checkbox" name="hobby" id="sleeping" class="hobby" value="취침"/>
+				   	<label for="sleeping" >취침</label>
+				   </td> 
+				</tr>
+				<tr>
+				   <th>
+				   <label>성 별</label>
+				   </th>
+				   <td>
+				   	<input type="radio" name="gender" id="m" value="m"/>
+				   	<label for="m">남자</label>
+				   	<input type="radio" name="gender" id="f" value="f" checked="checked"/>
+				   	<label for="f">여자</label>
+				   </td> 
+				</tr>
+				<tr>
+				   <th>
+				   <label for="email">메일</label>
+				   </th>
+				   <td>
+				   	<input type="email" name="email" id="email" class="email" required="required"/>
+				   </td> 
+				</tr>
+				<tr>
+					<th>
+					메일 수신
+					</th>
+					<td>
+					<select name="mailSend" multiple="multiple" class="mailSend">
+						<option>광고</option>
+						<option>배송</option>
+						<option>공지</option>
+						<option>뉴스</option>
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<input type="submit" value="가입하기" class = "joinBtn_style">
+						<input type="reset" value="다시하기" class = "joinBtn_style">
+						<input type="button" value="뒤로가기" class = "joinBtn_style" onclick="history.back()">
+					</td>
+				</tr>
+			</table>
+		</form>	
+		
+	</div>
+</body>
+</html>
+
+<link href="../css/join.css" rel="stylesheet">를 통해 문자에 스타일을 적용시켰으며
+<script type="text/javascript">
+	 	function chkJoin() {
+	 		// 두 비밀번호가 일치하고 메일 수신을 한개 이상 선택한 경우만 디폴트 이벤트 적용
+	 		if(frmJoin.pw.value != frmJoin.pwChk.value){
+	 			alert('비밀번호를 확인하세요')
+	 			pw.value ='';
+	 			pwChk.value ='';
+	 			pw.focus;
+	 			return false;
+	 		}
+	 		
+	 		var mailSendCnt = 0;	
+	 		
+	 		for (var i = 0; i<frmJoin.mailSend.length ; i++){
+	 			if (frmJoin.mailSend[i].selected){
+	 				mailSendCnt++
+	 			}//if 	
+	 		}//for
+	 		if(!mailSendCnt){
+	 			alert("메일 수신을 한 개 이상 선택하셔야 합니다.");
+	 			return false;
+	 		}
+	 	};// function
+	</script>
+
+파트로 비밀번호 확인 비밀번호 *표 처리 메일 수신 항목 체크를 스크립트 규칙으로 적용시킨다.
+
+해당 정보를 출력시키는 servlet의 구성은 아래와 같다.
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Arrays;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/Ex04")
+public class Ex04 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+    
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		actionDo(request, response);
+	}
+
+	private void actionDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html; charset=utf-8");
+		String hiddenParam = request.getParameter("hiddenParam");
+		String name = request.getParameter("name");
+		String id = request.getParameter("id");
+		String pw = request.getParameter("pw");
+		String birth = request.getParameter("birth");
+		Date birth2 = null;
+		if (birth!="") {
+			 birth2 = Date.valueOf(request.getParameter("birth")); // birth의 스트링값을 Date형태로 바꿈 데이터베이스 저장용	 	
+		}
+		
+		String[] hobby = request.getParameterValues("hobby"); //배열 || null 
+		String gender = request.getParameter("gender");
+		String email = request.getParameter("email");
+		String[] mailSend = request.getParameterValues("mailSend"); // 배열
+		PrintWriter out = response.getWriter();
+		out.println("<html>");
+		out.println("<head>");
+		out.println("<link href='css/join.css' rel='stylesheet'>");
+		//<link href='css/join.css' rel='stylesheet'>
+		out.println("</head>");
+		out.println("<body>");
+		out.println("<div id='joinForm_wrap'>");
+		out.println("<div id='join_title'> 회원가입정보 </div>");
+		out.println("<h2> hiddenParam : "+ hiddenParam+"</h2>");
+		out.println("<h2> 이름 : "+ name+"</h2>");
+		out.println("<h2> 아이디 : "+ id+"</h2>");
+		out.println("<h2> 비밀번호 : ");
+		for (int i = 0; i<pw.length() ; i++) {
+			out.println('*');
+		}
+		out.println("</h2>");
+		out.println("<h2> 생년월일 : "+ birth+"</h2>");
+		out.println("<h2> 생년월일(java.sql.Date) : "+ birth2+"</h2>"); 
+		out.println("<h2> 취미 : ");
+		if (hobby!=null) {
+			for (int i = 0; i<hobby.length ; i++) {
+				if(i == hobby.length-1) {
+					out.println(hobby[i] );
+				}else {
+					out.println(hobby[i]+',');
+				}//if	
+			}//for
+		}else {
+			out.println("선택한 취미가 없음");
+		}//if
+		out.println("</h2>");
+		out.println("<h2> 성별 : "+ gender+"</h2>");
+		out.println("<h2> 이메일 : "+ email+"</h2>");
+		out.println("<h2> 이메일 : "+ Arrays.toString(mailSend)+"</h2>");
+		out.println("</div>");
+		out.println("</body>");
+		out.println("</html>");
+		out.close();
+		
+	}
+
+}
+
+위 자바를 적용시킨 출력값은 아래와 같다.
+
+회원가입정보
+hiddenParam : 보이지는 않으나 전달되는 값
+이름 : 홍길동
+아이디 : dasdfasf
+비밀번호 : * * * * *
+생년월일 : 2022-05-05
+생년월일(java.sql.Date) : 2022-05-05
+취미 : 독서, 요리, 운동
+성별 : f
+이메일 : dda@ddddd.com
+이메일 : [광고, 배송]
+
+지시자 활용하기 
+
+지시자를 통하여 스타일링, 외부문서 삽입하기 등 다양한 활동을 할 수 있다.
+
+먼저 지시자가 진행되는 jsp파일은 아래와 같다.
+
+<%@page import="java.util.Arrays"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>지시자</title>
+	<link hidden="../css/join.css" rel="stylesheet">
+</head>
+<body>
+<%
+	int [] arr = {10, 20, 30};
+	out.println(Arrays.toString(arr));
+%>
+	<div id="header"> </div>
+	<h1>회원가입페이지</h1>
+	<hr>
+	<%@ include file="../member/footer.jsp" %>
+	<hr>
+	다시 ex03_지시자.jsp로 옮긴다.
+</body>
+</html>
+
+여기서  <%@page import="java.util.Arrays"%>를 통해 외부 함수를 가져오고
+<%
+	int [] arr = {10, 20, 30};
+	out.println(Arrays.toString(arr));
+%>
+를 통해 지시값을 사용하여 바로 객체출력이 가능해진다.
+<%@ include file="../member/footer.jsp" %> 를 통해 외부 폴더에 있는 타 jsp파일을
+지금 jsp파일에 삽입할 수 있다.
+
+
+[10, 20, 30]
+회원가입페이지
+
+서울시 XX구 XX로 000 XXX빌딩 8F | TEL : 02-999-9999 | FAX : 02-999-9998
+사업자등록번호 : 000-12-00000 | 통신판매업신로 : 종로 제0000호 | 대표이사 : 홍길동
+좋은시스템 문의 메일 : webmaster@joeun.com
+ⓒ2022 JOEUNSYSTEM.Co.,Ltd. All Rights Reserved.
+다시 ex03_지시자.jsp로 옮긴다.
+
+누적합 구하기
+
+jsp의 지시자를 활용하여 누적값을 구하고 이를 출력한다.
+
+해당 jsp의 구성은 아래와 같다.
+
+<%@page import="javax.security.auth.message.callback.PrivateKeyCallback.Request"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>누적합 출력하기</title>
+</head>
+<body>
+	<% String su1 = request.getParameter("su"); %>
+	<form action="#">
+		<fieldset>
+			<legend> 숫자입력</legend>
+			<table>
+				<tr> 
+					<th>숫자</th>
+					<td><input type="text" name="su" class="su" 
+					value="<%if(su1!=null) out.print(su1);%>"></td>
+					<td><input type="submit" value="누적"></td>
+			</tr>
+			
+			</table>
+			<%
+			 if (su1!=null && !su1.equals("")){
+				 int s1 = Integer.parseInt(su1);
+				 int total = 0;// 누적변수
+				 for (int i =1 ; i <=s1; i++){
+					 total += i;
+				 }
+				 out.println("<h2>1부터 "+s1+"까지의 누적합은 "+total+"이다.</h2>");
+			 }  
+			 %>
+		</fieldset>
+	</form>
+</body>
+</html>
+
+여기서 
+
+<legend> 숫자입력</legend>
+	 <table>
+	 <tr> 
+	 <th>숫자</th>
+	 <td><input type="text" name="su" class="su" 
+	 value="<%if(su1!=null) out.print(su1);%>"></td>
+	 <td><input type="submit" value="누적"></td>
+	 </tr>
+	 </table>
+
+를 통해 외견을 잡고 입력한 받은 숫자의 문자 값을 
+<% String su1 = request.getParameter("su"); %>
+<td><input type="text" name="su" class="su" value="<%if(su1!=null) out.print(su1);%>"></td>을 통해
+지시자로 보낸다. 이후 아래 지시자를 통해 누적값을 계산하고 출력한다.
+
+<% if (su1!=null && !su1.equals("")){
+	  int s1 = Integer.parseInt(su1);
+	  int total = 0;// 누적변수
+	 for (int i =1 ; i <=s1; i++){
+		  total += i;
+	 }
+  out.println("<h2>1부터 "+s1+"까지의 누적합은 "+total+"이다.</h2>");
+			 }  
+ %>
+
+해당 지시자의 올바른 출력값은 아래와 같다.
+
+숫자입력
+숫자	
+66
+1부터 66까지의 누적합은 2211이다.
+
+

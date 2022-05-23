@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	window.onload = function () {
+		//submit 디폴트 이벤트 제한 : checkbox가 한 개도 체크되어 있지 않을 때 제한
+		document.querySelector("form").onsubmit = function () {
+			var hobby = document.querySelectorAll('input[name="hobby"]');
+			var cnt = 0; //체크박수를 선택한 갯수 카운트
+			for (var i=0; i<hobby.length ; i++){
+				cnt= cnt + hobby[i].checked;
+				//if(hobby[i].checked){//체크박스나 라디오버튼에 체크의 여부 확인하는 함수	
+					//cnt++; //카운트 해놓기
+				//}
+			}//for
+			if(!cnt){
+				alert("취미를 한 개 이상 선택하셔야만 합니다.")
+				return false;
+			}
+			return true;
+		};//onsubmit
+	};//onload
+</script>
+</head>
+<body>
+	<form action="#">
+	<p> 취미
+		<input type="checkbox" name="hobby" value="독서">독서
+		<input type="checkbox" name="hobby" value="요리">요리
+		<input type="checkbox" name="hobby" value="운동">운동
+		<input type="checkbox" name="hobby" value="게임">게임
+		<input type="checkbox" name="hobby" value="취침">취침
+	</p>
+	<p><input type="submit" value="제출"></p>
+	</form>
+</body>
+</html>
