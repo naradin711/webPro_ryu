@@ -1,0 +1,272 @@
+ 220524
+
+간단한 메모장 만들기
+
+메모를 입력하기 위한 jsp는 아래와 같다.
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<% String conPath = request.getContextPath(); %><!-- /project_name 콘텍스트 경로! -->    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>메모장</title>
+	<link href="<%=conPath %>/css/ex02.css" rel="stylesheet" >
+</head>
+<body>
+	<form action="ex02_memoPro.jsp" method="post">
+	 <table>
+		<tr>
+			<th>작성자</th> <th>한줄메모</th>  
+		</tr>
+		<tr> 
+			<td><input type="text" name="writer" size="3"></td>
+			<td><input type="text" name="memo" size="30"></td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type="submit" name="submit" value="메모작성" size="5"> </td>
+		</tr>
+	 </table>
+	</form>
+	
+</body>
+</html>
+
+
+입력받은 값을 웹 페이지에 출력하기 위한 jsp는 아래와 같다.
+
+<%@page import="java.sql.Date"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <% String conPath = request.getContextPath(); %>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>한줄 메모장</title>
+	 
+</head>
+<body>
+	<%
+		request.setCharacterEncoding("utf-8");
+		String writer = request.getParameter("writer");
+		String memo = request.getParameter("memo");
+		String ip = request.getRemoteAddr(); //요청한 클라이언트의 ip주소
+		Date date = new Date(System.currentTimeMillis());
+		response.setContentType("text/html ; charset=utf-8");
+	%>
+	
+	<h2>글쓴이 	: <%=writer %></h2>
+	<h2>한줄메모 	: <%=memo %></h2>
+	<h2>글쓴 ip 	: <%=ip %></h2>
+	<h2>글쓴시점	: <%=date %></h2>
+</body>
+</html>
+
+해당 값을 출력한 웹페이지는 아래와 같다.
+
+글쓴이 : ㅇ
+한줄메모 : 시기다른 래퍼들의 반대편을 바라보던
+글쓴 ip : 127.0.0.1
+글쓴시점 : 2022-05-24
+
+
+로그인을 하기 위해 비밀번호와 값을 입력할 jsp 구성은 아래와 같다.
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>로그인 화면</title>
+	<style type="text/css">
+		td {
+			text-align: center;
+			padding: : 5px;
+			
+		}
+		#msg{
+		color: red;
+		text-align: center;
+		 
+		}
+	</style>
+</head>
+<body>
+	<form action="ex05_loginCertification.jsp">
+		<table>
+			<tr>
+			<th>아이디</th>
+			<td><input type="text" name="id"></td>
+			</tr>
+			<tr>
+			<th>비밀번호</th>
+			<td><input type="password" name="pw"></td>
+			</tr>
+			<tr>
+			<td colspan="2"><input type="submit" name="submit" value="로그인"></td>
+			</tr>
+		</table>
+	</form>
+	<div id="msg">
+		 
+		<% String msg = request.getParameter("msg"); 
+		if (msg!=null){
+			out.print("<h2>"+msg+"</h2>");
+		}
+		%>
+	</div>
+	
+</body>
+</html>
+
+
+해당 값을 입력받고 조건에 따라 로그인 성공인지 판단하는 jsp 구성은 아래와 같다.
+
+<%@page import="java.net.URLEncoder"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>로그인 성공</title>
+</head>
+<body>
+<%
+
+	String id = request.getParameter("id");
+	String pw = request.getParameter("pw");
+	if (id==null || !id.equals("aaa") || pw==null || !pw.equals("111")){
+		String msg = "아이디와 비밀번호를 입력하세요!";
+		msg = URLEncoder.encode(msg, "utf-8");
+		response.sendRedirect("ex05_loginFirm.jsp?msg="+msg);
+	}
+%>
+
+<h2>
+	ID는 <%=id %>이고 <br>
+	비밀번호는 <%=pw %> <br>
+	반갑습니다.<br>
+</h2>
+<br>
+<input type="button" onclick="history.go(-1);" value=뒤로가기>
+</body>
+</html>
+
+여기서 
+
+if (id==null || !id.equals("aaa") || pw==null || !pw.equals("111")){
+		String msg = "아이디와 비밀번호를 입력하세요!";
+		msg = URLEncoder.encode(msg, "utf-8");
+		response.sendRedirect("ex05_loginFirm.jsp?msg="+msg);
+	}
+
+부분을 통해 아이디가 aaa 비밀번호가 111로 정해졌고
+만일 아이디와 비밀번호가 다를 경우 자동으로 이전 페이지로 돌아가며 메시지 값을 가지며 간다.
+
+아래는 로그인이 실패 했을 경우 출력값이다.
+
+
+아이디와 비밀번호를 입력하세요!
+
+아래는 로그인이 성공했을 경우 출력값이다.
+
+ID는 aaa이고
+비밀번호는 111
+반갑습니다.
+
+
+컴퓨터부터 난수를 받아 일치 불일치로 야바위 만들기
+
+사용자가 숫자를 입력할 jsp는 아래와 같다.
+
+<meta charset="UTF-8">
+	<title>동전이 있는 곳을 맞춰봐</title>
+	<link href="../css/Ex01.css" rel="stylesheet" >
+</head>
+<body>
+	<form action="ExPro.jsp">
+		<button name="btn" class = "btn1" value = 1>1번</button>
+		<button name="btn" class = "btn1" value = 2>2번</button>
+		<button name="btn" class = "btn1" value = 3>3번</button>
+		</form>
+		<div id="msg">
+		 
+		<% String msg = request.getParameter("msg"); 
+		if (msg!=null){
+			out.print("<h2>"+msg+"</h2>");
+		}
+		%>
+	</div>
+
+
+이 숫자를 받고 컴퓨터로부터 난수를 받아 일치 불일치를 인식할 jsp는 아래와 같다.
+
+
+<body>
+	
+	<%
+		int min = 1;
+		int max = 4;
+		int random = (int)((Math.random()*(max - min))+min);
+		int num = Integer.parseInt(request.getParameter("btn"));
+		
+		if (num==random){
+			String msg1 = "<h2><p>정답입니다!</p><br>동전이 있던 곳은 "+num+"!</h2>";
+			out.println(msg1);
+			
+		} else {
+			String msg = "<p>Wrong! Try Again!</p><br>"+num+"은 정답아니고 "+random+"!";
+			msg = URLEncoder.encode(msg, "utf-8");
+			response.sendRedirect("Ex.jsp?msg="+msg);
+		}
+	%>
+	<br>
+	<br>
+	<button class="btn2" name="btn" onclick="history.go(-1)">다시 도전</button>
+	<br>
+</body>
+
+
+이때 여기서 사용자가 입력한 값과 컴퓨터의 난수가 일치할 경우
+if (num==random){
+String msg1 = "<h2><p>정답입니다!</p><br>동전이 있던 곳은 "+num+"!</h2>";
+out.println(msg1);
+}
+를 통해 아래와 같은 값을 출력한다.
+
+정답입니다!
+
+
+동전이 있던 곳은 1!
+
+
+사용자가 입력한 값과 컴퓨터의 난수가 불일치할 경우
+else { String msg = "<p>Wrong! Try Again!</p><br>"+num+"은 정답아니고 "+random+"!";
+ msg = URLEncoder.encode(msg, "utf-8");
+ response.sendRedirect("Ex.jsp?msg="+msg);
+ }
+를 통해 아래와 같은 값을 출력한다.
+
+Wrong! Try Again!
+
+
+3은 정답아니고 1!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

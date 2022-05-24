@@ -29,9 +29,10 @@ public class Ex04 extends HttpServlet {
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
 		String birth = request.getParameter("birth");
-		Date birth2 = null;
+		Date birth2 = null; Timestamp birth3=null;
 		if (birth!="") {
 			 birth2 = Date.valueOf(request.getParameter("birth")); // birth의 스트링값을 Date형태로 바꿈 데이터베이스 저장용	 	
+			 birth3 = Timestamp.valueOf(request.getParameter("birth") + " 00:00:00");
 		}
 		
 		String[] hobby = request.getParameterValues("hobby"); //배열 || null 
