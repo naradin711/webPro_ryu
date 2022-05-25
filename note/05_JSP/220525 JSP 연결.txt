@@ -1,0 +1,10 @@
+톰캣에 웹 어플리케이션 (ch05_jsp)를 실행할 수 있도록 배포
+
+소스 :  D:\webPro_ryu\source\06_JSP\ch05_jsp
+톰캣 :  D:\webPro_ryu\IDE\apache-tomcat-9.0.63
+배포할 위치  : D:\webPro_ryu\IDE\apache-tomcat-9.0.63\webapps
+
+1. 톰캣 webapps에  xx 폴더 생성
+2. 소스폴더의 webcontent 밑에 있는 모든 내용을 xx에 복사
+3. build 폴더의 모든 내용(classes폴더)을 xx 밑 WEB-INF에 복사
+4. 톰캣 부팅 (startup / shutdown) 
