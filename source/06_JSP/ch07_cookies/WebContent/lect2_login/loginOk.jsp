@@ -6,7 +6,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>로그인 정보 입력</title>
-	<link href="<%=conPath %>/css/style1.css " rel="style" type="text/css">
+	<link href="<%=conPath %>/css/style1.css " rel="stylesheet" type="text/css">
 	
 </head>
 <body>

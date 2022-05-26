@@ -9,11 +9,11 @@
 	<link href="<%=conPath %>/css/login.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<jsp:include page="../lect3_header/header.jsp"/>
+<jsp:include page="header.jsp"/>
 <br>
 <br>
 	<div id="loginForm_wrap">
-	<form action="<%=conPath %>/member/loginPro.jsp" method="post">
+	<form action="loginPro.jsp" method="post">
 	
 	<table>
 		<tr>
@@ -43,7 +43,7 @@
 			</td>
 		</tr>
 	</table> 
-	<p id="login_join"><a href="<%=conPath %>/member/join.jsp">아직 회원이 아니신가요?</a></p>
+	<p id="login_join"><a href="join.jsp">아직 회원이 아니신가요?</a></p>
 	</form>
 	</div>
 	

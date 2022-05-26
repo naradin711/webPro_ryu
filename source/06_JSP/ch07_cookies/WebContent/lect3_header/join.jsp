@@ -39,7 +39,7 @@
 	</script>
 </head>
 <body>
-<jsp:include page="../lect3_header/header.jsp"/>
+<jsp:include page="header.jsp"/>
 <br><br><br>
 	<div id="joinForm_wrap">
 		<form action="joinPro.jsp" method="post" name="frmJoin" class="frmJoin" onsubmit="return chkJoin()">

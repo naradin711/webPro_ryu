@@ -1,0 +1,162 @@
+ 220526
+
+ 로그인 페이지
+
+<form action="loginOk.jsp" method="post">
+		<table>
+			<tr><th>아이디</th><td><input type="text" name="id" autofocus="autofocus"></td></tr>
+			<tr><th>패스워드</th><td><input type="password" name="pw"></td></tr>
+			<tr><td></td></tr>
+			<tr><td colspan="2">
+						<input type="submit" value="로그인">
+					</td>
+			</tr>
+		</table>
+	</form>
+
+로그인 페이지에서 다음 페이지로 성공하는지 아니면 실패하여 다시 넘어가는지를 결정하는 jsp페이지는 아래와 같다.
+
+<body>
+	<%!String id, pw; %>
+	<%
+		id = request.getParameter("id");
+		pw = request.getParameter("pw");
+		
+		if (id==null || pw==null|| !pw.equals("111")||!id.equals("aaa")){
+			
+			%> <script>
+			alert("올바른 아이디와 비밀번호를 입력하세요.");
+			location.href="login.html";
+			</script> <% 
+			
+			
+		} else {
+			// 로그인 처리
+			Cookie cookie = new Cookie("id", id);
+			cookie.setMaxAge(-1); // 유효시간은 로그아웃 할 때 까지.
+			response.addCookie(cookie);
+			Cookie cookie2 = new Cookie("name", "홍길동"); // DB에서 가져온 이름을 쿠키값으로
+			cookie2.setMaxAge(-1); // 유효시간은 로그아웃 할 때 까지.
+			response.addCookie(cookie2);
+			response.sendRedirect("welcome.jsp");
+		}
+	%>
+</body>
+
+
+if (id==null || pw==null|| !pw.equals("111")||!id.equals("aaa")){
+			
+			%> <script>
+			alert("올바른 아이디와 비밀번호를 입력하세요.");
+			location.href="login.html";
+			</script> <% 
+			
+			
+		}
+
+를 통해 아이디가 aaa 비밀번호가 111이 아니면 올바른 아이디와 비밀번호를 입력하세요. 를 출력한 후 로그인 페이지로 돌아가며
+
+else {
+			// 로그인 처리
+			Cookie cookie = new Cookie("id", id);
+			cookie.setMaxAge(-1); // 유효시간은 로그아웃 할 때 까지.
+			response.addCookie(cookie);
+			Cookie cookie2 = new Cookie("name", "홍길동"); // DB에서 가져온 이름을 쿠키값으로
+			cookie2.setMaxAge(-1); // 유효시간은 로그아웃 할 때 까지.
+			response.addCookie(cookie2);
+			response.sendRedirect("welcome.jsp");
+		}
+	%>
+
+를 통해 입력받은 id 값을 cookie id와 cookie의 name값을 response를 통해 cookie에 등록 후
+welcome.jsp로 넘어가서 다음 페이지로 넘어간다.
+
+
+session을 생성하고 검색하고 특정 session 삭제 모든 session 삭제를 해본다.
+
+<body>
+<%//세션에 속성 추가 (객체타입으로 추가)
+	session.setAttribute("sessionName", "sessionValue");
+	session.setAttribute("myNum", 123);
+	
+%>
+<br>
+<h1>세션에 sessionName 속성추가</h1>
+<h1>세션에 myNum 속성추가</h1>
+<a href="ex02_sessionGet.jsp">세션 GET!</a>
+</body>
+
+먼저 위 페이지를 통해 서버에 session 값을 삽입한다.
+
+<body>
+	<%// 특정 세션 속성값 가져오기
+		String sessionName = (String)session.getAttribute("sessionName");
+							// session.setAttribute("sessionName", "sessionValue");
+		Integer myNum = (Integer)session.getAttribute("myNum");					
+							// session.setAttribute("myNum", 123);
+		out.println("sessionName : " + sessionName + "<br>" );
+		out.println("myNum : " + myNum + "<br>" );	
+		out.println("id : "+ session.getAttribute("id") + "<br>"); // 전 페이지에서 받아오지 않았기에 null 출력
+	
+	    // 모든 세션 속성 리스트 출력
+	    out.println("<h4>모든 세션 속성을 list</h4>");
+		Enumeration<String> sAttrNames = session.getAttributeNames();
+		int cnt = 0;
+		while(sAttrNames.hasMoreElements()) {
+			String sname = sAttrNames.nextElement();
+			String svalue = session.getAttribute(sname).toString();// 세션 (속성값)
+			out.println(sname + ": (세션이름) / " + svalue +" : (세션값) <br>");
+			cnt++;
+		}// while
+		if (cnt==0){
+			out.println("추가된 속성이 없습니다.");
+		} ;	
+		// 특정 세션 삭제하기 (로그아웃시 사용)
+		 
+		session.removeAttribute("myNum"); // myNum 속성 삭제
+			
+		out.println("<br><h4>마이넘 세션 속성을 삭제후 </h4>");
+		sAttrNames = session.getAttributeNames();
+		 cnt = 0;
+		while(sAttrNames.hasMoreElements()) {
+			String sname = sAttrNames.nextElement();
+			String svalue = session.getAttribute(sname).toString();// 세션 (속성값)
+			out.println(sname + ": (세션이름) / " + svalue +" : (세션값) <br>");
+			cnt++;
+		}// while
+		if (cnt==0){
+			out.println("추가된 속성이 없습니다.");
+		} ;	
+		out.println("<br><h4>모든 세션 속성을 삭제후 </h4>");	
+		// 모든 세션 삭제하기 (로그아웃시 사용)
+		session.invalidate(); // setAttribute한 모든 세선 속성값 다 삭제
+		
+		if(request.isRequestedSessionIdValid()){//유효한 세션 속성이 있는지 여부
+			out.println("session vaild<br>");
+		} else {
+			out.println("session invaild<br>");
+		}
+		out.println("<h3>세션ID : "+ session.getId()+"</h3>");
+		out.println("<h3>세션의 유효시간 : "+ session.getMaxInactiveInterval()+"</h3>");
+	%>
+	
+	
+</body>
+
+위 모든 과정을 거친 뒤 출력 값은 아래와 같다.
+
+sessionName : sessionValue
+myNum : 123
+id : null
+모든 세션 속성을 list
+myNum: (세션이름) / 123 : (세션값)
+sessionName: (세션이름) / sessionValue : (세션값)
+
+마이넘 세션 속성을 삭제후
+sessionName: (세션이름) / sessionValue : (세션값)
+
+모든 세션 속성을 삭제후
+session invaild
+세션ID : AD66191C6DCCBB174173E8E1EA9E5577
+세션의 유효시간 : 1800
+

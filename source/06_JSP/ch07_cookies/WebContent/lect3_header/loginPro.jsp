@@ -21,7 +21,7 @@
 				response.addCookie(cookie);
 				ok = true;
 				System.out.println(cookie.getValue());
-				response.sendRedirect("../lect3_header/main.jsp");
+				response.sendRedirect("main.jsp");
 				
 		} else if (!pw.equals("111")){
 				msg = "check the PW!";
