@@ -1,0 +1,112 @@
+ 220527
+
+자바 빈 사용하는 방법
+
+자바 빈을 사용하기에 앞서 먼저 그 빈의 출처가 될 자바 클래스를 생성한다.
+해당 클래스 예시는 아래와 같다.
+
+package com.lec.ex;
+
+public class Student {
+	private String sNum;
+	private String name;
+	private int grade;
+	private char ban;
+	private int score;
+	
+	public Student() {}
+	public Student(String sNum, String name, int grade, char ban, int score) {
+		super();
+		this.sNum = sNum;
+		this.name = name;
+		this.grade = grade;
+		this.ban = ban;
+		this.score = score;
+	}
+	public String getsNum() {
+		return sNum;
+	}
+	public void setsNum(String sNum) {
+		this.sNum = sNum;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getGrade() {
+		return grade;
+	}
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
+	public char getBan() {
+		return ban;
+	}
+	public void setBan(char ban) {
+		this.ban = ban;
+	}
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	
+	
+}
+
+위 구성을 보면 getter 와 setter 그리고 해당 객체를 받는 빈 필드를 생성한다.
+
+위 클래스를 바탕으로 해당 변수를 입력할 웹페이지를 아래와 같이  생성한다.
+
+<body>
+	<form action="step06.jsp">
+		<p>학번<input type="text" name="sNum" required="required"></p>
+		<p>이름<input type="text" name="name" required="required"></p>
+		<p>학년<input type="number" name="grade" required="required" min="1" max="6"></p>
+		<p>반
+			<input type="radio" name="ban" value="f" checked="checked">꽃님
+	    	<input type="radio" name="ban" value="s" >별님
+	    	<input type="radio" name="ban" value="m" >달님
+	    </p>
+	    <p>점수<input type="number" name="score" required="required" min="10" max="100"></p>
+		<p><input type="submit" value="입력"></p>
+	</form>
+</body>
+
+위 웹페이지에서 입력받은 객체 값을 아래의 자바빈으로 수용하고
+
+<body>
+	<jsp:useBean id="s" class="com.lec.ex.Student" scope="request"/>
+	<jsp:setProperty property="*" name="s"/>
+	<jsp:forward page="stResult.jsp"/>
+</body>
+
+다음 jsp파일에서 자바빈을 통해 출력한다.
+
+<body>
+	<jsp:useBean id="s" class="com.lec.ex.Student" scope="request"/>
+	<h2>입력된 개인정보</h2>
+	<p>학번 : <jsp:getProperty property="sNum" 	 name="s"/></p>
+	<p>이름 : <jsp:getProperty property="name" 	 name="s"/></p>
+	<p>학년 : <jsp:getProperty property="grade" 	 name="s"/></p>
+	<p>반  : <jsp:getProperty property="ban"      name="s"/></p>
+	<p>점수 : <jsp:getProperty property="score" 	 name="s"/></p>
+	
+</body>
+
+해당 구성을 다 올바르게 입력할 시 출력값은 아래와 같다.
+
+입력된 개인정보
+학번 : a1111
+
+이름 : 홍길동
+
+학년 : 2
+
+반 : s
+
+점수 : 13

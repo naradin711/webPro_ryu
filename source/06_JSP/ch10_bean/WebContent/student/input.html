@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+</head>
+<body>
+	<form action="step06.jsp">
+		<p>학번<input type="text" name="sNum" required="required"></p>
+		<p>이름<input type="text" name="name" required="required"></p>
+		<p>학년<input type="number" name="grade" required="required" min="1" max="6"></p>
+		<p>반
+			<input type="radio" name="ban" value="f" checked="checked">꽃님
+	    	<input type="radio" name="ban" value="s" >별님
+	    	<input type="radio" name="ban" value="m" >달님
+	    </p>
+	    <p>점수<input type="number" name="score" required="required" min="10" max="100"></p>
+		<p><input type="submit" value="입력"></p>
+	</form>
+</body>
+</html>
