@@ -3,7 +3,8 @@
 -- DML (outer join, AND=&&, OR=||, 일부단행형함수)
 -- java에서 쓸 데이터 넣고 연습해보기
 show databases; -- database 리스트 보기
-
+use kimdb;
+select * from personal;
 -- * * * DCL (계정생성, 권한부여, 권한박탈, 계정삭제) * * *
 create user user01 identified by 'password';
 grant all privileges on *.* to user01; -- 권한부여
@@ -12,6 +13,7 @@ drop user user01;
 show tables; -- 오라클의 select * from tab)
 
 show databases;
+
 create database kimdb; --새로운 데이터베이스 영역 생성
 use kimdb; -- kimdb 데이터베이스로 들어감
 select database();
