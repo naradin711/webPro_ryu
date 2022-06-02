@@ -2,12 +2,18 @@ package com.lec.member;
 
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
-public class MemberDao {
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import org.omg.CORBA.INITIALIZE;
+
+public class MemberDaoConn {
 	public static final int SUCCESS = 1; //회원가입, 정보수정 시 성공
 	public static final int FAIL 	= 0; //회원가입, 정보수정 시 실패
 	public static final int MEMBER_NONEXISTENT = 1; // 사용가능한 아이디일 때
@@ -16,21 +22,19 @@ public class MemberDao {
 	public static final int LOGIN_FAIL_ID = -1; // // 로그인시 ID오류일때 리턴값
 	public static final int LOGIN_FAIL_PW = 0; // // 로그인시 PW오류일때 리턴값
 	
-	
-	//싱글톤 - 생성자는 private여야 할것
-	private static MemberDao instance; // 자기가 자기 클래스 참조
-	public static MemberDao getInstance() {
-		if (instance == null) {
-			instance = new MemberDao();
-		}
-		return instance;
-	}
-	
-	private MemberDao () {}
 	// conn객체 관리하는 함수
-	private Connection getConnection() throws Exception {
-		Class.forName("oracle.jdbc.OracleDriver"); 
-		Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "scott", "tiger");
+	private Connection getConnection() throws SQLException  {
+		// 커넥션풀의 Datasource안의 conn 객체 이용
+		Connection conn = null;
+		
+		try {
+			Context ctx = new InitialContext();
+			DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/Oracle11g");
+			conn = ds.getConnection();
+		} catch (Exception e) {
+			System.out.println("커넥션풀 이름 오류 : "+ e.getMessage());
+		}
+		
 		return conn;
 	}
 	

@@ -58,9 +58,10 @@
 		if(conn!=null) conn.close();
 	}
 %>
-	<p><button onclick="location.href='ex3_deptnoIn.html'">다시 검색</button></p>
+	<p><button onclick="location.href='ex03_deptnoIn.jsp'">다시 검색</button></p>
 </body>
 </html>
+
 
 
 

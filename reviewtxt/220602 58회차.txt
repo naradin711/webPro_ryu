@@ -1,0 +1,359 @@
+ 220602
+
+커넥션 풀이란
+
+ 온라인 웹페이지에 접속하는 클라이언트에서 다수의 요청이 발생할 경우 데이터베이스에 부하가 발생하게 된다.
+ 이 때 한번에 접속하는 정보량을 그때 그때 전송하는 것이 아니라 미리 서버에 자주 반복되는 정보를 저장해 두고
+ 바로 바로 전송하는 것을 커넥션 풀이라 지칭한다.
+
+
+커넥션 풀 설정하는 방법은 
+
+먼저 아래와 같은 설정을 톰캣 서버의 context html에 복사하여 넣는다.
+
+ <Resource 
+		auth="Container"
+		driverClassName = "oracle.jdbc.driver.OracleDriver"
+		url = "jdbc:oracle:thin:@localhost:1521:xe"
+		username = "scott"
+		password = "tiger"
+		name = "jdbc/Oracle11g" 
+		type = "javax.sql.DataSource"
+		maxActive = "20"
+		maxWait = "1000"
+	/>
+
+maxActive = "20" 해당 커넥션 풀은 20회 정도 저장되며
+maxWait = "1000" 기다리는 시간은 1초 정도이다.
+
+getConnection 으로 DAO의 Connection으로 커넥선 풀을 바꾸는 구성은 아래와 같다.
+
+private Connection getConnection()   {
+		// 커넥션풀의 Datasource안의 conn 객체 이용
+		Connection conn = null;
+		
+		try {
+			Context ctx = new InitialContext();
+			DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/Oracle11g");
+		} catch (Exception e) {
+			System.out.println("커넥션풀 이름 오류 : "+ e.getMessage());
+		}
+		
+		return conn;
+	}
+
+해당 커넥션 풀을 loginok에 적용시켜보았다.
+
+<%
+	request.setCharacterEncoding("utf-8");
+	String id = request.getParameter("id");
+	String pw = request.getParameter("pw");
+	MemberDaoConn mDao = new MemberDaoConn();
+	int result = mDao.loginCheck(id, pw);
+	if(result == MemberDaoConn.LOGIN_SUCCESS) { // 로그인 성공
+		MemberDto member = mDao.getMember(id);
+		session.setAttribute("member", member);
+		response.sendRedirect("main.jsp");
+	} else if(result == MemberDaoConn.LOGIN_FAIL_PW) { // 비밀번호 오류
+	%> 
+		<script type="text/javascript">
+			alert('비밀번호를 확인하세요.');
+			history.back();
+		</script>
+	<%		
+	} else if(result == MemberDaoConn.LOGIN_FAIL_ID) { // 아이디 오류
+	%> 
+	    <script type="text/javascript">
+	    	alert('등록되지 않은 아이디입니다.');
+			history.back();
+		</script>	
+	<%	
+	}
+%>
+
+4번째 줄의 싱글톤 함수를 대체하였으며 나머지 함수도 Conn 커넥션 풀로 치환하였다.
+
+
+예제) 목록에 친구하고자 하는 이름과 전화번호를 받고 그것을 검색 후 출력하고자 하는 DB 및 jsp를 만드시오.
+
+친구의 값을 지정해줄 DTO 파일은 아래와 같다.
+
+package com.lec.member;
+
+public class FriendDTO {
+	private int num;
+	private String name;
+	private String phone;
+	
+	public FriendDTO() {
+		super();
+	}
+
+	public FriendDTO(int num, String name, String phone) {
+		super();
+		this.num = num;
+		this.name = name;
+		this.phone = phone;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	@Override
+	public String toString() {
+		return "FriendDTO [num=" + num + ", name=" + name + ", phone=" + phone + "]";
+	}
+	
+	
+}
+
+목록에 넣을 순번 값, 이름 값, 전화번호 값을 받을 빈 필드를 만들고 해당 값이 전부 들어간 필드를 만들었으며
+이를 다른 클래스나 페이지로 이동할 때 쓸 getter와 setter를 지정하였다.
+
+해당 dto를 바탕으로 oracle을 토대로 sql문을 시행할 dao는 아래와 같다.
+
+public class FriendDAOConn {
+	public static final int SUCCESS = 1; //회원가입, 정보수정 시 성공
+	public static final int FAIL 	= 0; //회원가입, 정보수정 시 실패
+	
+	private Connection getConnection() throws SQLException {
+		Connection conn = null;
+		try {
+			Context ctx = new InitialContext();
+			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Oracle11g");
+			conn = ds.getConnection();
+		} catch (Exception e) {
+			System.out.println("커넥션풀 이름 오류 : "+ e.getMessage());
+			
+		}
+		return conn;
+		
+	}
+	private String driver	= "oracle.jdbc.driver.OracleDriver";
+	private String url 		= "jdbc:oracle:thin:@localhost:1521:xe";
+	// -- 1. 친구 추가 할 쿼리
+	public int joinFriend(FriendDTO dto) {
+		int result = FAIL;
+		Connection conn = null;
+		PreparedStatement pstmt =null;
+		String sql = "INSERT INTO FRIEND (NUM, NAME, PHONE) " + 
+				"    VALUES (FRIEND_SEQ.nextval, ? , ? )";
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getName());
+			pstmt.setString(2, dto.getPhone());
+			result = pstmt.executeUpdate();
+			System.out.println(result==SUCCESS? "친구추가성공":"친구추가실패");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			System.out.println("친구추가 실패 : " + dto.toString());// toString으로 회원가입 실패요소 확인
+		} finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return result;
+		
+	}
+	//-- 2. 친구 리스트 뽑기.
+	public ArrayList<FriendDTO> getList() {
+		ArrayList<FriendDTO> dtos = new ArrayList<FriendDTO>();
+		FriendDTO dto = null;
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM FRIEND";
+		try {
+			conn = getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				int num = rs.getInt("num");
+				String name = rs.getString("name");
+				String phone = rs.getString("phone");
+				dtos.add(new FriendDTO(num, name, phone));
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if(rs!=null) 	rs.close();
+				if(stmt!=null) 	stmt.close();
+				if(conn!=null) 	conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return dtos;
+		
+	}
+	//-- 2-1. 이름으로 친구 리스트 뽑기.
+	public ArrayList<FriendDTO> search(String name, String phone) {
+		ArrayList<FriendDTO> dtos = new ArrayList<FriendDTO>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM FRIEND WHERE NAME LIKE '%' || ? || '%' AND PHONE LIKE '%'|| ? || '%' ";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, phone);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				int num = rs.getInt("num");
+				name = rs.getString("name");
+				phone = rs.getString("phone");
+				dtos.add(new FriendDTO(num, name, phone));
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			System.out.println("검색실패22" + dtos.toString());
+		} finally {
+			try {
+				if(rs!=null) 	rs.close();
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) 	conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				System.out.println("검색실패11");
+			}
+		}
+		return dtos;	
+	}
+}
+
+
+
+값을 입력하고 목록을 출력할 jsp 구성은 아래와 같다.
+
+<% String conPath = request.getContextPath(); %>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>친 구 찾 기</title>
+	<link href="<%=conPath %>/css/style.css " rel="stylesheet" type="text/css">
+	<script>
+		function search() { // function search
+			var name = frm.name.value;   // var 변수 네임 폼에서 값 받기
+			var phone = frm.phone.value; // var 변수 phone 폼에서 값 받기
+			
+			location = "main.jsp?name="+name+"&phone="+phone; // location 현재주소 ? 이름=+이름+ &번호= 번호
+		}
+	</script>
+</head>
+<body>
+<%
+String name = request.getParameter("name");
+String phone = request.getParameter("phone");
+%>
+	<form action="friendPro.jsp" method="post" name="frm" id="frm">
+	<b> 친구 이름 <input type="text" name="name" value="<%=name!=null? name : ""%>"> <!-- 친구 이름 입력값 null 일때 ""-->
+	        전화 <input type="text" name="phone" value="<%=phone!=null? phone : ""%>"> <!-- 전화번호 입력값 null 일때 ""-->
+		<input type="button" onclick="search()" value="검색"/> <!-- 검색 버튼은 온클릭에 자체 자바 스크립트 펑션으로 -->
+		<input type="submit" value="추가"/> <!-- 추가 버튼은 서브밋 -->
+	</b>
+	<table>
+	<caption>이곳에 DB에 입력된 친구들 리스트</caption>
+	<tr>
+		<th>순번</th><th>이름</th><th>전화</th>
+	</tr>
+	<%
+		
+	    FriendDAOConn fDao = new FriendDAOConn();
+	    ArrayList<FriendDTO> dtos1 = fDao.search(name, phone);
+	    ArrayList<FriendDTO> dtos2 = fDao.getList();
+	    if(!dtos1.isEmpty()){
+	    	for(FriendDTO dto1 : dtos1) {
+	    		out.println("<tr><td>"+dto1.getNum()+"</td><td>"+dto1.getName()+"</td><td>"+dto1.getPhone()+"</td></tr>");
+	    	}
+	    }else {
+	    	for(FriendDTO d2 : dtos2){
+	    		out.println("<tr><td>"+d2.getNum()+"</td><td>"+d2.getName()+"</td><td>"+d2.getPhone()+"</td></tr>");	    		
+	    	}
+	    }
+	    
+	%>
+	</table>
+		
+	</form>
+</body>
+</html>
+
+해당 jsp를 submit하였을 때 이를 db에 받을 jsp 구성은 아래와 같다.
+
+<body>
+<%
+	request.setCharacterEncoding("utf-8");
+%>
+	<jsp:useBean id="dto" class="com.lec.member.FriendDTO"/>
+	<jsp:setProperty property="*" name="dto"/>
+<%
+	FriendDAOConn fDao = new FriendDAOConn();
+	int result = fDao.joinFriend(dto);
+	if (result == FriendDAOConn.SUCCESS){
+	%>
+		<script type="text/javascript">
+		alert("친구추가 완료되었습니다.");
+		location.href = "main.jsp"
+		</script>
+	<%	
+	} else {
+	%>
+		<script type="text/javascript">
+		alert("친구추가에 실패하였습니다.");
+		location.href = "main.jsp"
+		</script>
+	<%		
+	}
+	
+%>	
+</body>
+
+request.setCharacterEncoding("utf-8"); 를 통해 외부 jsp에서 받아오는 문자값을 인코딩 한후에
+useBean을 사용하여 외부 폴더에 있는 dto 값을 가져온 후 <jsp:setProperty property="*" name="dto"/>를 이용해
+입력받은 모든 값을 db에 넣는다. 해당 작업이 잘 완료되면 int result = fDao.joinFriend(dto); 로 친구추가가 완료되었다.
+
+검색전 메인페이지는 아래와 같다.
+
+이곳에 DB에 입력된 친구들 리스트
+순번	이름	전화
+1	서지수	010-3333-3333
+2	유지애	010-2222-2222
+3	이수정	010-1111-1111
+4	류수정	010-7777-7777
+5	정예인	010-8888-8888
+
+여기서 이름에 지가 들어가는 친구를 찾은 뒤 출력값은 아래와 같다.
+
+이곳에 DB에 입력된 친구들 리스트
+순번	이름	전화
+1	서지수	010-3333-3333
+2	유지애	010-2222-2222
