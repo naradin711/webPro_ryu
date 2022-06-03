@@ -3,7 +3,7 @@ body {
 	background-color: #FFF0B5; 
 	font-size: 9pt;
 }
-table {border: 2px solid pink; width:95%; margin: 10px auto;}
+table {border: 2px solid pink; width:65%; margin: 10px auto;}
 table tr { background-color: #FFE271; height: 40px;}
 table tr:hover { background-color: orange;
 	cursor: pointer;
@@ -15,7 +15,7 @@ a { text-decoration: none; color:black}
 .left{text-align: left;}
 .paging {text-align: center;}
 input:not(.btn), textarea {
-	width: 150px;
+	width: 300px;
 }
 p {
 	text-align: center;
