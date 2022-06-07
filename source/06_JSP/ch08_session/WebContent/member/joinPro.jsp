@@ -54,8 +54,8 @@
 		<br>
 		<br>
 		<br>
-<div id='joinForm_wrap'>
-<div id='join_title'> 회원가입정보 </div>
+	<div id='joinForm_wrap'>
+	<div id='join_title'> 회원가입정보 </div>
 		<h2> name : <%=name %></h2>
 		<h2> id : <%=id %></h2>
 		<h2> pw : <% for (int i = 0; i<pw.length() ; i++) {
