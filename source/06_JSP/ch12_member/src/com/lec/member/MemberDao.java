@@ -34,8 +34,6 @@ public class MemberDao {
 		return conn;
 	}
 	
-	private String driver	= "oracle.jdbc.driver.OracleDriver";
-	private String url 		= "jdbc:oracle:thin:@localhost:1521:xe";
 	
 //-- 1. 회원가입시 ID 중복 체크를 위한 SQL : public int confirm id(String id)
 	public int confirmId(String id) {

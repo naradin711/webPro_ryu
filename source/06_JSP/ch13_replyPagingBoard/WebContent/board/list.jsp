@@ -45,7 +45,8 @@
 					// 답변글 RE_INDENT값에 따라 들여쓰기 - RE.GIF 출력
 					if (dto.getReIndent() > 0) {
 						int width = dto.getReIndent() * 20;
-						out.println("<img src= '"+ conPath +"/img/re.gif' width='"+width+"', height='10'>");
+						out.println("<img src= '"+ conPath +"/img/level.gif', width='"+width+"', height='10'>");
+						out.println("<img src= '"+ conPath +"/img/re.gif', height='10'>");
 					}
 					
 					// 조회수가 10 초과시 HOT.GIF 출력
