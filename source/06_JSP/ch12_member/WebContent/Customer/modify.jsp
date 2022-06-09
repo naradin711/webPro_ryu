@@ -14,7 +14,7 @@
 	
 </head>
 <body>
-<%!String cid, cname, ctel, cemail, caddress, cgender; Timestamp cbirth; %>
+<%!String cid, cname, ctel, cemail, caddress, cgender; Date cbirth; %>
 <%
 	CustomerDto customer = (CustomerDto)session.getAttribute("customer");
 	if (customer == null){

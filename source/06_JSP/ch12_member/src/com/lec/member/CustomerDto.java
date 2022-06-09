@@ -11,7 +11,7 @@ public class CustomerDto {
 	private String cemail;
 	private String caddress;
 	private String cgender;
-	private Timestamp cbirth;
+	private Date cbirth;
 	private Date crdate;
 	
 	
@@ -21,7 +21,7 @@ public class CustomerDto {
 
 
 	public CustomerDto(String cid, String cpw, String cname, String ctel, String cemail, String caddress,
-			String cgender, Timestamp cbirth, Date crdate) {
+			String cgender, Date cbirth, Date crdate) {
 		
 		this.cid = cid;
 		this.cpw = cpw;
@@ -120,13 +120,13 @@ public class CustomerDto {
 
 
 
-	public Timestamp getCbirth() {
+	public Date getCbirth() {
 		return cbirth;
 	}
 
 
 
-	public void setCbirth(Timestamp cbirth) {
+	public void setCbirth(Date cbirth) {
 		this.cbirth = cbirth;
 	}
 

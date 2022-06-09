@@ -82,7 +82,7 @@ public class CustomerDao {
 			pstmt.setString(5, dto.getCemail());
 			pstmt.setString(6, dto.getCaddress());
 			pstmt.setString(7, dto.getCgender());
-			pstmt.setTimestamp (8, dto.getCbirth());
+			pstmt.setDate (8, dto.getCbirth());
 			result = pstmt.executeUpdate();
 			System.out.println(result==SUCCESS? "회원가입성공" : "회원가입실패");
 		} catch (Exception e) {
@@ -154,7 +154,7 @@ public class CustomerDao {
 				String cemail	 =rs.getString("cemail");
 				String caddress	 =rs.getString("caddress");
 				String cgender	 =rs.getString("cgender");
-				Timestamp cbirth =rs.getTimestamp("cbirth");
+				Date cbirth 	 =rs.getDate("cbirth");
 				Date crdate		 =rs.getDate("crdate");
 				dto = new CustomerDto(cid, cpw, cname, ctel, cemail, caddress, cgender, cbirth, crdate);
 			}
@@ -194,7 +194,7 @@ public class CustomerDao {
 			pstmt.setString	(4, dto.getCemail());
 			pstmt.setString	(5, dto.getCaddress());
 			pstmt.setString	(6, dto.getCgender());
-			pstmt.setTimestamp (7, dto.getCbirth());
+			pstmt.setDate 	(7, dto.getCbirth());
 			pstmt.setString	(8, dto.getCid());
 			result = pstmt.executeUpdate();
 			System.out.println(result==SUCCESS? "회원가입성공" : "회원가입실패");

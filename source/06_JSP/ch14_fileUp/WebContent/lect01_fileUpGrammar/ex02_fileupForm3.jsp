@@ -7,10 +7,19 @@
 	<meta charset="UTF-8">
 	<title>파일 첨부</title>
 	<link href="<%=conPath %>/css/style.css " rel="stylesheet" type="text/css">
-	
+	<style type="text/css">
+		.frm {
+			border: 3px solid gray;
+			width: 500px;
+			height : 300px;
+			line-height: 65px;
+			text-align: center;
+			margin: 50px auto;
+		}
+	</style>
 </head>
 <body>
-	<form action="ex02_fileupPro3.jsp" method="post" enctype="multipart/form-data">
+	<form action="ex02_fileupPro3.jsp" method="post" enctype="multipart/form-data" class="frm">
 		
 		<p>파일1<input type="file" name="file1" ></p>
 		<p>파일2<input type="file" name="file2" ></p>

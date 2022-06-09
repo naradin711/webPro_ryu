@@ -22,7 +22,7 @@
 <%
 	String tempbirth = request.getParameter("tempbirth");
 	if (tempbirth != null) {
-	dto.setCbirth(Timestamp.valueOf(tempbirth + " 00:00:00 "));
+	dto.setCbirth(Date.valueOf(tempbirth));
 	}
 	CustomerDao cDao = CustomerDao.getInstance();
 	int result = cDao.confirmId(dto.getCid());
