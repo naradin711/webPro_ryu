@@ -9,10 +9,13 @@
 <head>
 	<meta charset="UTF-8">
 	<title>책 상 세 정 보</title>
-	<link href="<%=conPath %>/css/style.css " rel="stylesheet" type="text/css">
+	<link href="<%=conPath %>/css/style1.css " rel="stylesheet" type="text/css">
 	
 </head>
 <body>
+	<jsp:include page="../main/header.jsp"/>
+	<br>
+	<br>
 <%
 	int bid = Integer.parseInt(request.getParameter("bid"));
 	String pageNum = request.getParameter("pageNum");
@@ -50,6 +53,8 @@
 			</td>
 		</tr>
 	</table>
+	<br>
+	<jsp:include page="../main/footer.jsp"/>
 </body>
 </html>
 

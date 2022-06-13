@@ -40,6 +40,18 @@ public class FileboardDto {
 			this.frdate = frdate;
 		}
 
+		
+
+		public FileboardDto(int fnum, String fsubject, String fcontent, String ffilename, String fpw, String fip) {
+			super();
+			this.fnum = fnum;
+			this.fsubject = fsubject;
+			this.fcontent = fcontent;
+			this.ffilename = ffilename;
+			this.fpw = fpw;
+			this.fip = fip;
+		}
+
 
 
 		public FileboardDto(int fnum, String cid, String fsubject, String fcontent, 
@@ -62,12 +74,9 @@ public class FileboardDto {
 			this.cemail = cemail;
 		}
 
-
-
 		public int getFnum() {
 			return fnum;
 		}
-
 
 
 		public void setFnum(int fnum) {
@@ -204,6 +213,31 @@ public class FileboardDto {
 
 		public void setFrdate(Date frdate) {
 			this.frdate = frdate;
+		}
+		
+		
+
+
+		public String getCname() {
+			return cname;
+		}
+
+
+
+		public void setCname(String cname) {
+			this.cname = cname;
+		}
+
+
+
+		public String getCemail() {
+			return cemail;
+		}
+
+
+
+		public void setCemail(String cemail) {
+			this.cemail = cemail;
 		}
 
 

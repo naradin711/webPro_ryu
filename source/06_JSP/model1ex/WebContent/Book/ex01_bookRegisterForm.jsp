@@ -6,10 +6,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title>책 등 록</title>
-	<link href="<%=conPath %>/css/style.css " rel="stylesheet" type="text/css">
+	<link href="<%=conPath %>/css/style1.css " rel="stylesheet" type="text/css">
 	
 </head>
 <body>
+	<jsp:include page="../main/header.jsp"/>
 	<form action="ex02_bookRegisterPro.jsp" method="post" 
 	      enctype="multipart/form-data" id="book_Form">
 	      <table>
@@ -46,5 +47,9 @@
 	      </table>	        
 	
 	</form>
+	<br>
+	<br>
+	<br>
+	<jsp:include page="../main/footer.jsp"/>
 </body>
 </html>

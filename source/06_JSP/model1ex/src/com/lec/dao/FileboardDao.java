@@ -55,19 +55,19 @@ public class FileboardDao {
 			pstmt.setInt(2, endRow);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				int		fnum	= rs.getInt("fnum");
-				String 	cid = rs.getString("cid");
+				int		fnum		= rs.getInt("fnum");
+				String 	cid 		= rs.getString("cid");
 				String 	fsubject 	= rs.getString("fsubject");
 				String 	fcontent 	= rs.getString("fcontent");
 				String 	ffilename 	= rs.getString("ffilename"); 
-				String 	fpw 	= rs.getString("fpw");
-				int		fhit	= rs.getInt("fhit");
-				int		fref	= rs.getInt("fref");
-				int		frestep	= rs.getInt("frestep");
-				int		frelevel= rs.getInt("frelevel");
-				String 	fip = rs.getString("fip");
+				String 	fpw 		= rs.getString("fpw");
+				int		fhit		= rs.getInt("fhit");
+				int		fref		= rs.getInt("fref");
+				int		frestep		= rs.getInt("frestep");
+				int		frelevel	= rs.getInt("frelevel");
+				String 	fip 	= rs.getString("fip");
 				Date  	frdate 	= rs.getDate("frdate");
-				String 	cname 	= rs.getString("cname ");
+				String 	cname 	= rs.getString("cname");
 				String 	cemail 	= rs.getString("cemail");			
 				dtos.add(new FileboardDto(fnum, cid, fsubject, fcontent, ffilename, fpw, fhit, fref, frestep, frelevel, fip, frdate, cname, cemail));
 			}
@@ -216,7 +216,8 @@ public class FileboardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet		  rs	= null;
-		String sql = "SELECT * FROM FILEBOARD WHERE FNUM = ? ";
+		String sql = " SELECT F.*, CNAME, CEMAIL FROM FILEBOARD F, CUSTOMER C "
+				    + " WHERE F.CID=C.CID AND FNUM = ? ";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -234,7 +235,7 @@ public class FileboardDao {
 				int		frelevel= rs.getInt("frelevel");
 				String 	fip = rs.getString("fip");
 				Date  	frdate 	= rs.getDate("frdate");
-				String 	cname 	= rs.getString("cname ");
+				String 	cname 	= rs.getString("cname");
 				String 	cemail 	= rs.getString("cemail");			
 				dto = new FileboardDto(fnum, cid, fsubject, fcontent, ffilename, fpw, fhit, fref, frestep, frelevel, fip, frdate, cname, cemail);
 			}

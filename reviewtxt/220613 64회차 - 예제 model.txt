@@ -1,0 +1,195 @@
+ 2206013
+
+ 게시판에 글 / 답글 작성하는 과정입니다.
+
+먼저 아래의 jsp파일을 통해 작성글 / 댓글을 받는 형식을 출력합니다.
+
+<div id="content_form">
+<%
+	if(session.getAttribute("customer")==null){
+		response.sendRedirect(conPath+"/customer/loginForm.jsp");
+	}
+	String pageNum = request.getParameter("pageNum");
+	if(pageNum==null) {
+		pageNum = "1";
+	}
+	int fnum = 0; // 글 번호는 0으로 초기화
+	FileboardDto fbDto = new FileboardDto();
+	if(request.getParameter("fnum")!=null){//원글이 있어서 답글을 작성할 경우
+		fnum=Integer.parseInt(request.getParameter("fnum"));
+		FileboardDao fbDao = FileboardDao.getInstance();
+		fbDto = fbDao.getBoard(fnum); // 원글에 대한 정보 fref fre step fre level 필요
+	}
+%>
+	<form action="fboardWritePro.jsp" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="pageNum" value="<%=pageNum %>">
+		<input type="hidden" name="fnum" value="<%=fnum %>">
+		<input type="hidden" name="fref" value="<%=fbDto.getFref() %>">
+		<input type="hidden" name="frestep" value="<%=fbDto.getFrestep() %>">
+		<input type="hidden" name="frelevel" value="<%=fbDto.getFrelevel() %>">
+		<table>
+		<caption><%=fnum==0? "글쓰기":"답글 쓰기" %></caption>
+			<tr>
+			<th>제목</th>
+			<td>
+				<input type="text" name="fsubject" required="required" autofocus="autofocus" 
+				value="<%
+				if (fbDto.getFsubject()!=null){
+					out.print("답) " + fbDto.getFsubject());
+				}
+				%>">
+				</td>
+			</tr>
+			<tr><th>첨부파일</th><td><input type="file" name="ffilename"></td></tr>
+			<tr><th>본문</th><td><textarea rows="5" cols="20" name="fcontent"> </textarea> </td></tr>
+			<tr><th>작성비밀번호</th><td><input type="password" name="fpw" required="required"></td></tr>
+			<tr>
+			<td colspan="2">
+				<input type="submit" value="<%=fnum==0? "글쓰기":"답글 쓰기"  %>" name="submit" class="btn">
+				<input type="reset"  value="다시 쓰기" name="ffilename" class="btn">
+				<input type="button" value="목록" name="flist" class="btn"
+					onclick="location.href='fboardList.jsp?pageNum=<%=pageNum %>'">
+			</td>
+			</tr>
+			</table>
+		</form>
+	</div>
+
+이 때 <%=fnum==0? "글쓰기":"답글 쓰기" %> 를 통하여 이전 글에서 fnum 글번호를 받아오면 답글쓰기를 출력하도록 하며
+value="<%if (fbDto.getFsubject()!=null){out.print("답) " + fbDto.getFsubject());}%>">를 통해
+답변하고자 하는 글의 제목을 이어받는 작업을 한다. 위 구성의 출력값은 아래와 같다.
+
+
+			글쓰기
+
+제목	
+
+첨부파일		선택된 파일 없음
+
+본문	
+
+
+
+
+ 
+작성 비밀번호	
+
+		(글쓰기) (다시 쓰기) (목록)
+
+여기까지는 일반 글쓰기의 형식이며
+
+
+			답글 쓰기
+
+제목 답) for 문으로 생성된 글68	
+
+첨부파일		선택된 파일 없음
+
+본문	
+
+
+
+
+ 
+작성 비밀번호	
+
+		(글쓰기) (다시 쓰기) (목록)
+ 
+여기까지가 답변 글을 받는 형식이다.
+
+  
+
+ String path = request.getRealPath("fileboardUpload"); 파일 첨부를 할 때 파일이 저장되는 경로를 지정합니다. 
+int maxSize = 1024*1024*20; // 업로드 제한 용량을 지정합니다.
+String ffilename = null;// 첨부한 파일 이름을 초기화하고 언제든지 받을 수 있도록 준비합니다.
+MultipartRequest mRequest = null; 다양한 변수를 받을 수 있는 멀티리퀘스트 함수를 생성 및 초기화합니다.
+try {
+mRequest = new MultipartRequest (request, path, maxSize, "utf-8",new DefaultFileRenamePolicy());
+Enumeration<String> params = mRequest.getFileNames();
+String param = params.nextElement(); //파라미터
+ffilename = mRequest.getFilesystemName(param);
+} catch (Exception e){
+	System.out.println(e.getMessage());
+}
+
+위 try~catch 구문을 통해 해당 멀티리퀘스트를 받고 
+
+if(ffilename!=null){
+	InputStream is = null;
+	OutputStream os = null;
+	try {
+		File serverfile = new File(path+"/"+ffilename);
+		is = new FileInputStream(serverfile);
+		os = new FileOutputStream("D:/webPro_ryu/source/06_JSP/model1ex/WebContent/fileboardUpload/"+ffilename);
+		byte[] bs = new byte[(int)serverfile.length()];
+		int readByCnt; 
+		while((readByCnt = is.read(bs))!= -1) {
+			os.write(bs, 0, readByCnt );
+		}
+	} catch (Exception e){
+		System.out.println(e.getMessage());
+	} finally {
+		try {
+		if(os!=null) os.close();
+		if(is!=null) is.close();
+		} catch (Exception e){
+		System.out.println(e.getMessage());
+		} 
+	}//finally-
+}//if
+
+위 if 구문을 통해 Input을 받고 file이름을 입력받아 byte[] bs = new byte[(int)serverfile.length()]를 이용하여
+그림 및 첨부파일을 byte를 숫자로 받아 서버에서 하드로 하드에서 서버로 이동시킨다.
+
+아래 jsp 구성을 통해 작성된 글에서 파라미터 정보 받아오고 글 작성 여부를 출력한다.
+
+	String pageNum 	= mRequest.getParameter("pageNum");
+	int fnum 		= Integer.parseInt(mRequest.getParameter("fnum"));
+	String cid 		= ((CustomerDto)session.getAttribute("customer")).getCid();
+	String fsubject = mRequest.getParameter("fsubject");
+	String fcontent = mRequest.getParameter("fcontent");
+	String fpw 		= mRequest.getParameter("fpw");
+	int fref 		= Integer.parseInt(mRequest.getParameter("fref")); // 원글은 0 답변글은 원글의 fref들어옴
+	int frestep 	= Integer.parseInt(mRequest.getParameter("frestep")); // 원글은 0 답변글은 원글의 frestep들어옴
+	int frelevel 	= Integer.parseInt(mRequest.getParameter("frelevel")); // 원글은 0 답변글은 원글의 frelevel들어옴
+	String fip 		= request.getRemoteAddr();
+	FileboardDto fbDto = new FileboardDto(fnum, cid, fsubject, fcontent, ffilename, fpw, 0, fref, frestep, frestep, fip, null);
+	FileboardDao fbDao = FileboardDao.getInstance();
+	int result;
+	if(fnum == 0){
+		result = fbDao.insertBoard(fbDto);
+	} else {
+		result = fbDao.reply(fbDto);
+	}
+	if(result== FileboardDao.SUCCESS){%>
+		<script>
+			alert('글 작성 완료');
+			location.href= 'fboardList.jsp?pageNum=<%=pageNum %>';
+		</script> 
+  <%}else {%>
+		<script>
+			alert('글 작성 실패');
+			history.back();
+		</script>
+  <%}%>	
+
+
+
+위 구성의 출력물을 받고 글 목록을 출력하면 아래와 같다.
+
+글번호	작성자	글제목				메일		IP		작성일시		조회수
+76	김길동	시기다른 래퍼들의 바라보는 래퍼들의 	hong@hong.com	127.0.0.1		2022-06-13	8
+77	김길동	  답) 시기다른 래퍼들의 바라보는 래퍼들의	hong@hong.com	127.0.0.1		2022-06-13	0
+75	박길동	for 문으로 생성된 글68		"없음"		192.100.55.77	2022-06-13	1
+74	유길동	for 문으로 생성된 글67		bbb@naver.com	192.100.55.77	2022-06-13	0
+73	김길동	for 문으로 생성된 글66		hong@hong.com	192.100.55.77	2022-06-13	2
+
+
+
+
+
+
+
+
+
+

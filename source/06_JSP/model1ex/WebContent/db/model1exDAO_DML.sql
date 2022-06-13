@@ -95,6 +95,7 @@ SELECT * FROM BOOK WHERE BID=5;
          
     -- 6. 글 상세보기 (FNUM으로 DTO가져오기)
     SELECT * FROM FILEBOARD WHERE FNUM = 1;
+    SELECT F.*, CNAME, CEMAIL FROM FILEBOARD F, CUSTOMER C WHERE F.CID=C.CID AND FNUM = 4;
     -- 7. 글 수정하기
     UPDATE FILEBOARD SET FSUBJECT = '수정된 제목',
                          FCONTENT = '수정된 본문',

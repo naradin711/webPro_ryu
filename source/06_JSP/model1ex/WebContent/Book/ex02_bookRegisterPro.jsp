@@ -19,7 +19,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-	<link href="<%=conPath %>/css/style.css " rel="stylesheet" type="text/css">
+	<link href="<%=conPath %>/css/style1.css " rel="stylesheet" type="text/css">
 	
 </head>
 <body>

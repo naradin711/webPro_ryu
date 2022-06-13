@@ -192,23 +192,25 @@ public class CustomerDao {
 				"                    CEMAIL = ? , " + 
 				"                    CADDRESS = ? , " + 
 				"                    CGENDER = ? , "  +
-				"                    CBIRTH = ?  + " +
+				"                    CBIRTH = ? " +
 				"                    WHERE CID= ? ";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
+			System.out.println(1);
 			pstmt.setString	(1, dto.getCpw());
-			pstmt.setString	(2, dto.getCname());
-			pstmt.setString	(3, dto.getCtel());
-			pstmt.setString	(4, dto.getCemail());
-			pstmt.setString	(5, dto.getCaddress());
-			pstmt.setString	(6, dto.getCgender());
-			pstmt.setDate	(7, dto.getCbirth());
-			pstmt.setString	(8, dto.getCid());
+			pstmt.setString	(2, dto.getCtel());
+			pstmt.setString	(3, dto.getCemail());
+			pstmt.setString	(4, dto.getCaddress());
+			pstmt.setString	(5, dto.getCgender());
+			pstmt.setDate	(6, dto.getCbirth());
+			pstmt.setString	(7, dto.getCid());
+			System.out.println(2);
 			result = pstmt.executeUpdate();
+			System.out.println(3);
 			System.out.println(result==SUCCESS? "정보 수정 성공":"정보 수정 실패");
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println(e.getMessage() +"정보 수정 에러" + dto);
 		} finally {
 			try {			 
 				if (pstmt!=null) pstmt.close();

@@ -9,10 +9,17 @@
 <head>
 	<meta charset="UTF-8">
 	<title>책 목 록</title>
-	<link href="<%=conPath %>/css/style.css " rel="stylesheet" type="text/css">
-	
+	<link href="<%=conPath %>/css/style1.css " rel="stylesheet" type="text/css">
+	<style type="text/css">
+		.paging{
+			margin: 10px auto;
+			text-align: center;
+			font-size: 1.5em;
+		}
+	</style>
 </head>
 <body>
+	<jsp:include page="../main/header.jsp"/>
 	<table>
 		<tr>
 <%
@@ -67,7 +74,10 @@
  					[<a href="ex03_list_productp.jsp?pageNum=<%=endPage+1%>">다음</a>]
  			<%}%>	
  	</div>
- 	
+ 	<br>
+	<br>
+	<br>
+	<jsp:include page="../main/footer.jsp"/>
 </body>
 </html>
 

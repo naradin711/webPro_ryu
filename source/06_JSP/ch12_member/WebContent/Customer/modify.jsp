@@ -9,7 +9,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>고객 회원 정보 수정</title>
-	<link href="<%=conPath %>/Customer/join.css " rel="stylesheet" type="text/css">
+	<link href="<%=conPath %>/Customer/style1.css " rel="stylesheet" type="text/css">
 	<script src="<%=conPath %>/Customer/modify.js"></script>
 	
 </head>

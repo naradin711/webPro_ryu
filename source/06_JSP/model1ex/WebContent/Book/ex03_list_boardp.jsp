@@ -14,6 +14,7 @@
 	
 </head>
 <body>
+	<jsp:include page="../main/header.jsp"/>
 <%	//ex03_list_boardp.jsp 또는 ex03_list_boardp.jsp?pageNum=1 또는 ex03_list_boardp.jsp?pageNum=5
 	String pageNum = request.getParameter("pageNum");
 	if(pageNum==null) pageNum="1";
