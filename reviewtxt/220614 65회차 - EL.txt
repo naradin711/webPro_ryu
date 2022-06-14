@@ -1,0 +1,59 @@
+ 220614
+
+ EL (Expression Language)란?
+ EL(Expression Language)란, 표현식(<%=~ %>) 를 조금 더 간략하게 대신해서 값을 표현하는 언어. 
+ 액션 태그를 조금 다르게(간략하게) 표현한 것.
+ 
+ 위 EL 식을 이용하여 bean태그를 받으면 아래와 같다.
+
+ 	<jsp:useBean id="dto" class="com.lec.ex.MemberDto" scope="page"/>
+	<jsp:setProperty property="*" name="dto"/>
+	<h2>bean태그를 이용한 정보 출력</h2>
+	<h3>이름 : <jsp:getProperty property="name" name="dto"/> </h3>
+	<h3>ID  : <jsp:getProperty property="id" name="dto"/> </h3>
+	<h3>비번 : <jsp:getProperty property="pw" name="dto"/> </h3>
+	<br><br><br>
+	<h2> 표현식을 이용한 정보 출력</h2>
+	<h3>이름 : <%=dto.getName() %> </h3>
+	<h3>ID  : <%=dto.getId() %> </h3>
+	<h3>비번 : <%=dto.getPw() %> </h3>
+	<br><br><br>
+	<h2> EL 표현식을 이용한 정보 출력</h2>
+	<h3>이름 : ${ dto.name } </h3>
+	<h3>ID  : ${ dto.id } </h3>
+	<h3>비번 : ${ dto.pw } </h3>
+
+파라미터 값을 받아 위 구성을 출력하면 아래와 같다.
+
+bean태그를 이용한 정보 출력
+이름 : 홍길동
+ID : aaa
+비번 : 111
+
+
+
+표현식을 이용한 정보 출력
+이름 : 홍길동
+ID : aaa
+비번 : 111
+
+
+
+EL 표현식을 이용한 정보 출력
+이름 : 홍길동
+ID : aaa
+비번 : 111
+
+다음은 내장객체를 표현하는 EL이다
+Scope에 관한 객체
+  pageScope : page객체의 attributte를 참조하는 객체(page attribute의 집합) Map 타입
+  requestScope : request객체의 attribute를 참조하는 객체(rquest attribute의 집합) Map 타입
+  sessionScope : session객체의 attribute를 참조하는 객체(session attribute의 집합) Map 타입
+  applicationScope : application객체의 attribute를 참조하는 객체(application attribute의 집합) Map 타입
+
+그 외 유용한 객체
+  param : 요청 파라미터를 참조하는 객제(웹 브라우저로부터 입력된 데이터의 집합) Map 타입
+  paramValues : 요청 파라미터(배열)를 참조하는 객제(웹 브라우저로부터 입력된 데이터의 집합
+                   -똑같은 이름의 데이터가 여럿일 때 사용) Map 타입
+  initParam : 초기화 파라미터를 참조하는 객체(웹 어플리케이션의 초기화 파라미터의 집합) Map 타입
+  cookie : cookie객체를 참조하는 객체(웹 브라우저로부터 전송된 쿠키의 집합)

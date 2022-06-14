@@ -1,0 +1,76 @@
+220615 66회차 - JSTL
+
+해당 라이브러리를 사용하기 전에 위에 있는 임포트 함수를 적용한다.
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  
+
+<h2>core 라이브러리 </h2><br>
+<c:forEach var="i" begin="1" end="3" step="1">
+	<p>${i }번째, 안녕 클레오파트라 세상에서 제일 예쁜 포테이토칩!</p>
+</c:forEach>
+<br><hr><br>
+<h2>fmt(formatting) 라이브러리 </h2> <br>
+<fmt:formatNumber value="1687.12712" pattern="#,###.00"/>
+<br><hr><br>
+<h2>그외의 functions 라이브러리 </h2> <br> <!-- fn라이브러리는 el표기법 사용 -->
+ID 파라미터를 대문자로 : ${fn:toUpperCase(param.id) }
+
+위 구성을 출력하면 아래와 같다.
+
+core 라이브러리
+
+1번째, 안녕 클레오파트라 세상에서 제일 예쁜 포테이토칩!
+
+2번째, 안녕 클레오파트라 세상에서 제일 예쁜 포테이토칩!
+
+3번째, 안녕 클레오파트라 세상에서 제일 예쁜 포테이토칩!
+
+
+
+fmt(formatting) 라이브러리
+
+1,687.13
+
+그외의 functions 라이브러리
+
+ID 파라미터를 대문자로 : AAA
+
+
+
+c태그를 이용해 변수를 선언하고 해당 변수를 출력, 삭제한다.
+
+	<H2>변수 선언과 출력</H2>
+	<c:set var="varName" value="varValue"/>
+	varName : ${varName }<br>
+	<c:set var="varName" value="abc<varValue>"/>
+	varName : ${varName }<br>
+	 <!-- c:out / 변수출력 : escapeXml="true" : 특수문자 인식  -->
+	varName : <c:out value="${varName }" escapeXml="true"></c:out><br>
+	<c:remove var="varName"/><!-- 변수 삭제 -->
+	varName : ${varName }<br>
+	varName : ${empty varName? "삭제된거냐":"남아있냐" }<br>
+	varName : <c:out value="${varName }" default="없어진 변수"></c:out>
+
+<c:set을 통해 변수의 이름과 값을 설정하고 c:out을 통해 해댱 변수를 출력한다.
+c:remove를 통해 해당 이름의 변수를 삭제할 수 있다. 위 jsp 구성을 출력하면 아래와 같다.
+
+변수 선언과 출력
+varName : varValue
+varName : abc
+varName : abc<varValue>
+varName :
+varName : 삭제된거냐
+varName : 없어진 변수
+
+
+
+
+
+
+
+
+
+
+
