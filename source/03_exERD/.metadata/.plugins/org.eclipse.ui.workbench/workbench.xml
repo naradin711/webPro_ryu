@@ -35,7 +35,7 @@
 </folder>
 </info>
 </editorArea>
-<editor id="com.tomato.exerd.editor.DiagramEditor" name="book.exerd" partName="book.exerd" path="D:/webPro_ryu/source/03_exERD/newProject/book.exerd" title="book.exerd" tooltip="newProject/book.exerd" workbook="DefaultEditorWorkbook">
+<editor activePart="true" focus="true" id="com.tomato.exerd.editor.DiagramEditor" name="book.exerd" partName="book.exerd" path="D:/webPro_ryu/source/03_exERD/newProject/book.exerd" title="book.exerd" tooltip="newProject/book.exerd" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/newProject/book.exerd"/>
 </editor>
 <editor id="com.tomato.exerd.editor.DiagramEditor" name="dept_emp.exerd" partName="dept_emp.exerd" path="D:/webPro_ryu/source/03_exERD/newProject/dept_emp.exerd" title="dept_emp.exerd" tooltip="newProject/dept_emp.exerd" workbook="DefaultEditorWorkbook">
@@ -50,7 +50,7 @@
 <editor id="com.tomato.exerd.editor.DiagramEditor" name="9_shoppingmall.exerd" partName="9_shoppingmall.exerd" path="D:/webPro_ryu/source/03_exERD/newProject/9_shoppingmall.exerd" title="9_shoppingmall.exerd" tooltip="newProject/9_shoppingmall.exerd" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/newProject/9_shoppingmall.exerd"/>
 </editor>
-<editor focus="true" id="com.tomato.exerd.editor.DiagramEditor" name="220422ex2.exerd" partName="220422ex2.exerd" path="D:/webPro_ryu/source/03_exERD/newProject/220422ex2.exerd" title="220422ex2.exerd" tooltip="newProject/220422ex2.exerd" workbook="DefaultEditorWorkbook">
+<editor id="com.tomato.exerd.editor.DiagramEditor" name="220422ex2.exerd" partName="220422ex2.exerd" path="D:/webPro_ryu/source/03_exERD/newProject/220422ex2.exerd" title="220422ex2.exerd" tooltip="newProject/220422ex2.exerd" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/newProject/220422ex2.exerd"/>
 </editor>
 </editors>
@@ -76,7 +76,7 @@
 <viewState/>
 </view>
 </views>
-<perspectives activePart="org.eclipse.gef.ui.palette_view" activePerspective="com.tomato.exerd.perspective.design">
+<perspectives activePart="com.tomato.exerd.editor.DiagramEditor" activePerspective="com.tomato.exerd.perspective.design">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="com.tomato.exerd.perspective.ExerdPerspectiveFactory" id="com.tomato.exerd.perspective.design" label="eXERD"/>
 <alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
@@ -173,6 +173,7 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.tomato.exerd.editor.DiagramEditor" path="/newProject/7_5MAJOR.exerd"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.tomato.exerd.editor.DiagramEditor" path="/newProject/9_shoppingmall.exerd"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.tomato.exerd.editor.DiagramEditor" path="/newProject/220422ex2.exerd"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.tomato.exerd.editor.DiagramEditor" path="/newProject/book.exerd"/>
 </editors>
 <item historyLabel="book.exerd" index="0"/>
 <item historyLabel="dept_emp.exerd" index="1"/>
@@ -190,7 +191,8 @@
 <item historyLabel="7_5MAJOR.exerd" index="3"/>
 <item historyLabel="book.exerd" index="0"/>
 <item historyLabel="9_shoppingmall.exerd" index="4"/>
-<item active="true" historyLabel="220422ex2.exerd" index="5"/>
+<item historyLabel="220422ex2.exerd" index="5"/>
+<item active="true" historyLabel="book.exerd" index="6"/>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>

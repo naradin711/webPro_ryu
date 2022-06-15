@@ -8,32 +8,12 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>방문횟수</title>
+	<title>INDEX</title>
 	<link href="${conPath }/css/style.css " rel="stylesheet" type="text/css">
 </head>
 <body>
-<!--  <form action="ex09_visitNum.jsp">-->
-<form action="ex11_visitNumChoose.jsp">
-	방문횟수 <input type="number" name="visitNum" required="required">
-	<input type="submit" value="확인">
-</form>
+	<h1><a href="${conPath }/emplist">EMPLIST</a></h1><br><br>
+	<h1><a href="${conPath }/empSch">EMPSEARCH</a></h1>
+	<!-- EmpSch.javadhk empSch.jsp파일을 첨부해서 메일로 보내기 -->
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

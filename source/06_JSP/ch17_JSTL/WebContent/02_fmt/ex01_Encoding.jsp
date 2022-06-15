@@ -8,19 +8,15 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>방문횟수</title>
+	<title>인코딩소스</title>
 	<link href="${conPath }/css/style.css " rel="stylesheet" type="text/css">
 </head>
 <body>
-<!--  <form action="ex09_visitNum.jsp">-->
-<form action="ex11_visitNumChoose.jsp">
-	방문횟수 <input type="number" name="visitNum" required="required">
-	<input type="submit" value="확인">
-</form>
+	<fmt:requestEncoding value="utf-8"/>
+	<%-- request.setCharacterEncoding("utf_8"); --%>
+	<h2>이름 : ${param.name } </h2><!-- request.getParameter("name") -->
 </body>
 </html>
-
-
 
 
 

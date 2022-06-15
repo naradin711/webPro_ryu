@@ -1,0 +1,6 @@
+--03_emp.sql
+-- 전체리스트
+SELECT * FROM EMP;
+SELECT * FROM EMP ORDER BY EMPNO;
+-- 검색 (직원 이름 직장)
+SELECT * FROM EMP WHERE ENAME LIKE '%'||UPPER('A')||'%' AND JOB LIKE '%'||UPPER('SALE')||'%' ORDER BY EMPNO;
