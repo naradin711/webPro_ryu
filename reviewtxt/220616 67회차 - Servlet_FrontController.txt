@@ -1,0 +1,148 @@
+220616 67회차 - Servlet_FrontController_Interface
+
+먼저 해당 로직을 링크할 웹페이지를 만든다.
+
+<body>
+	<h1><a href="../insert.do"> INSERT</a></h1>
+	<h1><a href="${conPath }/select.do"> SELECT</a></h1>
+	<h1><a href="/ch18_ServletList/delete.do"> DELETE</a></h1>
+	<h1><a href="http://localhost:8090/ch18_ServletList/update.do"> UPDATE</a></h1>
+</body>
+
+INSERT  
+SELECT 
+DELETE 
+UPDATE
+
+이제 링크된 페이지에 가도록 FrontController servlet을 작성한다.
+
+@WebServlet("*.do") // *.do do 확장자를 지닌 모든 서블릿을 링크하는 확장자이다.
+public class FrontController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+     
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		
+		actionDo(request, response);
+	}
+ 
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8"); 
+		actionDo(request, response);
+	}
+
+	private void actionDo(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String uri = request.getRequestURI(); // /ch18_ServletList/insert.do
+		String conPath = request.getContextPath(); // /ch18_ServletList
+		String command = uri.substring(conPath.length());
+		System.out.println("uri = " + uri);
+		//uri = /ch18_ServletList/insert.do
+		//uri = /ch18_ServletList/update.do
+		//uri = /ch18_ServletList/delete.do
+		//uri = /ch18_ServletList/select.do 
+		System.out.println("conPath = " + conPath);
+		System.out.println("들어온 요청 = " + command);
+		String viewPage = null;
+		Service service = null;
+		if (command.equals("/insert.do")) {
+			// insert 로직을 수행할 객체 생성
+			service = new InsertService();
+			// 객체이름.메소드(request, response)
+			service.execute(request, response);
+			// request.setAttribute("result", "insert 결과");
+			// viewPage = "ex02/select.jsp"; // list결과를 못 뿌림
+			viewPage = "select.do";
+			
+		} else if (command.equals("/select.do")) {
+			// select 로직을 수행할 객체 생성
+			service = new SelectService();
+			// 객체이름.메소드(request, response)
+			service.execute(request, response);
+			//request.setAttribute("list", "list 결과");
+			viewPage = "ex02/select.jsp";
+			
+		} else if (command.equals("/delete.do")) {
+			// delete 로직을 수행할 객체 생성
+			service = new DeleteService();
+			// 객체이름.메소드(request, response)
+			service.execute(request, response);
+			//request.setAttribute("result", "delete 결과");
+			viewPage = "select.do";
+			
+		} else if (command.equals("/update.do")) {
+			// update 로직을 수행할 객체 생성
+			service = new UpdateService();
+			// 객체이름.메소드(request, response)
+			service.execute(request, response);
+			//request.setAttribute("result", "update 결과");
+			viewPage = "select.do";
+			
+		}
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+		dispatcher.forward(request, response);
+		
+	}
+
+위 servlet의 각각의 로직에 해당하는 interface 및 클래스를 만든다.
+
+public interface Service {
+	public void execute(HttpServletRequest request, HttpServletResponse response);
+}
+
+먼저 위와 같은 interface를 통해 execute 함수를 설정하고 
+
+public void execute(HttpServletRequest request, HttpServletResponse response) {
+		//  insert 로직 (DAO 생성 - request.getParameter() - dao.insert)
+		int result = 1;
+		request.setAttribute("insertResult", result);
+
+	}
+public void execute(HttpServletRequest request, HttpServletResponse response) {
+		//  delete 로직 (DAO 생성 - request.getParameter() - dao.delete)
+			int result = 1;
+			request.setAttribute("deleteResult", result);
+
+	}
+public void execute(HttpServletRequest request, HttpServletResponse response) {
+		//  select 로직 (ArrayList 생성 - request.getParameter() - dao.list)
+//			String[] Dto = {"홍", "백", "적"};
+//			ArrayList<Dto> dtos = dao.list(startRow, endRow);
+//			int PageCnt, startPage, endPage;
+			String rs = "글목록";
+			request.setAttribute("list", rs);
+
+}
+를 통해 DAO로 생성된 각각의 method를 java클래스로 받는 역할을 한다.
+
+해서 위 jsp를 FrontController servlet에 다시 돌리고 모든 결과값을 select.jsp로 모은 후 아래와 같이 결과 값을 출력한다.
+
+	<c:if test="${insertResult == 1}" >
+		<script type="text/javascript"> alert('insert 성공');</script>
+		<h2>작성 완료</h2>
+	</c:if>
+	<c:if test="${deleteResult == 1}" >
+		<script type="text/javascript"> alert('delete 성공');</script>
+		<h2>삭제 완료</h2>
+	</c:if>
+	<c:if test="${updateResult == 1}" >
+		<script type="text/javascript"> alert('update 성공');</script>
+		<h2>수정 완료</h2>
+	</c:if>
+
+위와 같은 구성을 제일 처음 페이지에서 수행하면 결과 값은 아래와 같다.
+
+작성 완료
+select.jsp입니다
+Select 결과입니다. 글목록
+
+삭제 완료
+select.jsp입니다
+Select 결과입니다. 글목록
+
+수정 완료
+select.jsp입니다
+Select 결과입니다. 글목록
