@@ -53,21 +53,21 @@ public class BoardDao {
 				rs = pstmt.executeQuery();
 				while (rs.next()) {
 					int 	bid 	= rs.getInt("bid");      
-				    String  bname 	= rs.getString("bname") ;     
-				    String  btitle	= rs.getString("bname") ;  
-				    String  bcontent= rs.getString("bname") ;
-				    Date    date 	= rs.getDate("date");            
-				    int 	bhit 	= rs.getInt("bhit");      
+				    String  bname 	= rs.getString("bname"); 
+				    String  btitle	= rs.getString("btitle");  
+				    String  bcontent= rs.getString("bcontent"); 
+				    Date    bdate 	= rs.getDate("bdate");            
+				    int 	bhit 	= rs.getInt("bhit"); 
 				    int 	bgroup 	= rs.getInt("bgroup");   
-				    int 	bstep 	= rs.getInt("bstep");   
+				    int 	bstep 	= rs.getInt("bstep"); 
 				    int 	bindent = rs.getInt("bindent");  
-				    String  bip		= rs.getString("bname");
+				    String  bip		= rs.getString("bip");
 				    dtos.add(new BoardDto(bid, bname, btitle, bcontent, 
-				    		date, bhit, bgroup, bstep, bindent, bip));
+				    		bdate, bhit, bgroup, bstep, bindent, bip));
 					 
 				}
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				System.out.println(e.getMessage() + "list");
 			} finally {
 				try {
 					if(rs!=null) rs.close();
@@ -174,16 +174,16 @@ public class BoardDao {
 			rs = pstmt.executeQuery(); 
 			if (rs.next()){     
 			    String  bname 	= rs.getString("bname") ;     
-			    String  btitle	= rs.getString("bname") ;  
-			    String  bcontent= rs.getString("bname") ;
-			    Date    date 	= rs.getDate("date");            
+			    String  btitle	= rs.getString("btitle") ;  
+			    String  bcontent= rs.getString("bcontent") ;
+			    Date    bdate 	= rs.getDate("bdate");            
 			    int 	bhit 	= rs.getInt("bhit");      
 			    int 	bgroup 	= rs.getInt("bgroup");   
 			    int 	bstep 	= rs.getInt("bstep");   
 			    int 	bindent = rs.getInt("bindent");  
 			    String  bip		= rs.getString("bname");
 			    dto = new BoardDto(bid, bname, btitle, bcontent, 
-			    		date, bhit, bgroup, bstep, bindent, bip);
+			    		bdate, bhit, bgroup, bstep, bindent, bip);
 			}
 			
 		} catch (Exception e) {
@@ -199,6 +199,45 @@ public class BoardDao {
 		}
 		return dto;
 	}
+	// bid로 dto가져오기=수정하기 + 답변글쓰기(form, 조회수 올리기 미포함)
+		public BoardDto modifyView_replyView(int bid) {
+			BoardDto dto = null;
+			Connection        conn  = null;
+			PreparedStatement pstmt = null;
+			ResultSet         rs    = null;
+			String sql = "SELECT * FROM BOARD WHERE BID = ?";
+			try {
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, bid);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					//int    bid     = rs.getInt("bid");
+					String bname   = rs.getString("bname");
+					String btitle  = rs.getString("btitle");
+					String bcontent= rs.getString("bcontent");
+					Date   bdate   = rs.getDate("bdate");
+					int    bhit    = rs.getInt("bhit");
+					int    bgroup  = rs.getInt("bgroup");
+					int    bstep   = rs.getInt("bstep");
+					int    bindent = rs.getInt("bindent");
+					String bip     = rs.getString("bip");
+					dto = new BoardDto(bid, bname, btitle, bcontent, 
+							bdate, bhit, bgroup, bstep, bindent, bip);
+				}
+			}catch (Exception e) {
+				System.out.println(e.getMessage());
+			}finally {
+				try {
+					if(rs   !=null) rs.close();
+					if(pstmt!=null) pstmt.close();
+					if(conn!=null)  conn.close();
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			return dto;
+		}
  	//  -- 답변글 쓰기전 스텝 
 	private void preReplyStep(int bgroup, int bstep) {
 		Connection 		    conn  = null;
@@ -281,9 +320,8 @@ public class BoardDao {
 				pstmt.setString (3, bcontent);
 				pstmt.setString (4, bip);
 				pstmt.setInt	(5, bid);
-				
-	result = pstmt.executeUpdate();
-	System.out.println(result==SUCCESS? "수정 성공" : "수정 실패");
+				result = pstmt.executeUpdate();
+				System.out.println(result==SUCCESS? "수정 성공" : "수정 실패");
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			} finally {

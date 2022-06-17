@@ -8,3 +8,847 @@
  주로 .jsp파일로 작성 하며, Controller에서 어떤 View 컴폰넌트를 보여줄지 결정한다.
  Controller는 클라이언트의 요청을 받고, 적절한 Model에 지시를 내리며, 
  Model에서 전달된 데이터를 적절한  View에 전달한다.
+
+ 아래와 같이 MVC 파트를 이용해 게시판을 만들고 이를 실행한다.
+
+ DROP SEQUENCE BOARD_SEQ;
+CREATE SEQUENCE BOARD_SEQ MAXVALUE 999999 NOCACHE NOCYCLE;
+DROP TABLE BOARD;
+CREATE TABLE BOARD(
+        BID      NUMBER(6)      PRIMARY KEY,
+        BNAME    VARCHAR2(50)   NOT NULL,
+        BTITLE   VARCHAR2(100)  NOT NULL,
+        BCONTENT VARCHAR2(2500),
+        BDATE    DATE           DEFAULT SYSDATE,
+        BHIT     NUMBER(6)      DEFAULT 0 NOT NULL,
+        BGROUP   NUMBER(6)      NOT NULL,
+        BSTEP    NUMBER(6)      NOT NULL,
+        BINDENT  NUMBER(6)      NOT NULL,
+        BIP      VARCHAR2(50)   NOT NULL
+        );
+
+여기까지 게시판을 구성할 요소들을 생성한 뒤에
+
+-- DUMMY DATA
+INSERT INTO BOARD (BID, BNAME, BTITLE, BCONTENT, BGROUP, BSTEP, BINDENT, BIP )
+    VALUES (BOARD_SEQ.NEXTVAL, '홍길동', '글1', '본문1', BOARD_SEQ.CURRVAL, 0, 0, '192.168.10.30');
+INSERT INTO BOARD (BID, BNAME, BTITLE, BCONTENT, BGROUP, BSTEP, BINDENT, BIP )
+    VALUES (BOARD_SEQ.NEXTVAL, '홍길동', '글2', '본문2', BOARD_SEQ.CURRVAL, 0, 0, '192.168.10.30');
+-- 1번 글의 답변 더미데이터
+INSERT INTO BOARD (BID, BNAME, BTITLE, BCONTENT, BGROUP, BSTEP, BINDENT, BIP )
+    VALUES (BOARD_SEQ.NEXTVAL, '홍길동', '답)글1', '답글1', 1, 1, 1, '192.168.10.30');
+
+위와 같이 예시용 더미 데이터를 생성한다.
+
+아래와 같이 DAO에 들어갈 QUERY를 생성한 이후 DTO파일과 DAO파일을 생성한다.
+
+-- 글목록 (startRow endRow)
+SELECT * FROM BOARD ORDER BY BGROUP DESC, BSTEP; -- 글 출력순서
+SELECT *
+    FROM (SELECT ROWNUM RN, A.* FROM (SELECT * FROM BOARD ORDER BY BGROUP DESC, BSTEP)A )
+    WHERE RN BETWEEN 2 AND 3;
+
+-- 전체 글 갯수
+SELECT COUNT(*) CNT FROM BOARD;
+
+-- 글쓰기 
+INSERT INTO BOARD (BID, BNAME, BTITLE, BCONTENT, BGROUP, BSTEP, BINDENT, BIP )
+    VALUES (BOARD_SEQ.NEXTVAL, '홍길동', '글3', '본문3', BOARD_SEQ.CURRVAL, 0, 0, '192.168.10.30');
+    
+-- BID로 조회수 올리기
+UPDATE BOARD SET BHIT=BHIT+1 WHERE BID=1;
+
+-- 글 상세보기 (BID로 DTO가져오기)
+SELECT * FROM BOARD WHERE BID = 1;
+
+-- 답변글 쓰기전 스텝
+SELECT * FROM BOARD WHERE BGROUP = 1; -- 1번 GROUP출력
+UPDATE BOARD SET BSTEP = BSTEP+1 WHERE BGROUP = 1 AND BSTEP > 0;
+
+
+-- 답변글 쓰기
+INSERT INTO BOARD (BID, BNAME, BTITLE, BCONTENT, BGROUP, BSTEP, BINDENT, BIP )
+    VALUES (BOARD_SEQ.NEXTVAL, '홍답', '답글1-2', '답글1-2', 1, 1, 1, '192.168.10.30');
+
+-- 글 수정
+UPDATE BOARD SET BNAME = '홍길동 답',
+                 BTITLE = '답)글1-2',
+                 BCONTENT = '답글1-2',
+                 BIP = '111.111.11.1'
+                 WHERE BID =4;
+-- 글 삭제
+
+DELETE FROM BOARD WHERE BID = 2;
+
+아래는 게시판을 구성하는 DTO파일이며
+
+public class BoardDto {
+	private int 	bid;      
+    private String  bname;     
+    private String  btitle;   
+    private String  bcontent; 
+    private Date    bdate;            
+    private int 	bhit;      
+    private int 	bgroup;    
+    private int 	bstep;    
+    private int 	bindent;   
+    private String  bip;
+     
+	public BoardDto() { }
+
+	public BoardDto(int bid, String bname, String btitle, String bcontent, Date bdate, int bhit, int bgroup, int bstep,
+			int bindent, String bip) {
+  
+		this.bid = bid;
+		this.bname = bname;
+		this.btitle = btitle;
+		this.bcontent = bcontent;
+		this.bdate = bdate;
+		this.bhit = bhit;
+		this.bgroup = bgroup;
+		this.bstep = bstep;
+		this.bindent = bindent;
+		this.bip = bip;
+	}
+
+	public int getBid() {
+		return bid;
+	}
+
+	public void setBid(int bid) {
+		this.bid = bid;
+	}
+
+	public String getBname() {
+		return bname;
+	}
+
+	public void setBname(String bname) {
+		this.bname = bname;
+	}
+
+	public String getBtitle() {
+		return btitle;
+	}
+
+	public void setBtitle(String btitle) {
+		this.btitle = btitle;
+	}
+
+	public String getBcontent() {
+		return bcontent;
+	}
+
+	public void setBcontent(String bcontent) {
+		this.bcontent = bcontent;
+	}
+
+	public Date getBdate() {
+		return bdate;
+	}
+
+	public void setBdate(Date date) {
+		this.bdate = date;
+	}
+
+	public int getBhit() {
+		return bhit;
+	}
+
+	public void setBhit(int bhit) {
+		this.bhit = bhit;
+	}
+
+	public int getBgroup() {
+		return bgroup;
+	}
+
+	public void setBgroup(int bgroup) {
+		this.bgroup = bgroup;
+	}
+
+	public int getBstep() {
+		return bstep;
+	}
+
+	public void setBstep(int bstep) {
+		this.bstep = bstep;
+	}
+
+	public int getBindent() {
+		return bindent;
+	}
+
+	public void setBindent(int bindent) {
+		this.bindent = bindent;
+	}
+
+	public String getBip() {
+		return bip;
+	}
+
+	public void setBip(String bip) {
+		this.bip = bip;
+	}
+
+	@Override
+	public String toString() {
+		return "BoardDto [bid=" + bid + ", bname=" + bname + ", btitle=" + btitle + ", bcontent=" + bcontent + ", bdate="
+				+ bdate + ", bhit=" + bhit + ", bgroup=" + bgroup + ", bstep=" + bstep + ", bindent=" + bindent
+				+ ", bip=" + bip + "]";
+	}
+	
+	
+  아래는 게시판을 구성하는 DAO 파일이다.
+
+  package com.lec.dao;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import com.lec.dto.BoardDto; 
+
+public class BoardDao {
+	public static final int SUCCESS = 1; // 회원가입 성공
+	public static final int FAIL = 0;	// 회원가입 실패
+	private DataSource ds;
+	
+	//싱글톤
+	private static BoardDao instance;
+	public static BoardDao getInstance(){
+		if(instance == null) {
+			instance = new BoardDao();
+		}
+		return instance;
+	}
+	private BoardDao() {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Oracle11g");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} 
+		
+	}
+	//-- 글목록 (startRow endRow) 
+	// ;
+	public ArrayList<BoardDto> listBoard (int startRow, int endRow){
+			ArrayList<BoardDto> dtos = new ArrayList<BoardDto>();
+			Connection 		   conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet			rs  = null;
+			String sql = "SELECT * FROM (SELECT ROWNUM RN, A.* "
+					        + "    FROM (SELECT * FROM BOARD ORDER BY BGROUP DESC, BSTEP) A ) "
+					        + "    WHERE RN BETWEEN ? AND ?";
+			try {
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					int 	bid 	= rs.getInt("bid");      
+				    String  bname 	= rs.getString("bname"); 
+				    String  btitle	= rs.getString("btitle");  
+				    String  bcontent= rs.getString("bcontent"); 
+				    Date    bdate 	= rs.getDate("bdate");            
+				    int 	bhit 	= rs.getInt("bhit"); 
+				    int 	bgroup 	= rs.getInt("bgroup");   
+				    int 	bstep 	= rs.getInt("bstep"); 
+				    int 	bindent = rs.getInt("bindent");  
+				    String  bip		= rs.getString("bip");
+				    dtos.add(new BoardDto(bid, bname, btitle, bcontent, 
+				    		bdate, bhit, bgroup, bstep, bindent, bip));
+					 
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage() + "list");
+			} finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt!=null) pstmt.close();
+					if(conn!=null) conn.close();
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			return dtos;
+	}
+	
+	//-- 전체 글 갯수 ;
+	public int getTotalCnt() {
+		int totalCnt = 0;
+		Connection 		   conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet			rs  = null;
+		String sql = "SELECT COUNT(*) CNT FROM BOARD";
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql); 
+			rs = pstmt.executeQuery();
+			rs.next();  
+			totalCnt = rs.getInt("CNT"); 
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return totalCnt;
+	}
+	
+	//  -- 글쓰기  
+	
+	public int write(String bname, String btitle, String bcontent, String bip) {
+		int result = FAIL;
+		Connection 		   conn = null;
+		PreparedStatement pstmt = null; 
+		String sql = "INSERT INTO BOARD (BID, BNAME, BTITLE, BCONTENT, BGROUP, BSTEP, BINDENT, BIP ) " + 
+				" VALUES (BOARD_SEQ.NEXTVAL, ?, ? , ? , BOARD_SEQ.CURRVAL, 0, 0, ? )";
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, bname);
+			pstmt.setString(2, btitle);
+			pstmt.setString(3, bcontent);
+			pstmt.setString(4, bip);
+			result = pstmt.executeUpdate();
+			 
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try { 
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return result;
+	}
+	
+	//	-- BID로 조회수 올리기  ;
+	private void hitUp (int bid) {
+		Connection 		   conn = null;
+		PreparedStatement pstmt = null; 
+		String sql = "UPDATE BOARD SET BHIT=BHIT+1 WHERE BID=?";
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bid);
+			pstmt.executeUpdate();			 
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try { 
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
+ 
+	//	-- 글 상세보기 (BID로 DTO가져오기) ;
+	public BoardDto contentView(int bid) {
+		BoardDto dto = null; 
+		hitUp(bid); //글 상세보기시 자동적으로 조회수 올라감
+		Connection 		   conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet			rs  = null;
+		String sql = "SELECT * FROM BOARD WHERE BID = ? ";
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bid);
+			rs = pstmt.executeQuery(); 
+			if (rs.next()){     
+			    String  bname 	= rs.getString("bname") ;     
+			    String  btitle	= rs.getString("btitle") ;  
+			    String  bcontent= rs.getString("bcontent") ;
+			    Date    bdate 	= rs.getDate("bdate");            
+			    int 	bhit 	= rs.getInt("bhit");      
+			    int 	bgroup 	= rs.getInt("bgroup");   
+			    int 	bstep 	= rs.getInt("bstep");   
+			    int 	bindent = rs.getInt("bindent");  
+			    String  bip		= rs.getString("bname");
+			    dto = new BoardDto(bid, bname, btitle, bcontent, 
+			    		bdate, bhit, bgroup, bstep, bindent, bip);
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return dto;
+	}
+	// bid로 dto가져오기=수정하기 + 답변글쓰기(form, 조회수 올리기 미포함)
+		public BoardDto modifyView_replyView(int bid) {
+			BoardDto dto = null;
+			Connection        conn  = null;
+			PreparedStatement pstmt = null;
+			ResultSet         rs    = null;
+			String sql = "SELECT * FROM BOARD WHERE BID = ?";
+			try {
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, bid);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					//int    bid     = rs.getInt("bid");
+					String bname   = rs.getString("bname");
+					String btitle  = rs.getString("btitle");
+					String bcontent= rs.getString("bcontent");
+					Date   bdate   = rs.getDate("bdate");
+					int    bhit    = rs.getInt("bhit");
+					int    bgroup  = rs.getInt("bgroup");
+					int    bstep   = rs.getInt("bstep");
+					int    bindent = rs.getInt("bindent");
+					String bip     = rs.getString("bip");
+					dto = new BoardDto(bid, bname, btitle, bcontent, 
+							bdate, bhit, bgroup, bstep, bindent, bip);
+				}
+			}catch (Exception e) {
+				System.out.println(e.getMessage());
+			}finally {
+				try {
+					if(rs   !=null) rs.close();
+					if(pstmt!=null) pstmt.close();
+					if(conn!=null)  conn.close();
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			return dto;
+		}
+ 	//  -- 답변글 쓰기전 스텝 
+	private void preReplyStep(int bgroup, int bstep) {
+		Connection 		    conn  = null;
+		PreparedStatement 	pstmt = null; 
+		String sql = "UPDATE BOARD SET BSTEP = BSTEP+1 WHERE BGROUP = ? AND BSTEP > ?";
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bgroup);
+			pstmt.setInt(2, bstep);
+			pstmt.executeUpdate();			 
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try { 
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
+ 
+	//	-- 답변글 쓰기
+	//  -- 답변자 : String bname, String btitle, String bcontent, String bip
+	//  -- 원글    : bgroup, bstep, bindent
+	//	
+	public int reply (String bname, String btitle, String bcontent, String bip, 
+			          int bgroup, int bstep, int bindent) {
+		int result = FAIL;
+		preReplyStep(bgroup, bstep);
+		Connection 		   conn = null;
+		PreparedStatement pstmt = null; 
+		String sql = "INSERT INTO BOARD (BID, BNAME, BTITLE, BCONTENT, BGROUP, BSTEP, BINDENT, BIP ) " + 
+				"	 VALUES (BOARD_SEQ.NEXTVAL, ? , ?, ?, ?, ?, ?, ?)";
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString (1, bname);
+			pstmt.setString (2, btitle);
+			pstmt.setString (3, bcontent);
+			pstmt.setInt	(4, bgroup);
+			pstmt.setInt	(5, bstep+1);
+			pstmt.setInt	(6, bindent+1);
+			pstmt.setString (7, bip);
+			result = pstmt.executeUpdate();
+			System.out.println(result==SUCCESS? "답변글 성공" : "답변글 실패");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try { 
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return result;
+		
+	}
+	
+	
+	//	-- 글 수정
+	//	;
+	public int modify (String bname, String btitle, String bcontent, String bip, int bid) {
+			int result = FAIL;
+				 
+			Connection 		   conn = null;
+			PreparedStatement pstmt = null; 
+			String sql = "UPDATE BOARD SET BNAME = ? , " + 
+					"	 	                 BTITLE = ? , " + 
+					"	 	                 BCONTENT = ? , " + 
+					"	 	                 BIP =  ? " + 
+					"	 	                 WHERE BID = ? ";
+			try {
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString (1, bname);
+				pstmt.setString (2, btitle);
+				pstmt.setString (3, bcontent);
+				pstmt.setString (4, bip);
+				pstmt.setInt	(5, bid);
+				
+	result = pstmt.executeUpdate();
+	System.out.println(result==SUCCESS? "수정 성공" : "수정 실패");
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			} finally {
+				try { 
+					if(pstmt!=null) pstmt.close();
+					if(conn!=null) conn.close();
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			return result;
+
+	}
+	
+	//	-- 글 삭제
+	//	;
+	public int delete (int bid) {
+		int result = FAIL;
+		Connection 		   conn = null;
+		PreparedStatement pstmt = null; 
+		String sql = "DELETE FROM BOARD WHERE BID = ? ";
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt	(1, bid);
+			
+			result = pstmt.executeUpdate();
+			System.out.println(result==SUCCESS? "삭제 성공" : "삭제 실패");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try { 
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return result;
+
+	} 
+	
+}
+
+먼저 해당 DAO를 기반으로 글 목록을 출력할 jsp 파일을 작성한다.
+
+public interface Service {
+	public void execute(HttpServletRequest request, HttpServletResponse response);
+}
+
+을 통해 Service 함수를 지정한 후 Controller를 통해 Model과 View를 연결한다.
+	public class BListService implements Service {
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) {
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum == null) pageNum="1";
+		int currentPage = Integer.parseInt(pageNum);
+		final int PAGESIZE = 10, BLOCKSIZE = 10;
+		int startRow = ((currentPage-1)*PAGESIZE)+1;
+		int endRow = startRow + PAGESIZE-1 ;
+		BoardDao bDao = BoardDao.getInstance();  
+		request.setAttribute("list", bDao.listBoard(startRow, endRow));//글목록
+		int totalCnt = bDao.getTotalCnt();//등록된 글 갯수
+		int pageCnt = (int)Math.ceil((double)totalCnt/PAGESIZE);// 페이지 수
+		int startPage = ((currentPage-1)/BLOCKSIZE)*BLOCKSIZE + 1;
+		int endPage = startPage + BLOCKSIZE -1;
+		if(endPage>pageCnt) {
+			endPage = pageCnt;
+		}
+		request.setAttribute("BLOCKSIZE", BLOCKSIZE);
+		request.setAttribute("startPage", startPage);
+		request.setAttribute("endPage", endPage);
+		request.setAttribute("pageNum", pageNum);
+		request.setAttribute("pageCnt", pageCnt);
+	}
+ 위 service 파일을 통해 글 목록의 paging과 글 목록 출력을 지정한 뒤에
+
+	private void Actiondo(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException { 
+		String uri = request.getRequestURI();			  // /ch19_mvcboard/list.do
+		String conPath = request.getContextPath(); 		  // /ch19_mvcboard
+		String command = uri.substring(conPath.length()); // /list.do
+		String viewPage = null;
+		Service service = null;
+		if(command.equals("/list.do")) { // 글 목록
+			service = new BListService();
+			service.execute(request, response);
+			viewPage = "board/list.jsp";
+		}
+
+위 Controller의 함수를 통해 Index에서 list.jsp로 이동 할 수 있다. 이 출력값을 받는 list.jsp 구성은 아래와 같다.
+
+	<table>
+		<caption>게 시 판</caption>
+		<tr><td><a href="${conPath }/write_view.do">글쓰기</a></td></tr>
+	</table>
+	<table>
+		<tr><th>글 번호</th><th>작성자</th><th>글 제목</th><th>IP</th><th>작성일</th><th>조회수</th></tr>
+		<c:if test="${list.size() eq 0 }">
+		<tr><td colspan="6">해당 페이지에 글이 존재하지 않습니다.</td></tr>
+		
+		</c:if>
+		<c:if test="${list.size() != 0 }">
+			<c:forEach var="dto" items="${list }">
+			<tr>
+				<td>${dto.bid }</td>
+				<td>${dto.bname }</td>
+				<td class="left">
+					<c:forEach var="i" begin="1" end="${dto.bindent }">
+						<c:if test="${i eq dto.bindent }">
+							ㄴ
+						</c:if>
+						<c:if test="${i != dto.bindent }">
+							&nbsp; &nbsp;
+						</c:if>
+					</c:forEach><!-- 답변글 들여쓰기 -->
+					<a href="${conPath }/content_view.do?bid=${dto.bid}&pageNum=${pageNum}">
+					 ${dto.btitle } </a>
+					 <c:if test="${dto.bhit > 10 }">
+					 <b> * </b>
+					 </c:if>
+					 
+				</td><!-- 글제목 -->
+				<td>${dto.bip }</td>
+				<td><fmt:formatDate value="${dto.bdate }" pattern="yy년 MM월dd일"/> </td>
+				<td>${dto.bhit }</td>
+			</tr>
+			</c:forEach>	
+		</c:if>
+	</table>
+	<div class="paging">
+		<c:if test="${startPage > BLOCKSIZE }" >
+			[<a href="${conPath }/list.do?pageNum=${startPage-1}">이전</a>]
+		</c:if>
+		<c:forEach var="i" begin="${startPage }" end="${endPage }">
+			<c:if test="${i eq pageNum }">
+			[<b> ${i } </b>]
+			</c:if>
+			<c:if test="${i != pageNum }">
+			[<a href="${conPath }/list.do?pageNum=${i}"> ${i } </a>]
+			</c:if>
+		</c:forEach>
+		<c:if test="${endPage < pageCnt }">
+		[<a href="${conPath }/list.do?pageNum=${endPage + 1}"> 다음 </a>]
+		</c:if>
+	</div>
+ 
+ 아래는 해당 글 목록의 출력값이다.
+
+				게 시 판
+
+			 	 글쓰기
+
+	글 번호	작성자	글 제목	IP		작성일		조회수
+	130	홍길동25	글제목25	111.111.11.1125	22년 06월17일	0
+	129	홍길동24	글제목24	111.111.11.1124	22년 06월17일	0
+	128	홍길동23	글제목23	111.111.11.1123	22년 06월17일	0
+	127	홍길동22	글제목22	111.111.11.1122	22년 06월17일	0
+	126	홍길동21	글제목21	111.111.11.1121	22년 06월17일	0
+	125	홍길동20	글제목20	111.111.11.1120	22년 06월17일	0
+	124	홍길동19	글제목19	111.111.11.1119	22년 06월17일	0
+	123	홍길동18	글제목18	111.111.11.1118	22년 06월17일	2
+	122	홍길동17	글제목17	111.111.11.1117	22년 06월17일	0
+	121	홍길동16	글제목16	111.111.11.1116	22년 06월17일	0
+
+
+위에서 출력한 글 목록에서 정보를 받아 상세 글읽기를 아래와 같이 구성하고 출력한다.
+
+	
+	public class BContentService implements Service { 
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) { 
+		int bid = Integer.parseInt(request.getParameter("bid"));
+		BoardDao bDao = BoardDao.getInstance();
+		request.setAttribute("content_view", bDao.contentView(bid));
+	}
+
+	else if(command.equals("/content_view.do")) {// 상세보기 
+			service = new BContentService();
+			service.execute(request, response);
+			viewPage = "board/content_view.jsp";
+	}
+
+위 service 함수와 controller 지정을 통해 content_view.jsp로 이동하며 해당 페이지로 이동하며
+이 jsp파일의 구성과 그 출력값은 아래와 같다.
+
+	<table>
+		<caption>상세보기</caption>
+		<tr> <th>글번호</th> <td>${content_view.bid }</td> </tr>
+		<tr> <th>작성자</th> <td>${content_view.bname }</td> </tr>
+		<tr> <th>글제목</th> <td>${content_view.btitle }</td> </tr>
+		<tr> <th>본문</th><td><pre>${content_view.bcontent }</pre></td></tr>
+		<tr> 
+			<th>작성일</th> 
+			<td><fmt:formatDate value="${content_view.bdate }" pattern="yy년 MM월dd일"/></td>
+		</tr>
+		<tr> <th>IP</th> <td>${content_view.bip }</td> </tr>
+		<tr> <th>조회수</th> <td>${content_view.bhit }</td> </tr>
+		<tr>
+		<td colspan="2">
+			<button onclick="location='${conPath }/modify_view.do?bid=${param.bid}&pageNum=${param.pageNum}'">수정</button>
+			<button onclick="location='${conPath }/delete.do?bid=${param.bid}&pageNum=${param.pageNum}'">삭제</button>
+			<button onclick="location='${conPath }/reply_view.do?bid=${param.bid}&pageNum=${param.pageNum}'">답변</button>
+			<button onclick="location='${conPath }/list.do?pageNum=${param.pageNum}'">목록</button>
+		</td>
+		</tr>
+	</table>
+
+		상세보기
+
+	글번호	121
+	작성자	홍길동16
+	글제목	글제목16
+	본문글	 본문16
+	작성일	22년 06월17일
+	IP	홍길동16
+	조회수	1
+		수정 삭제 답변 목록
+
+
+글쓰기를 위한 Service 파일이자 Controller 함수는 아래와 같다.
+
+public class BWriteService implements Service {
+
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) {
+		String bname = request.getParameter("bname");
+		String btitle = request.getParameter("btitle");
+		String bcontent = request.getParameter("bcontent");
+		String bip = request.getRemoteAddr(); //아이피 주소
+		BoardDao bDao = BoardDao.getInstance();
+		request.setAttribute("writeResult", bDao.write(bname, btitle, bcontent, bip));//서버로 전송
+
+	}
+
+else if(command.equals("/write_view.do")) {// 글쓰기 view(form)
+			viewPage = "board/write_view.jsp";
+			write_view = true;
+		} else if(command.equals("/write.do")) { // 원글 쓰고 db에 저장하기
+			if(write_view) {
+				service = new BWriteService();
+				service.execute(request, response);
+				write_view = false;
+			}
+			viewPage = "list.do";
+		} 
+
+
+글쓰기 플랫폼을 통해서 글을 작성하고 글 목록에 추가가 가능하다.
+
+답글 달기를 위한 Service 파일과 이를 적용한 Controller 함수는 아래와 같다.
+
+public class BReplyService implements Service {
+
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) {
+		String bname = request.getParameter("bname");
+		String btitle = request.getParameter("btitle");
+		String bcontent = request.getParameter("bcontent");
+		String bip = request.getRemoteAddr(); //아이피 주소
+		int bgroup = Integer.parseInt(request.getParameter("bgroup"));
+		int bstep = Integer.parseInt(request.getParameter("bstep"));
+		int bindent = Integer.parseInt(request.getParameter("bindent"));
+		BoardDao bDao = BoardDao.getInstance();
+		request.setAttribute("replyResult", bDao.reply(bname, btitle, bcontent, 
+											bip, bgroup, bstep, bindent));     //서버로 전송
+
+	}
+
+	else if(command.equals("/reply_view.do")) {// 글 답글달기 (form) 
+			service = new BReplyViewService();
+			service.execute(request, response);
+			viewPage = "board/reply_view.jsp";
+			write_view = true;
+		} else if(command.equals("/reply.do")) {// 글 삭제하고 db 전송
+			if(write_view) {
+				service = new BReplyService();
+				service.execute(request, response);
+				write_view = false;
+			}
+			viewPage = "list.do";
+		}
+
+이를 통해 답글을 작성하고 이를 글목록에 반영하면 출력값은 아래와 같다.
+
+				     게 시 판
+			  	      글쓰기
+
+	글 번호	작성자	글 제목		IP		작성일		조회수
+	208	홍길동11	아버지를 *		127.0.0.1		22년 06월17일	11
+	207	홍길동	시기다른 래퍼들의	127.0.0.1		22년 06월17일	6
+	206	홍길동	시기		127.0.0.1		22년 06월17일	0
+	204	홍길동99	글제목99		111.111.11.1199	22년 06월17일	0
+	203	홍길동98	글제목98		111.111.11.1198	22년 06월17일	1
+	202	홍길동97	글제목97		111.111.11.1197	22년 06월17일	1
+	211	홍길동	ㄴ 답) 글제목97	127.0.0.1		22년 06월17일	3
+	201	홍길동96	글제목96		111.111.11.1196	22년 06월17일	1
+	209	홍길동	ㄴ 답) 글제목96	127.0.0.1		22년 06월17일	1
+	210	홍길동	    ㄴ 답) 답) 글제목96	127.0.0.1	22년 06월17일	2
+
+		[ 1 ] [ 2 ] [ 3 ] [ 4 ] [ 5 ] [ 6 ] [ 7 ] [ 8 ] [ 9 ] [ 10 ] [ 다음 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
