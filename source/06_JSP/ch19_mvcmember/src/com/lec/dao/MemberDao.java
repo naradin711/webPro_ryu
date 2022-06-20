@@ -88,7 +88,7 @@ public class MemberDao {
 					result = MEMBER_NONEXISTENT;
 				}
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				System.out.println(e.getMessage() + "idConfirm");
 			} finally {
 				try {
 					if (rs!=null) rs.close();
@@ -120,12 +120,11 @@ public class MemberDao {
 				pstmt.setString(5, dto.getMphoto());
 				pstmt.setDate	(6, dto.getMbirth());
 				pstmt.setString	(7, dto.getMaddress());
-				pstmt.setDate	(8, dto.getMrdate());
 				result = pstmt.executeUpdate();
 				System.out.println(result==SUCCESS? "회원가입성공":"회원가입실패");
 				
 			} catch (Exception e) {
-				// TODO: handle exception
+				System.out.println(e.getMessage() + "join error");
 			}
 			return result;
 		}
@@ -186,9 +185,8 @@ public class MemberDao {
 					 String memail	 = rs.getString("memail");    
 					 String mphoto   = rs.getString("mphoto");
 					 Date mbirth     = rs.getDate("mbirth");
-					 String maddress = rs.getString("maddress");  
-					 Date mrdate     = rs.getDate("mdate");
-					 members.add(new MemberDto(mid, mpw, mname, memail, mphoto, mbirth, maddress, mrdate));
+					 String maddress = rs.getString("maddress");
+					 members.add(new MemberDto(mid, mpw, mname, memail, mphoto, mbirth, maddress));
 				}
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -226,7 +224,7 @@ public class MemberDao {
 					 String mphoto   = rs.getString("mphoto");
 					 Date mbirth     = rs.getDate("mbirth");
 					 String maddress = rs.getString("maddress");  
-					 Date mrdate     = rs.getDate("mdate");
+					 Date mrdate     = rs.getDate("mrdate");
 					 dto = new MemberDto(mid, mpw, mname, memail, mphoto, mbirth, maddress, mrdate);
 				}
 			} catch (Exception e) {
@@ -252,7 +250,7 @@ public class MemberDao {
 //		                     MADDRESS = '서울시 중랑구'
 //		                     WHERE MID = 'aaa';
 
-		public int modify (String mname, String mpw, String memail, String mphoto, Date mbirth, String maddress, String mid) {
+		public int modify (MemberDto member) {
 			int result = FAIL;
 			Connection 		   conn = null;
 			PreparedStatement pstmt = null; 
@@ -266,18 +264,18 @@ public class MemberDao {
 			try {
 				conn = ds.getConnection();
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString (1, mname);
-				pstmt.setString (2, mpw);
-				pstmt.setString (3, memail);
-				pstmt.setString (4, mphoto);
-				pstmt.setDate   (5, mbirth);
-				pstmt.setString (6, maddress);
-				pstmt.setString (7, mid);
+				pstmt.setString (1, member.getMname());
+				pstmt.setString (2, member.getMpw());
+				pstmt.setString (3, member.getMemail());
+				pstmt.setString (4, member.getMphoto());
+				pstmt.setDate   (5, member.getMbirth());
+				pstmt.setString (6, member.getMaddress());
+				pstmt.setString (7, member.getMid());
 				result = pstmt.executeUpdate();
 				System.out.println(result==SUCCESS? "회원 정보 수정 성공" : "회원 정보 수정 실패");
 			
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				System.out.println(e.getMessage()+"Dao Modify Error");
 			} finally {
 				try {
 					if(pstmt!=null) pstmt.close();

@@ -1,0 +1,13 @@
+220620 69회차 - JQuery
+		<script src="js/jquery-3.6.0.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function () {
+			//jQuery 소스들 삽입 예정
+			$('#p1').click(function (){
+				
+				$(this).html("<b>태그가 내용이 바뀜</b>"); //click시 function을 실행
+				 
+				
+			}); 
+		});
+		</script>
