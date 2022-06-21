@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('img').mousedown(function () {
+				$(this).attr('src', 'img/but2.gif');
+				$(this).attr('alt', '마우스 다운');
+			});// 	mousedown 이벤트 
+			$('img').mouseup(function () {
+				$(this).attr('src', 'img/but1.gif');
+				$(this).attr('alt', '마우스 다운 전');
+			});
+		});
+	</script>
+</head>
+<body>
+	<img alt="마우스 다운 전" src="img/but1.gif">
+</body>
+</html>

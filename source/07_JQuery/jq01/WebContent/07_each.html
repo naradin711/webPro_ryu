@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			var array = [{name : '가메출판사', link:'http://www.kame.co.kr'},
+						 {name : '나메출판사', link:'http://www.name.co.kr'},
+						 {name : '다메출판사', link:'http://www.dame.co.kr'},
+						 {name : '라메출판사', link:'http://www.rame.co.kr'},
+						 {name : '마메출판사', link:'http://www.mame.co.kr'},
+						 {name : '바메출판사', link:'http://www.bame.co.kr'},
+						 {name : '네이버', 	link:'http://www.naver.com'},
+						 {name : '구글', 		link:'http://www.google.com'},
+						 {name : '다음', 		link:'http://www.daum.net'}
+						];
+			var out = '';
+			$.each(array, function (idx, item) { 
+				out += '<h1><a href="'+item.link+'">'+item.name+'</a></h1>'
+				//$('body').html($('body').html() + '<h1>TEST</h1>');	
+			});
+			$('body').html(out);
+		});
+	</script>
+</head>
+<body>
+
+</body>
+</html>

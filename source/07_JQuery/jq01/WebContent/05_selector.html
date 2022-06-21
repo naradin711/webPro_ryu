@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jQuery - 선택자</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('tr:even').css('background-color','#cccccc');//0부터 시작 0 2 4 6 8
+			$('tr:odd').css('backgroundColor','#FFFFAA');
+			$('tr:nth-child(3n)').css('color','red');// 1부터 시작 1 3 6 9 12 15...
+			$('tr:eq(0)').css('backgroundColor','black').css('color', 'white'); // 8번째
+		});
+	</script>
+</head>
+<body>
+	<table>
+		<tr><th>글번호</th><th>글제목</th><th>글쓴이</th><th>조회수</th></tr>
+		<tr><th>4</th><th>글제목4</th><th>홍사동</th><th>44</th></tr>
+		<tr><th>3</th><th>글제목3</th><th>홍삼동</th><th>33</th></tr>
+		<tr><th>2</th><th>글제목2</th><th>홍이동</th><th>22</th></tr>
+		<tr><th>1</th><th>글제목1</th><th>홍일동</th><th>11</th></tr>
+		
+	</table>
+	
+</body>
+</html>

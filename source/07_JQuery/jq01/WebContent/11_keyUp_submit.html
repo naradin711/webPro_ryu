@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>keyUp.Submit</title>
+<style type="text/css">
+	p:last-child {
+		padding-left: 20px;
+	}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('input[name="pwChk"]').keyup(function () {
+				var pw = $('input[name="pw"]').val();
+				var pwChk = $('input[name="pwChk"]').val();
+				if (pw == pwChk){
+					$('.result').text('비밀번호가 일치합니다.');
+				} else {
+					$('.result').html('<b>비밀번호가 일치하지 않습니다.</b>');
+				}
+			}); //pw check
+			$('form').submit(function() {
+				var resultMsg = $('.result').text().trim();
+				if (resultMsg !='비밀번호가 일치합니다.'){
+					alert('비밀번호를 확인하세요!');
+					$('input[name="pw"]').val('');
+					$('input[name="pwChk"]').val('');
+					$('input[name="pw"]').focus();
+					return false;
+				} else {
+					alert('회원가입이 완료되었습니다.');
+				}
+			})
+		});
+	</script>
+</head>
+<body>
+    <form action="">
+	<table>
+	<tr><th><p>ID</p></th><td><p><input type="text" name="id"></p></td></tr>
+	<tr><th><p>PW</p></th><td><p><input type="text" name="pw"></p></td></tr>
+	<tr><th><p>PW</p></th><td><p><input type="text" name="pwChk"></p></td></tr>
+	<tr><td colspan="2"> &nbsp; &nbsp; <p class="result"></p> </td></tr>
+	<tr><td colspan="2"> <input type="submit" value="가입하기"> </td></tr>
+	</table>
+	</form>
+</body>
+</html>

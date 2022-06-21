@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('h1').one('click', function (){
+				$(this).append('<b>♡</b>').prepend('<b>♥</b>').css('color', 'green');
+				
+			});
+/* 			$('h1').click(function () {
+				$(this).append('<b>♡</b>').prepend('<b>♥</b>').css('color', 'green');
+				$(this).off();
+			})  */
+			
+		});
+	</script>
+</head>
+<body>
+	<h1>BTS 좋아요는 한번만</h1>
+	<h1>jsp 좋아요도 한번만</h1>
+</body>
+</html>
