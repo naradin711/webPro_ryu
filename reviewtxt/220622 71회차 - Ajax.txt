@@ -1,0 +1,135 @@
+220622 71회차 - Ajax 및 JQuery
+
+Ajax - JQuery와 MVC 패턴으로 회원가입 시 아이디가 중복인지 비밀번호가 맞는지를 체크하고자 한다.
+우선 아이디와 비밀번호 비밀번호 확인용 문자열을 받을 form태그 세션을 아래와 같이 지정한다.
+
+<form action="${conPath }/join.do" method="post" enctype="multipart/form-data" id="content_form">
+		<table>
+			<tr>
+				<th>아이디</th>
+				<td>
+					<input type="text" name="mid" id="mid" required="required">
+					<div id="idConfirmResult"> &nbsp; </div>
+				</td>
+			</tr>
+			<tr>
+				<th>비밀번호</th>
+				<td>
+					<input type="password" name="mpw" id="mpw" required="required">
+				</td>
+			</tr>
+			<tr>
+				<th>비밀번호 확인</th>
+				<td>
+					<input type="password" name="pwChk" id="pwChk" required="required">
+					<div id="pwChkResult"> &nbsp; </div>		 
+				</td>
+			</tr>
+			<tr>
+				<th>이름</th>
+				<td>
+				 	<input type="text" name="mname" id="mname" required="required">
+				</td>
+			</tr>
+			<tr>
+				<th> 이메일 </th>
+				<td>
+					<input type="email" name="memail" id="memail" required="required">
+					<div id="emailConfirmResult"> &nbsp; </div>
+				</td>
+			</tr>
+			<tr>
+				<th>사진</th>
+				<td>
+					<input type="file" name="mphoto">
+				</td>
+			</tr>
+			<tr>
+				<th>생년월일</th>
+				<td>
+					<input type="text" name="mbirth" id="datepicker"><br>
+				</td>
+			</tr>
+			<tr>
+				<th>주소</th>
+				<td>
+					<input type="text" name="maddress" id="maddress">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input type="submit" value="회원가입" class="btn">
+					<input type="button" value="로그인" class="btn" onclick="location='${conPath}/loginView.do'">
+				</td>
+			</tr>
+		</table>
+	</form>
+
+해당 form 태그 안의 테이블에 입력된 값에 중복 아이디 감별, 비밀번호 확인을 하기 위해서는 아래와 같은 Jquery를 입력한다.
+
+<script type="text/javascript">
+		$(document).ready(function () {
+			$('#mid').keyup(function() {
+				var mid = $('#mid').val();
+				$.ajax({
+					url : '${conPath}/idConfirm.do',
+					data : 'mid='+mid,
+					type : 'get',
+					dataType : 'html',
+					success : function(data) {
+						$('#idConfirmResult').html(data);
+					}//success
+				});//ajax
+			});//keyup
+			$('#mpw, #pwChk').keyup(function() {
+				var mpw 	= $('#mpw').val();
+				var pwChk 	= $('#pwChk').val();
+				if (mpw == pwChk){
+					$('#pwChkResult').text('비밀번호 일치');
+				} else {
+					$('#pwChkResult').text('비밀번호 불일치');
+				}
+			});//keyup checkpw
+			$('form').submit(function() {
+				var idConfirmResult = $('#idConfirmResult').text().trim();
+				var pwChkResult = $('#pwChkResult').text().trim();
+				if(idConfirmResult!= '사용 가능한  ID입니다.' ){
+					alert('사용가능한 ID를 입력하세요.');
+					$('#idConfirmResult').focus();
+					return false;
+				} else if (pwChkResult!='비밀번호 일치')  {
+					alert('올바른 비밀번호를 입력하세요.');
+					$('#pwChkResult').focus();
+					return false;
+				}
+			})
+		});//document.ready
+</script>
+
+이때 	<div id="idConfirmResult"> &nbsp; </div>
+	<div id="pwChkResult"> &nbsp; </div>
+	<div id="emailConfirmResult"> &nbsp; </div>
+와 같이 아이디를 지닌 div를 사용하여 위 JQuery의 출력값을 받을 장소를 마련한다.
+해서 위와 같은 구성을 출력하고 아이디 비밀번호 이메일 등등 변수를 입력한 출력값은 아래와 같다.
+
+
+		아이디		dddd
+				중복된 아이디 입니다.
+
+		비밀번호		•••
+
+		비밀번호 확인	•••
+				비밀번호 일치
+
+		이름		적길동
+
+		이메일		hong007001@hong.com
+				사용 가능한 Email입니다.
+
+		사진		선택된 파일 없음
+
+		생년월일		1987-02-08
+
+		주소		서울시 종로구 청운동
+ 
+				

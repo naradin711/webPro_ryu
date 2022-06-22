@@ -15,7 +15,7 @@
 	<!-- ${requestScope.joinResult} -->
 	<c:if test="${not empty joinResult }">
 		<script type="text/javascript">
-			alert('${joinResult }');
+			alert('회원가입을 축하드립니다.');
 		</script>
 	</c:if>
 	<!-- ${requestScope.joinErrorMsg} -->
