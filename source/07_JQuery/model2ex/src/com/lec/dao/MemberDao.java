@@ -317,4 +317,30 @@ public class MemberDao {
 			}
 			return result;
 		}
+		// 9. 회원정보 삭제하기
+		
+		public int deleteMember (String mid) {
+			int result = FAIL;
+			Connection 		   conn = null;
+			PreparedStatement pstmt = null; 
+			String sql = "DELETE MEMBER WHERE MID = ?  ";
+			try {
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString (1, mid);
+				result = pstmt.executeUpdate();
+				System.out.println(result==SUCCESS? "회원 정보 삭제 성공" : "회원 정보 삭제 실패");
+			
+			} catch (Exception e) {
+				System.out.println(e.getMessage()+"MemberDao Delete Error");
+			} finally {
+				try {
+					if(pstmt!=null) pstmt.close();
+					if(conn!=null) conn.close();
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			return result;
+		}
 }

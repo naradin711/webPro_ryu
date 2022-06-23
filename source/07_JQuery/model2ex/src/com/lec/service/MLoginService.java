@@ -10,7 +10,7 @@ import com.lec.dto.MemberDto;
 public class MLoginService implements Service {
 
 	@Override
-	public void excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		String mid = request.getParameter("mid");
 		String mpw = request.getParameter("mpw");

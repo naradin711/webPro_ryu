@@ -8,7 +8,7 @@ import com.lec.dao.MemberDao;
 public class IdConfirmService implements Service {
 
 	@Override
-	public void excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String mid = request.getParameter("mid");
 		MemberDao mDao = MemberDao.getInstance();
 		int result = mDao.confirmMid(mid);

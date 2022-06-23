@@ -27,18 +27,6 @@
 				}//success
 			});//ajax
 		});//keyup
-		$('#memail').keyup(function() {
-			var memail = $('#memail').val();
-			$.ajax({
-				url : '${conPath}/emailConfirm.do',
-				data : 'memail='+memail,
-				type : 'get',
-				dataType : 'html',
-				success : function(data) {
-					$('#emailConfirmResult').html(data);
-				}//success
-			});//ajax
-		});//keyup
 		$('#mpw, #pwChk').keyup(function() {
 			var mpw 	= $('#mpw').val();
 			var pwChk 	= $('#pwChk').val();
@@ -61,6 +49,25 @@
 				return false;
 			}
 		});
+		$('#memail').keyup(function(){
+			var patternMail = /^[a-zA-Z0-9_]+@[a-zA-Z0-9]+(\.[a-zA-Z]+){1,2}$/; // 메일 패턴
+			var mEmail = $('#memail').val();
+			if(patternMail.test(mEmail)){
+				$.ajax({
+					url : '${conPath}/emailConfirm.do',
+					type : 'get',
+					dataType : 'html',
+					data : "mEmail="+mEmail,
+					success : function(data){
+						$('#emailConfirmResult').html(data);
+					}
+				});//ajax
+			}else if(!mEmail){
+				$('#emailConfirmResult').html(' &nbsp; ');
+			}else{
+				$('#emailConfirmResult').html('메일 형식을 지켜주세요');
+			}//if
+		});// mEmail keyup 이벤트
 });//document.ready
 </script>
 </head>

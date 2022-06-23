@@ -19,7 +19,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 public class MJoinService implements Service {
 	@Override
-	public void excute(HttpServletRequest request, HttpServletResponse response) {
+	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		String path = request.getRealPath("memberPhotoUp");
 		int MaxSize = 1024*1024*50; //사진 업로드 제한
 		String mphoto = ""; // 첨부된 파일이 저장되는 파일 이름

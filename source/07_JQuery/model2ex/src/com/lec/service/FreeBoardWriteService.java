@@ -5,24 +5,24 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.Date;
 import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.lec.dao.MemberDao;
-import com.lec.dto.MemberDto;
+import com.lec.dao.FileBoardDao;
+import com.lec.dto.FileBoardDto;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-public class MModifyService implements Service {
+public class FreeBoardWriteService implements Service {
+
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String path = request.getRealPath("memberPhotoUp");
+		String path = request.getRealPath("freeBoardUp");
 		int MaxSize = 1024*1024*50; //사진 업로드 제한
-		String mphoto = ""; // 첨부된 파일이 저장되는 파일 이름
+		String ffilename = ""; // 첨부된 파일이 저장되는 파일 이름
 		MultipartRequest mRequest = null;
 		try {
 			// mRequest 객체 생성 후 mPhoto 파일이름 얻어옴
@@ -31,42 +31,30 @@ public class MModifyService implements Service {
 			Enumeration<String> params = mRequest.getFileNames();
 			while(params.hasMoreElements()) {
 				String param = params.nextElement();
-				mphoto = mRequest.getFilesystemName(param);
+				ffilename = mRequest.getFilesystemName(param);
 			}
-			System.out.println(mphoto+"들어옴");
+			System.out.println(ffilename+"들어옴");
 			// mRequest 객체를 이용하여 파라미터 받아와서 DB 저장
 			String mid = mRequest.getParameter("mid");
-			String mpw = mRequest.getParameter("mpw");
+			String ftitle = mRequest.getParameter("ftitle");
 			System.out.println(1);
-			String mname = mRequest.getParameter("mname");
+			String fcontent = mRequest.getParameter("fcontent");
 			System.out.println(2);
-			String memail = mRequest.getParameter("memail");
 			System.out.println(3);
 			HttpSession session = request.getSession();
-			MemberDto ms =(MemberDto)session.getAttribute("member");
-			String sessionPhoto = null;
-			if (ms!=null) {
-				sessionPhoto = ms.getMphoto() ; // 세션의 pw를 sessionPw에 할당
-			}
-			mphoto = mphoto==null? sessionPhoto : mphoto;
+			FileBoardDto ff =(FileBoardDto)session.getAttribute("fileboard");
 			System.out.println(4);
-			String mBirthStr = mRequest.getParameter("mbirth");
+			String fip = request.getRemoteAddr();
 			System.out.println(5);
-			Date mbirth = null;
-			if(!mBirthStr.equals("")) {
-				mbirth = Date.valueOf(mBirthStr);
-			}
-			String maddress = mRequest.getParameter("maddress");
-			System.out.println(6);
-			MemberDao mDao = MemberDao.getInstance();
-			MemberDto member = new MemberDto(mid, mpw, mname, memail, mphoto, mbirth, maddress);
-			int result = mDao.modify(member); 
-			if (result == MemberDao.SUCCESS) { // 중복멤 없음 회원가입 가능
-				System.out.println(7);
-				session.setAttribute("member", member);
-				request.setAttribute("ModifyResult", result); 
+			FileBoardDao fDao = FileBoardDao.getInstance();
+			FileBoardDto fileboard = new FileBoardDto(mid, ftitle, fcontent, ffilename, fip);
+			int result = fDao.insertFileBoard(fileboard); 
+			if (result == FileBoardDao.SUCCESS) { // 중복멤 없음 회원가입 가능
+				System.out.println(6);
+				session.setAttribute("fileboard", fileboard);
+				request.setAttribute("writeResult", result); 
 			} else {
-				request.setAttribute("ModifyErrorMsg", "회원 정보 수정 실패");
+				request.setAttribute("writeError", result);
 			} 
 	
 		} catch (Exception e) {
@@ -74,13 +62,13 @@ public class MModifyService implements Service {
 		}
 		
 		// 파일 복사
-		File serverFile = new File (path +"/"+ mphoto);
-		if (serverFile.exists() && !mphoto.equals("NOIMG.JPG")) {
+		File serverFile = new File (path +"/"+ ffilename);
+		if (serverFile.exists() && !ffilename.equals("NOIMG.JPG")) {
 			InputStream is = null;
 			OutputStream os = null;
 			try {
 				is = new FileInputStream(serverFile);
-				os = new FileOutputStream("D:/webPro_ryu/source/06_JSP/ch19_mvcmember/WebContent/memberPhotoUp/"+mphoto);
+				os = new FileOutputStream("D:/webPro_ryu/source/06_JSP/ch19_mvcmember/WebContent/freeBoardUp/"+ffilename);
 				byte[] bs = new byte[(int) serverFile.length()];
 				while (true) {
 					int readByCnt = is.read(bs);
@@ -97,11 +85,9 @@ public class MModifyService implements Service {
 					System.out.println(e.getMessage());
 				} 
 			}
-		}
-		
-		
-		
+		}	
 
 	}
+	 
 
 }
