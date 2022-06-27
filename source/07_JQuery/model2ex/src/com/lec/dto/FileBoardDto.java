@@ -5,7 +5,7 @@ import java.sql.Date;
 public class FileBoardDto {
 	private int fid;
 	private String mid;       
-	private String ftitle ;      
+	private String ftitle;      
     private String fcontent;    
     private String ffilename;    
     private Date frdate;

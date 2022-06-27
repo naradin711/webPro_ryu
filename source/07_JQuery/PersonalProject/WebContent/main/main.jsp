@@ -10,7 +10,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Main</title>
-	<link href="${conPath }/css/style.css " rel="stylesheet" type="text/css">
+	<link href="${conPath }/css/style2.css " rel="stylesheet" type="text/css">
 	
 </head>
 <body>

@@ -16,12 +16,33 @@ CREATE TABLE CUSTOMER_SHOP (
 select * from customer_shop;
 
 --1. ID중복체크
+SELECT * FROM customer_shop WHERE CID = 'aaa';
 
 
 --2. 회원가입        
 INSERT INTO customer_shop (CID, CPW, CNAME, CEMAIL, CTEL, CADDRESS, CBIRTH)
         VALUES ('aaa', '111', '홍길동', 'honghong11@hong.com', '010-9999-9999', 
                 '서울시 종로구 무악동', '1992-02-19');
+INSERT INTO customer_shop (CID, CPW, CNAME, CEMAIL, CTEL, CADDRESS, CBIRTH)
+        VALUES ('bbb', '111', '비길동', 'honghong12@hong.com', '010-2222-2222', 
+                '서울시 종로구 창천동', '1992-02-22');
+INSERT INTO customer_shop (CID, CPW, CNAME, CEMAIL, CTEL, CADDRESS, CBIRTH)
+        VALUES ('ccc', '111', '시길동', 'honghong13@hong.com', '010-2333-2333', 
+                '서울시 종로구 삼전동', '1992-03-30'); 
+                
+-- 3. 회원 정보 수정
+
+update customer_shop set cpw = '111',
+                        CNAME = '씨길동',
+                        CEMAIL = 'honghong13@hong.com',
+                        CTEL = '010-2333-2333',
+                        CADDRESS = '서울시 종로구 사전동' ,
+                        CBIRTH = '1993-03-03'
+                        WHERE CID = 'ccc';
+
+-- 4. 회원 탈퇴
+
+DELETE CUSTOMER_SHOP WHERE CID = 'bbb';
                 
                 
 --------------------------------------------------------------------
@@ -50,7 +71,7 @@ CREATE  SEQUENCE PRODUCT_SEQ MAXVALUE 999999 NOCACHE NOCYCLE;
 
 CREATE TABLE PRODUCT (
         pid NUMBER(10) PRIMARY KEY,
-        pname VARCHAR2(30) NOT NULL UNIQUE,
+        pname VARCHAR2(30) NOT NULL,
         ptype VARCHAR2(30) NOT NULL,
         pcontent VARCHAR2(3000) NOT NULL,
         pphoto VARCHAR2(300) NOT NULL,
@@ -73,15 +94,15 @@ INSERT INTO PRODUCT (PID, PNAME, PTYPE, pcontent, pphoto, pprice )
         VALUES (PRODUCT_SEQ.nextval , 'RED DRESS' , 'DRESS' , 
                 '이것은 빨간색 원피스' , 'NOIMG.JPG' , 35000 );
         INSERT INTO PRODUCT (PID, PNAME, PTYPE, pcontent, pphoto, pprice )
-        VALUES (PRODUCT_SEQ.nextval , 'RED DRESS 01' , 'DRESS' , 
-                '이것은 빨간색 원피스' , 'NOIMG.JPG' , 35000 );        
+        VALUES (PRODUCT_SEQ.nextval , 'BLUE TOP', 'TOP', 
+                '이것은 파란색 상의입니다.', 'NOIMG.JPG', 43000 );        
                 
 -- 2. 상품 상세 조회 (PID로 DTO 출력)
 
 SELECT * FROM PRODUCT WHERE PID = 2;
 
 -- 2-1. 상품 조회수 올리기
-UPDATE PRODUCT SET PHIT = PHIT + 1 WHERE PID = 2;
+UPDATE PRODUCT SET PHIT = PHIT + 1 WHERE PID = 3;
 
 -- 3-1 . 상품 목록 출력 이름 검색
 Select * from PRODUCT where PNAME like '%' || upper( 'WH' ) || '%';
@@ -123,7 +144,7 @@ CREATE SEQUENCE FBSHOP_SEQ MAXVALUE 999999 NOCYCLE NOCACHE;
 CREATE TABLE FREEBOARD_SHOP (
                 fbid    NUMBER(10)       PRIMARY KEY,
                 CID     VARCHAR2(30)     REFERENCES CUSTOMER_SHOP(CID),
-                aname   VARCHAR2(30)     REFERENCES ADMIN(aname),
+                aname   VARCHAR2(30)     ,
                 fbtitle VARCHAR2(30)     NOT NULL,
                 fbcontent VARCHAR2(3000) NOT NULL,
                 fbphoto VARCHAR2(300),
@@ -134,14 +155,63 @@ CREATE TABLE FREEBOARD_SHOP (
                 fbindent NUMBER(10)  NOT NULL,
                 fbpw    VARCHAR2(3000) NOT NULL
             );
+            SELECT * from FREEBOARD_SHOP;
+            COMMIT;
+ 
+-- 1. 글 출력 (int startRow, int endRow)
+SELECT ROWNUM RN, A.* FROM
+(select F.*  from FREEBOARD_SHOP F, CUSTOMER_SHOP C 
+                 WHERE F.CID = C.CID
+                ORDER BY FBGROUP DESC, fbstep) A ;
+                
+SELECT * FROM
+    (SELECT ROWNUM RN, A.* FROM
+    (select F.* from FREEBOARD_SHOP F, CUSTOMER_SHOP C 
+                 WHERE F.CID = C.CID
+                ORDER BY FBGROUP DESC, fbstep )A )
+     WHERE RN BETWEEN 5 AND 11; 
+
+            
+-- 2. 글 갯수 세기
+SELECT COUNT(*)CNT FROM FREEBOARD_SHOP;
+
+-- 3. 글 작성하기. (고객 원글)
+INSERT INTO FREEBOARD_SHOP (fbid, cID, aname, fbtitle, fbcontent,  
+        fbphoto, fbip, fbgroup, fbstep, fbindent, fbpw)
+VALUES (FBSHOP_SEQ.NEXTVAL, 'aaa', NULL,'title220702','content23', 
+        'NOIMG.JPG', '192.168.10.151', FBSHOP_SEQ.CURRVAL, 0, 0, '111');
+
+-- 4. FBId로 글 dto보기 (글쓴이 이름 추가)
+SELECT F.* from FREEBOARD_SHOP F, CUSTOMER_SHOP C 
+           WHERE F.CID = C.CID AND FBID=1;
+
+-- 6. 글 수정 (FBID, fBtitle, FBContent, FBPHOTO,  FIp)
+UPDATE FREEBOARD_SHOP SET FBTITLE = '바뀐제목3',
+                            FBCONTENT = '바뀐 본문',
+                            fBPHOTO = 'NOIMG.JPG',
+                            FBIP = '111.168.151.11'
+                      WHERE FBID = 3; 
+                      
+-- (7) 글 삭제하기(FBID, FBPW로 삭제하기)
+COMMIT;
+DELETE FROM FREEBOARD_SHOP WHERE FBID=3 AND FBPW = '111';
+ROLLBACK;                      
+                      
+-- (9) 답변글 쓰기 (관리자 ONLY)
+
+INSERT INTO FREEBOARD_SHOP (fbid, cID, aname, fbtitle, fbcontent,  
+        fbphoto, fbip, fbgroup, fbstep, fbindent, fbpw)
+VALUES (FBSHOP_SEQ.NEXTVAL, 'aaa', '관리자','답) title220702','답) content23', 
+        'NOIMG.JPG', '192.168.10.151', 3, 1, 1, '111');
+            
 
 --------------------------------------------------------------------
                         -- REVIEW TABLE
 --------------------------------------------------------------------
-DROP TABLE FREEBOARD_SHOP;
-DROP SEQUENCE FBSHOP_SEQ;
-CREATE SEQUENCE FBSHOP_SEQ MAXVALUE 999999 NOCYCLE NOCACHE;
-CREATE TABLE FREEBOARD_SHOP (
+DROP TABLE REVIEW;
+DROP SEQUENCE REVIEW_SEQ;
+CREATE SEQUENCE REVIEW_SEQ MAXVALUE 999999 NOCYCLE NOCACHE;
+CREATE TABLE REVIEW (
                 rbid    NUMBER(10)       PRIMARY KEY,
                 CID     VARCHAR2(30)     REFERENCES CUSTOMER_SHOP(CID),
                 rbtitle VARCHAR2(30)     NOT NULL,
@@ -152,14 +222,177 @@ CREATE TABLE FREEBOARD_SHOP (
                 rbpw    VARCHAR2(3000) NOT NULL
             );
 
+-- 1. 글 출력 (int startRow, int endRow)
+SELECT ROWNUM RN, A.* FROM
+(select R.*  from REVIEW R, CUSTOMER_SHOP C 
+                 WHERE R.CID = C.CID
+                ORDER BY FBGROUP DESC, fbstep) A ;
+                
+SELECT * FROM
+    (SELECT ROWNUM RN, A.* FROM
+    (select R.* from REVIEW R, CUSTOMER_SHOP C 
+                 WHERE R.CID = C.CID ORDER BY R.RBID DESC)A )
+     WHERE RN BETWEEN 20 AND 24; 
+     
+     COMMIT;
+
+            
+-- 2. 글 갯수 세기
+SELECT COUNT(*)CNT FROM REVIEW;
+
+-- 3. 글 작성하기. (고객 원글)
+INSERT INTO REVIEW (Rbid, cID, Rbtitle, Rbcontent, Rbphoto, Rbip, Rbpw)
+VALUES (REVIEW_SEQ.NEXTVAL, 'bbb', 'REVIEW220609','REVIEW015', 
+        'NOIMG.JPG', '192.168.10.151', '111');
+
+-- 4. RBId로 글 dto보기 (글쓴이 이름 추가)
+SELECT R.* from REVIEW R, CUSTOMER_SHOP C 
+           WHERE R.CID = C.CID AND RBID=1;
+
+-- 6. 리뷰 수정 (RBID, RBtitle, RBContent, RBPHOTO,  RIp)
+UPDATE REVIEW SET RBTITLE = '바뀐 리뷰 제목 3',
+                    RBCONTENT = '바뀐 리뷰 본문 33',
+                    RBPHOTO = 'NOIMG.JPG',
+                    RBIP = '103.133.133.33'
+                WHERE RBID = 3; 
+                      
+-- (7) 리뷰 삭제하기(RBID, RBPW로 삭제하기)
+COMMIT;
+DELETE FROM REVIEW WHERE RBID=3 AND RBPW = '111';
+ROLLBACK;
+
 --------------------------------------------------------------------
                         -- CART TABLE
 --------------------------------------------------------------------
+DROP TABLE CART;
+DROP SEQUENCE CART_SEQ;
+CREATE SEQUENCE CART_SEQ MAXVALUE 999999 NOCYCLE NOCACHE;
+CREATE TABLE CART (
+                cartid      NUMBER(10)      PRIMARY KEY,
+                CID         VARCHAR2(30)    REFERENCES CUSTOMER_SHOP(CID),
+                pname       VARCHAR2(30)    NOT NULL,
+                ptype       VARCHAR2(30)    NOT NULL,
+                pphoto      VARCHAR2(300)   NOT NULL,
+                pprice      NUMBER(10)      NOT NULL
+                 );
+-- 1. 글 출력 (int startRow, int endRow)
+SELECT ROWNUM RN, A.* FROM
+(select R.*  from CART CT, CUSTOMER_SHOP C , PRODUCT PR
+                 WHERE CT.CID = C.CID AND CT.PID = PR.PID
+                ORDER BY FBGROUP DESC, fbstep) A ;
+                
+SELECT * FROM
+    (SELECT ROWNUM RN, A.* FROM
+    (select CT.* from CART CT, CUSTOMER_SHOP C
+                 WHERE CT.CID = C.CID ORDER BY CT.CARTID DESC)A )
+     WHERE RN BETWEEN 1 AND 5; 
+     
+     COMMIT;
+
+            
+-- 2. 글 갯수 세기
+SELECT COUNT(*)CNT FROM CART;
+
+-- 3. 장바구니 추가. (고객 입장)
+INSERT INTO CART (CARTid, cID, pname, ptype, pphoto, pprice)
+VALUES (CART_SEQ.NEXTVAL, 'aaa', 'WHITE DRESS', 'DRESS', 'NOIMG.JPG', 50000);
+
+INSERT INTO CART (CARTid, cID, pname, ptype, pphoto, pprice)
+VALUES (CART_SEQ.NEXTVAL, 'aaa','BLUE TOP', 'TOP', 'NOIMG.JPG', 43000);
+
+INSERT INTO CART (CARTid, cID, pname, ptype, pphoto, pprice)
+VALUES (CART_SEQ.NEXTVAL, 'bbb', 'BLUE TOP', 'TOP', 'NOIMG.JPG', 43000);
+
+-- 4. CID로 CART dto보기 (개인 장바구니 목록 출력)
+select CT.* from CART CT, CUSTOMER_SHOP C
+                 WHERE CT.CID = C.CID 
+                 AND CT.CID = 'bbb'
+                 ORDER BY CT.CARTID DESC;
+
+                      
+-- 5 장바구니 목록별 삭제하기(CARTID 로 삭제하기)
+COMMIT;
+DELETE FROM CART WHERE CARTID=3;
+ROLLBACK;
+
+-- 5 -1  담은 장바구니 전체 삭제하기(CID 로 삭제하기). 오더 파트에서 주문 처리할때 쓰임
+COMMIT;
+DELETE FROM CART WHERE CID= 'bbb';
+ROLLBACK;
 
 --------------------------------------------------------------------
                         -- ORDER TABLE
 --------------------------------------------------------------------
 
+DROP TABLE ORDERLIST;
+DROP SEQUENCE ORDERLIST_SEQ;
+CREATE SEQUENCE ORDERLIST_SEQ MAXVALUE 999999 NOCYCLE NOCACHE;
+CREATE TABLE ORDERLIST (
+                ODID        NUMBER(10)      PRIMARY KEY,
+                cartid      NUMBER(10)      REFERENCES CART(cartid),
+                CID         VARCHAR2(30)    REFERENCES CUSTOMER_SHOP(CID),
+                pname       VARCHAR2(30)    NOT NULL,
+                ptype       VARCHAR2(30)    NOT NULL,
+                pphoto      VARCHAR2(300)   NOT NULL,
+                pprice      NUMBER(10)      NOT NULL,
+                ODCALL      VARCHAR2(30)    DEFAULT 'N',
+                ODDATE      DATE            DEFAULT SYSDATE
+                 );
 
+-- 1. 구매 목록 출력 시간순 (int startRow, int endRow)
+SELECT ROWNUM RN, A.* FROM
+(select R.*  from CART CT, CUSTOMER_SHOP C , PRODUCT PR
+                 WHERE CT.CID = C.CID AND CT.PID = PR.PID
+                ORDER BY FBGROUP DESC, fbstep) A ;
+                
+SELECT * FROM
+    (SELECT ROWNUM RN, A.* FROM
+    (select OD.* from ORDERLIST OD, CUSTOMER_SHOP C
+                 WHERE OD.CID = C.CID ORDER BY ODDATE DESC)A )
+     WHERE RN BETWEEN 1 AND 3; 
+     
+     COMMIT;
+-- 1. 1. 구매목록 출력 - 카테고리별
+SELECT * FROM
+    (SELECT ROWNUM RN, A.* FROM
+    (select OD.* from ORDERLIST OD, CUSTOMER_SHOP C
+                 WHERE OD.CID = C.CID 
+                 AND PTYPE = 'TOP'
+                 ORDER BY ODDATE DESC)A )
+     WHERE RN BETWEEN 1 AND 3; 
+     
+-- 1. 2. 구매목록 출력 - 주문 미처리
+SELECT * FROM
+    (SELECT ROWNUM RN, A.* FROM
+    (select OD.* from ORDERLIST OD, CUSTOMER_SHOP C
+                 WHERE OD.CID = C.CID 
+                 AND ODCALL = 'N'
+                 ORDER BY ODDATE DESC)A )
+     WHERE RN BETWEEN 1 AND 3; 
+            
+-- 2. 글 갯수 세기
+SELECT COUNT(*)CNT FROM ORDERLIST;
 
+-- 3. 구매 목록 추가. (고객이 관리자에게)
+INSERT INTO ORDERLIST (ODID, CARTid, cID, pname, ptype, pphoto, pprice)
+VALUES (ORDERLIST_SEQ.NEXTVAL, 1 ,'aaa', 'WHITE DRESS', 'DRESS', 'NOIMG.JPG', 50000);
+
+INSERT INTO ORDERLIST (ODID, CARTid, cID, pname, ptype, pphoto, pprice)
+VALUES (ORDERLIST_SEQ.NEXTVAL, 2 ,'aaa','BLUE TOP', 'TOP', 'NOIMG.JPG', 43000);
+
+INSERT INTO ORDERLIST (ODID, CARTid, cID, pname, ptype, pphoto, pprice)
+VALUES (ORDERLIST_SEQ.NEXTVAL, 3 ,'bbb', 'BLUE TOP', 'TOP', 'NOIMG.JPG', 43000);
+
+-- 4. CID로 ORDERLIST dto보기 (개인 구매 목록 출력)
+select OD.* from ORDERLIST OD, CUSTOMER_SHOP C
+                 WHERE OD.CID = C.CID 
+                 AND OD.CID = 'bbb'
+                 ORDER BY OD.ODID DESC;
+
+                      
+-- 5. 구매처리하기 (ORDER CALL을 Y로 업데이트)
+COMMIT;
+UPDATE ORDERLIST SET ODCALL = 'Y'
+                 WHERE ODID = 3;
+ROLLBACK;
 

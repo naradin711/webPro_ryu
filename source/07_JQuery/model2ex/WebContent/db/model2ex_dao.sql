@@ -79,7 +79,7 @@ CREATE TABLE FILEBOARD(
     fContent    VARCHAR2(2000),
     fFileName   VARCHAR2(100),
     fRdate      DATE DEFAULT SYSDATE,
-    fHit         NUMBER(7) DEFAULT 0,
+    fHit        NUMBER(7) DEFAULT 0,
     fGroup      NUMBER(7) NOT NULL,
     fStep       NUMBER(3) NOT NULL,
     fIndent     NUMBER(3) NOT NULL,
