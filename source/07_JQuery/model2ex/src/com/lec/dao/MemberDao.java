@@ -162,7 +162,7 @@ public class MemberDao {
 		
 
 //		4. 회원 수 세보기
-//		SELECT COUNT(*) CNT FROM mvcmember;
+//		 SELECT COUNT(*) CNT FROM CUSTOMER_SHOP  
 		public int getMemberCnt() {
 			int totCnt = 0;
 			Connection conn = null;

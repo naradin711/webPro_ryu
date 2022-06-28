@@ -189,6 +189,7 @@ public class FileBoardDao {
 		// 5. 글 상세보기  fId로 글 dto보기 (글쓴이 이름 추가)
 		// SELECT F.*, MNAME FROM FILEBOARD F, MEMBER M WHERE M.MID=F.MID AND FID= ? 
 		public FileBoardDto FileBoardView(int fid){
+			insertFfit(fid);
 			FileBoardDto dto = null;
 			Connection conn = null;
 			PreparedStatement pstmt = null;

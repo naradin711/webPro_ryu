@@ -2,7 +2,7 @@ package com.mall.dto;
 
 public class CartDto {
 	private int cartid;        
-	private int cid;         
+	private String cid;         
 	private String pname;         
 	private String ptype;         
 	private String pphoto;        
@@ -17,7 +17,7 @@ public class CartDto {
 	
 
 
-	public CartDto(int cartid, int cid, String pname, String ptype, String pphoto, int pprice) {
+	public CartDto(int cartid, String cid, String pname, String ptype, String pphoto, int pprice) {
 	 
 		this.cartid = cartid;
 		this.cid = cid;
@@ -44,14 +44,14 @@ public class CartDto {
 
 
 
-	public int getCid() {
+	public String getCid() {
 		return cid;
 	}
 
 
 
 
-	public void setCid(int cid) {
+	public void setCid(String cid) {
 		this.cid = cid;
 	}
 

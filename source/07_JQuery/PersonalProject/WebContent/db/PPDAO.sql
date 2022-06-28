@@ -15,9 +15,14 @@ CREATE TABLE CUSTOMER_SHOP (
         );
 select * from customer_shop;
 
+--0. 로그인
+SELECT * FROM customer_shop WHERE CID = 'aaa' and CPW = '111';
+
 --1. ID중복체크
 SELECT * FROM customer_shop WHERE CID = 'aaa';
 
+--1. 1. ID중복체크
+SELECT * FROM customer_shop WHERE CEMAIL = 'honghong13@hong.com';
 
 --2. 회원가입        
 INSERT INTO customer_shop (CID, CPW, CNAME, CEMAIL, CTEL, CADDRESS, CBIRTH)
@@ -27,9 +32,24 @@ INSERT INTO customer_shop (CID, CPW, CNAME, CEMAIL, CTEL, CADDRESS, CBIRTH)
         VALUES ('bbb', '111', '비길동', 'honghong12@hong.com', '010-2222-2222', 
                 '서울시 종로구 창천동', '1992-02-22');
 INSERT INTO customer_shop (CID, CPW, CNAME, CEMAIL, CTEL, CADDRESS, CBIRTH)
-        VALUES ('ccc', '111', '시길동', 'honghong13@hong.com', '010-2333-2333', 
-                '서울시 종로구 삼전동', '1992-03-30'); 
+        VALUES ('eee', '111', '라길동', 'honghong15@hong.com', '010-2555-2555', 
+                '서울시 종로구 오전동', '1992-05-30'); 
                 
+                
+-- 2. 1. 회원 수 세보기
+
+SELECT COUNT(*) CNT FROM CUSTOMER_SHOP ;
+
+
+-- 2. 2. 회원 목록 보기 페이징하기
+SELECT * FROM 
+        (SELECT ROWNUM RN, A.* FROM 
+        (SELECT * FROM CUSTOMER_SHOP ORDER BY crdate DESC)A )
+         WHERE RN BETWEEN 1 AND 9;
+         
+-- 2. 3. 회원정보 상세보기 (cid로 dto 출력)         
+SELECT * FROM CUSTOMER_SHOP WHERE CID= 'aaa';   
+
 -- 3. 회원 정보 수정
 
 update customer_shop set cpw = '111',
@@ -82,6 +102,15 @@ CREATE TABLE PRODUCT (
         
 SELECT * FROM product;
 COMMIT;
+
+-- 0. 상품 출력
+SELECT * FROM
+ (SELECT ROWNUM RN, A.* FROM
+ (select P.* from PRODUCT P ORDER BY prdate DESC )A )
+  WHERE RN BETWEEN 1 AND 5;
+
+-- 0. 1. 상품 갯수 세기
+SELECT COUNT(*) CNT FROM PRODUCT;
         
 -- 1. 상품등록        
 INSERT INTO PRODUCT (PID, PNAME, PTYPE, pcontent, pphoto, pprice )
@@ -102,26 +131,53 @@ INSERT INTO PRODUCT (PID, PNAME, PTYPE, pcontent, pphoto, pprice )
 SELECT * FROM PRODUCT WHERE PID = 2;
 
 -- 2-1. 상품 조회수 올리기
-UPDATE PRODUCT SET PHIT = PHIT + 1 WHERE PID = 3;
+UPDATE PRODUCT SET PHIT = PHIT + 1 WHERE PID = 1;
 
 -- 3-1 . 상품 목록 출력 이름 검색
 Select * from PRODUCT where PNAME like '%' || upper( 'WH' ) || '%';
+
+SELECT * FROM
+ (SELECT ROWNUM RN, A.* FROM
+ (select P.* from PRODUCT P WHERE PNAME like '%' || upper( 'WH' ) || '%' 
+                            ORDER BY prdate DESC )A )
+                            WHERE RN BETWEEN 1 AND 5;
 
 -- 3-2 . 상품 목록 출력 가격 높은순
 
 SELECT * FROM PRODUCT ORDER BY PPRICE DESC;
 
+SELECT * FROM
+ (SELECT ROWNUM RN, A.* FROM
+ (select P.* from PRODUCT P ORDER BY PPRICE DESC )A )
+                            WHERE RN BETWEEN 1 AND 5;
+
 -- 3-3 . 상품 목록 출력 가격 낮은순
 SELECT * FROM PRODUCT ORDER BY PPRICE ;
+SELECT * FROM
+ (SELECT ROWNUM RN, A.* FROM
+ (select P.* from PRODUCT P ORDER BY PPRICE )A )
+                            WHERE RN BETWEEN 1 AND 5;                           
 
 -- 3-4 . 상품 목록 최신순
-SELECT * FROM PRODUCT ORDER BY PRDATE DESC;
+SELECT * FROM
+ (SELECT ROWNUM RN, A.* FROM
+ (select P.* from PRODUCT P ORDER BY prdate DESC )A )
+  WHERE RN BETWEEN 1 AND 5;
 
 -- 3-5 . 상품 목록 인기순
 SELECT * FROM PRODUCT ORDER BY PHIT DESC;
+SELECT * FROM
+ (SELECT ROWNUM RN, A.* FROM
+ (select P.* from PRODUCT P ORDER BY PHIT DESC )A )
+  WHERE RN BETWEEN 1 AND 5;
 
--- 3-6 . 상품 목록 종류별 (인기순)
+-- 3-6 . 상품 목록 종류별 (기본 - 인기순)
 SELECT * FROM PRODUCT WHERE PTYPE='DRESS' ORDER BY PHIT DESC;
+SELECT * FROM
+ (SELECT ROWNUM RN, A.* FROM
+ (select P.* from PRODUCT P WHERE PTYPE='DRESS'
+                            ORDER BY PHIT DESC )A )
+  WHERE RN BETWEEN 1 AND 5;
 
 -- 4. 상품 정보 수정
 UPDATE PRODUCT SET  PNAME = 'BLUE TOP',
@@ -214,6 +270,7 @@ CREATE SEQUENCE REVIEW_SEQ MAXVALUE 999999 NOCYCLE NOCACHE;
 CREATE TABLE REVIEW (
                 rbid    NUMBER(10)       PRIMARY KEY,
                 CID     VARCHAR2(30)     REFERENCES CUSTOMER_SHOP(CID),
+                pname       VARCHAR2(30)    NOT NULL,
                 rbtitle VARCHAR2(30)     NOT NULL,
                 rbcontent VARCHAR2(3000) NOT NULL,
                 rbphoto VARCHAR2(300),
@@ -231,8 +288,8 @@ SELECT ROWNUM RN, A.* FROM
 SELECT * FROM
     (SELECT ROWNUM RN, A.* FROM
     (select R.* from REVIEW R, CUSTOMER_SHOP C 
-                 WHERE R.CID = C.CID ORDER BY R.RBID DESC)A )
-     WHERE RN BETWEEN 20 AND 24; 
+                 WHERE R.CID = C.CID ORDER BY R.RBRDATE DESC)A )
+     WHERE RN BETWEEN 20 AND 28; 
      
      COMMIT;
 
@@ -241,8 +298,8 @@ SELECT * FROM
 SELECT COUNT(*)CNT FROM REVIEW;
 
 -- 3. 글 작성하기. (고객 원글)
-INSERT INTO REVIEW (Rbid, cID, Rbtitle, Rbcontent, Rbphoto, Rbip, Rbpw)
-VALUES (REVIEW_SEQ.NEXTVAL, 'bbb', 'REVIEW220609','REVIEW015', 
+INSERT INTO REVIEW (Rbid, cID, pname, Rbtitle, Rbcontent, Rbphoto, Rbip, Rbpw)
+VALUES (REVIEW_SEQ.NEXTVAL, 'bbb', 'BLUE TOP', '파란 상의 2206090010','REVIEW025', 
         'NOIMG.JPG', '192.168.10.151', '111');
 
 -- 4. RBId로 글 dto보기 (글쓴이 이름 추가)
@@ -339,11 +396,10 @@ CREATE TABLE ORDERLIST (
                 ODDATE      DATE            DEFAULT SYSDATE
                  );
 
+-- 0. 글 갯수 세기
+SELECT COUNT(*)CNT FROM ORDERLIST;
+
 -- 1. 구매 목록 출력 시간순 (int startRow, int endRow)
-SELECT ROWNUM RN, A.* FROM
-(select R.*  from CART CT, CUSTOMER_SHOP C , PRODUCT PR
-                 WHERE CT.CID = C.CID AND CT.PID = PR.PID
-                ORDER BY FBGROUP DESC, fbstep) A ;
                 
 SELECT * FROM
     (SELECT ROWNUM RN, A.* FROM
@@ -370,8 +426,7 @@ SELECT * FROM
                  ORDER BY ODDATE DESC)A )
      WHERE RN BETWEEN 1 AND 3; 
             
--- 2. 글 갯수 세기
-SELECT COUNT(*)CNT FROM ORDERLIST;
+
 
 -- 3. 구매 목록 추가. (고객이 관리자에게)
 INSERT INTO ORDERLIST (ODID, CARTid, cID, pname, ptype, pphoto, pprice)

@@ -10,7 +10,11 @@
 	<meta charset="UTF-8">
 	<title>Header</title>
 	<link href="${conPath}/css/header1.css" rel="stylesheet" type="text/css">
-	
+	<script type="text/javascript">
+		$(document).ready(function () {
+			  
+		});
+	</script>
 </head>
 <body> <!-- gnb는 로그인/전후 다르다 -->
 	<header>
@@ -50,8 +54,22 @@
 					
 					<li><a href="${conPath }/Book/ex03_list_productp.jsp">BestSeller</a></li>
 			 		<li><a href="${conPath }/Book/ex03_list_productp.jsp">What's New</a></li>		
-					<li><a href="${conPath }/Book/ex03_list_productp.jsp">Product</a></li>	
-					<li><a href='${conPath }/Book/ex03_list_productp.jsp'>About Us</a></li>		
+					<li>
+						<a href="${conPath }/Book/ex03_list_productp.jsp">Product</a>
+						<ul class="hidden">
+							<li><a href='${conPath }/main/aboutUs.jsp'>DRESS</a></li>
+							<li><a href='${conPath }/main/aboutUs.jsp'>Accessories</a></li>	
+							<li><a href='${conPath }/main/aboutUs.jsp'>TOPS</a></li>
+							<li><a href='${conPath }/main/aboutUs.jsp'>BOTTOMS</a></li>
+						</ul>
+					</li>	
+					<li>
+						<a href='${conPath }/main/aboutUs.jsp'>About Us</a>
+						<ul class="hidden">
+							<li><a href='${conPath }/main/aboutUs.jsp'>Brand Story</a></li>
+							<li><a href='${conPath }/main/contact.jsp'>Contact Us</a></li>
+						</ul>
+					</li>		
 			</ul>
 		</div>
 	</header>

@@ -2,6 +2,7 @@
 body { 
 	background-color: #FFF0B5; 
 	font-size: 9pt;
+	z-index: -1;
 }
 table {border: 2px solid pink; width:600px; margin: 10px auto;}
 table tr { background-color: #FFE271; height: 40px;}
@@ -39,4 +40,5 @@ p {
 	text-align: center;
 	color: #003300;
 	padding-top:100px;
+	z-index: -1;
 }

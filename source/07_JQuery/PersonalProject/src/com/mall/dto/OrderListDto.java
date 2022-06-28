@@ -5,12 +5,13 @@ import java.sql.Date;
 public class OrderListDto {
 	private int odid;            
 	private int cartid;          
-	private int cid;               
+	private String cid;
+	private String caddress; 
 	private String pname;        
 	private String ptype;         
 	private String pphoto;        
     private int pprice;           
-    private int odcall;  
+    private String odcall;  
     private Date oddate;
     
     
@@ -18,29 +19,27 @@ public class OrderListDto {
 	public OrderListDto() { 
 	}
 
-	
-
-	public OrderListDto(int odid, int cartid, int cid, String pname, String ptype, String pphoto, int pprice,
-			int odcall) {
-		super();
+	public OrderListDto(int odid, int cartid, String cid, String caddress, String pname, String ptype, String pphoto,
+			int pprice,  Date oddate) {
+		 
 		this.odid = odid;
 		this.cartid = cartid;
 		this.cid = cid;
+		this.caddress = caddress;
 		this.pname = pname;
 		this.ptype = ptype;
 		this.pphoto = pphoto;
-		this.pprice = pprice;
-		this.odcall = odcall;
+		this.pprice = pprice; 
+		this.oddate = oddate;
 	}
 
-
-
-	public OrderListDto(int odid, int cartid, int cid, String pname, String ptype, String pphoto, int pprice,
-			int odcall, Date oddate) {
-		super();
+	public OrderListDto(int odid, int cartid, String cid, String caddress, String pname, String ptype, String pphoto,
+			int pprice, String odcall, Date oddate) {
+		 
 		this.odid = odid;
 		this.cartid = cartid;
 		this.cid = cid;
+		this.caddress = caddress;
 		this.pname = pname;
 		this.ptype = ptype;
 		this.pphoto = pphoto;
@@ -75,14 +74,26 @@ public class OrderListDto {
 
 
 
-	public int getCid() {
+	public String getCid() {
 		return cid;
 	}
 
 
 
-	public void setCid(int cid) {
+	public void setCid(String cid) {
 		this.cid = cid;
+	}
+
+
+
+	public String getCaddress() {
+		return caddress;
+	}
+
+
+
+	public void setCaddress(String caddress) {
+		this.caddress = caddress;
 	}
 
 
@@ -135,13 +146,13 @@ public class OrderListDto {
 
 
 
-	public int getOdcall() {
+	public String getOdcall() {
 		return odcall;
 	}
 
 
 
-	public void setOdcall(int odcall) {
+	public void setOdcall(String odcall) {
 		this.odcall = odcall;
 	}
 
@@ -161,11 +172,14 @@ public class OrderListDto {
 
 	@Override
 	public String toString() {
-		return "OrderListDto [odid=" + odid + ", cartid=" + cartid + ", cid=" + cid + ", pname=" + pname + ", ptype="
-				+ ptype + ", pphoto=" + pphoto + ", pprice=" + pprice + ", odcall=" + odcall + ", oddate=" + oddate
-				+ "]";
-	} 
+		return "OrderListDto [odid=" + odid + ", cartid=" + cartid + ", cid=" + cid + ", caddress=" + caddress
+				+ ", pname=" + pname + ", ptype=" + ptype + ", pphoto=" + pphoto + ", pprice=" + pprice + ", odcall="
+				+ odcall + ", oddate=" + oddate + "]";
+	}
 	
+	
+	
+	 
 	
     
 	

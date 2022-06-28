@@ -4,7 +4,8 @@ import java.sql.Date;
 
 public class ReviewDto {
 	private int rbid;     
-	private String cid;       
+	private String cid;
+	private String pname;
 	private String rbtitle;   
 	private String rbcontent;   
 	private String rbphoto;  
@@ -38,6 +39,38 @@ public class ReviewDto {
 		 
 		this.rbid = rbid;
 		this.cid = cid;
+		this.rbtitle = rbtitle;
+		this.rbcontent = rbcontent;
+		this.rbphoto = rbphoto;
+		this.rbrdate = rbrdate;
+		this.rbip = rbip;
+		this.rbpw = rbpw;
+	}
+	
+	
+	
+
+
+	public ReviewDto(int rbid, String cid, String pname, String rbtitle, String rbcontent, String rbphoto, String rbip,
+			String rbpw) { 
+		this.rbid = rbid;
+		this.cid = cid;
+		this.pname = pname;
+		this.rbtitle = rbtitle;
+		this.rbcontent = rbcontent;
+		this.rbphoto = rbphoto;
+		this.rbip = rbip;
+		this.rbpw = rbpw;
+	}
+
+
+
+
+	public ReviewDto(int rbid, String cid, String pname, String rbtitle, String rbcontent, String rbphoto, Date rbrdate,
+			String rbip, String rbpw) { 
+		this.rbid = rbid;
+		this.cid = cid;
+		this.pname = pname;
 		this.rbtitle = rbtitle;
 		this.rbcontent = rbcontent;
 		this.rbphoto = rbphoto;
@@ -79,6 +112,20 @@ public class ReviewDto {
 
 	public String getRbtitle() {
 		return rbtitle;
+	}
+
+	
+
+
+	public String getPname() {
+		return pname;
+	}
+
+
+
+
+	public void setPname(String pname) {
+		this.pname = pname;
 	}
 
 

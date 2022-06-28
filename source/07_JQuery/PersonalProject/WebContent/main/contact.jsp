@@ -21,7 +21,7 @@
 	<jsp:include page="../main/header.jsp"/>
 	<div id="content_form">
 	<br>
-	<h1>Main</h1>
+	<h1>Contact Us</h1>
 	</div>
 	<jsp:include page="../main/footer.jsp"/>
 </body>
