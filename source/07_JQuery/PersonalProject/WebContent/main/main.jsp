@@ -51,12 +51,12 @@
 			history.back();
 		</script>
 	</c:if>
-	<c:if test="${not empty DeleteMemberResult }">
+	<c:if test="${not empty DeleteCustomerResult }">
 		<script type="text/javascript">
 			alert('회원 탈퇴에 성공하셨습니다.');
 		</script>
 	</c:if>
-	<c:if test="${not empty DeleteMemberError }">
+	<c:if test="${not empty DeleteCustomerError }">
 		<script type="text/javascript">
 			alert('회원 탈퇴에 실패하셨습니다.');
 			history.back();

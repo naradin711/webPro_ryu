@@ -19,36 +19,36 @@
 </head>
 <body>
 	<jsp:include page="../main/header.jsp"/>
-		<div id="content_form">
+	<div id="content_form">
 		<c:set var="SUCCESS" value="1"/>
-	<c:set var="FAIL" value="0"/>
-	<table>
-	<caption>회원 정보 보기</caption>
-		<c:if test="${list.size() eq 0 }">
-			<tr><th>등록된 회원이 없습니다</th></tr>
-		</c:if>
-		<c:if test="${list.size() != 0 }">
-		<tr>
-			<c:forEach var="dto" items="${list }">		
-				<td>
-				 <img alt="memberImg" src="${conPath }/memberPhotoUp/${dto.mphoto}" width="120">
-					<br>
-					<br>
-					${dto.mname } 
-					<br>
-					(${dto.mid })
-					<br>
-				</td>		
-			</c:forEach>
-		</tr>	
-		</c:if>
-		<tr>
-			<td colspan="3">
-				<input type="button" value="메인화면" onclick="location ='${conPath}/main.do'">
-				<input type="button" value="로그아웃" onclick="location ='${conPath}/logout.do'">
-			</td>
-		</tr>
-	</table>
+		<c:set var="FAIL" value="0"/>
+		<table>
+		<caption>회원 정보 보기</caption>
+			<c:if test="${list.size() eq 0 }">
+				<tr><th>등록된 회원이 없습니다</th></tr>
+			</c:if>
+			<c:if test="${list.size() != 0 }">
+				<tr>
+					<c:forEach var="dto" items="${list }">		
+						<td>
+				 			<img alt="memberImg" src="${conPath }/memberPhotoUp/${dto.mphoto}" width="120">
+							<br>
+							<br>
+							${dto.mname } 
+							<br>
+							(${dto.mid })
+							<br>
+						</td>		
+					</c:forEach>
+				</tr>	
+			</c:if>
+			<tr>
+				<td colspan="3">
+					<input type="button" value="메인화면" onclick="location ='${conPath}/main.do'">
+					<input type="button" value="로그아웃" onclick="location ='${conPath}/logout.do'">
+				</td>
+			</tr>
+		</table>
 	<div class="paging">
 				<a href="${conPath }/allView.do?pageNum=1">◀◀</a>
 					&nbsp; &nbsp; &nbsp;

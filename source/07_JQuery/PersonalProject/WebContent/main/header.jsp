@@ -19,7 +19,7 @@
 <body> <!-- gnb는 로그인/전후 다르다 -->
 	<header>
 		<div class="gnb">
-		<c:if test="${empty member && empty admin}">
+		<c:if test="${empty customer && empty admin}">
 			<!-- 로그인 전 메뉴 우측부터 고객 센터 회원가입 로그인 -->
 			<ul>
 				<li><a href="${conPath }/boardList.do">고객센터</a></li>
@@ -27,18 +27,19 @@
 				<li><a href="${conPath }/loginView.do">로그인</a></li>
 			</ul>	
 		</c:if>	
-		<c:if test="${ member != null }">
+		<c:if test="${ customer != null }">
 			<!-- 로그인 후 메뉴 우측부터 고객 센터 로그아웃 정보 수정, 고객이름 -->
 			<ul>
 				<li><a href="${conPath }/boardList.do">고객센터</a></li>
 				<li><a href="${conPath }/logout.do">로그아웃</a></li>
-				<li><a href="${conPath }/modifyView.do">정보수정</a></li>
-				<li><a href="#">${member.mname }님 반갑습니다.</a></li>
+				<li><a href="${conPath }/mypage.do">My Page</a></li>
+				<li><a href="#">${customer.cname }님 반갑습니다.</a></li>
 			</ul>	
 		</c:if>
 		<c:if test="${ admin != null }">
 			<ul>
-				<li><a href="${conPath }/buyList.do">판매 목록</a></li>
+				<li><a href="${conPath }/CustomerList.do">고객 목록</a></li>
+				<li><a href="${conPath }/ProductList.do">상품 목록</a></li>
 				<li><a href="${conPath }/boardList.do">고객센터</a></li>
 				<li><a href="${conPath }/logout.do">관리자 모드 나가기</a></li>
 				<li><a href="#">${admin.aname }님 </a></li>
@@ -52,10 +53,10 @@
 			<!-- 우측부터 메뉴 : 도서보기, 도서등록(로그인 이후) -->
 			<ul>
 					
-					<li><a href="${conPath }/Book/ex03_list_productp.jsp">BestSeller</a></li>
-			 		<li><a href="${conPath }/Book/ex03_list_productp.jsp">What's New</a></li>		
+					<li><a href="${conPath }/main/aboutUs.jsp">BestSeller</a></li>
+			 		<li><a href="${conPath }/main/aboutUs.jsp">What's New</a></li>		
 					<li>
-						<a href="${conPath }/Book/ex03_list_productp.jsp">Product</a>
+						<a href="${conPath }/main/aboutUs.jsp">Product</a>
 						<ul class="hidden">
 							<li><a href='${conPath }/main/aboutUs.jsp'>DRESS</a></li>
 							<li><a href='${conPath }/main/aboutUs.jsp'>Accessories</a></li>	

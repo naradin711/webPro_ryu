@@ -8,48 +8,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
- 
-<link href="${conPath }/css/joinpp.css " rel="stylesheet" type="text/css">
+<title>Insert title here</title>
+<link href="${conPath }/css/style2.css " rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
 <script type="text/javascript">
 		$(document).ready(function () {
-			$('#cid').keyup(function() {
-				var cid = $('#cid').val();
-				$.ajax({
-					url : '${conPath}/idConfirm.do',
-					data : 'cid='+cid,
-					type : 'get',
-					dataType : 'html',
-					success : function(data) {
-						$('#idConfirmResult').html(data);
-					}//success
-				});//ajax
-			});//keyup
-			$('#cpw, #pwChk').keyup(function() {
-				var cpw 	= $('#cpw').val();
-				var pwChk 	= $('#pwChk').val();
-				if (cpw == pwChk){
-					$('#pwChkResult').text('비밀번호 일치');
-				} else {
-					$('#pwChkResult').text('비밀번호 불일치');
-				}
-			});//keyup checkpw
-			$('form').submit(function() {
-				var idConfirmResult = $('#idConfirmResult').text().trim();
-				var pwChkResult = $('#pwChkResult').text().trim();
-				if(idConfirmResult!= '사용 가능한  ID입니다.' ){
-					alert('사용가능한 ID를 입력하세요.');
-					$('#idConfirmResult').focus();
-					return false;
-				} else if (pwChkResult!='비밀번호 일치')  {
-					alert('올바른 비밀번호를 입력하세요.');
-					$('#pwChkResult').focus();
-					return false;
-				}
-			});
 			$('#cemail').keyup(function(){
 				var patternMail = /^[a-zA-Z0-9_]+@[a-zA-Z0-9]+(\.[a-zA-Z]+){1,2}$/; // 메일 패턴
 				var cemail = $('#cemail').val();
@@ -92,7 +58,7 @@
 </script>
 </head>
 <body>
-<script>
+	<script>
   $( function() {
     $( "#datepicker" ).datepicker({
     	dateFormat : 'yy-mm-dd',
@@ -109,71 +75,61 @@
   } );
   </script>
 	<jsp:include page="../main/header.jsp"/>
-	 
-		<form id="joinForm_wrap" action="${conPath }/join.do" method="post">
-			<table>
-			<tr>
+	<div id="content_form">
+	<form action="${conPath}/CustomerModify2.do" method="post" >
+		<input type="hidden" name="pageNum" value="${param.pageNum}">
+		<table>
+			<caption>개인 정보 수정하기</caption>
+			<tr> 
 				<th>아이디</th>
-				<td>
-					<input type="text" name="cid" id="cid" required="required">
-					<div id="idConfirmResult"> &nbsp; </div>
-				</td>
+				<td><input type="text" name="cid" value="${Customer_view.cid }" readonly="readonly"></td> 
 			</tr>
-			<tr>
-				<th>비밀번호</th>
-				<td>
-					<input type="password" name="cpw" id="cpw" required="required">
-				</td>
+			<tr> 
+				<th>비밀번호</th><td><input type="password" name="cpw" size="5"  value="${Customer_view.cpw }" required="required"></td>
+			</tr>		
+			<tr> 
+				<th>이름</th> 
+				<td><input type="text" name="cname" value="${Customer_view.cname }" readonly="readonly"></td> 
 			</tr>
-			<tr>
-				<th>비밀번호 확인</th>
+			<tr> 
+				<th>이메일</th> 
 				<td>
-					<input type="password" name="pwChk" id="pwChk" required="required">
-					<div id="pwChkResult"> &nbsp; </div>		 
-				</td>
-			</tr>
-			<tr>
-				<th>이름</th>
-				<td>
-				 	<input type="text" name="cname" id="cname" required="required">
-				</td>
-			</tr>
-			<tr>
-				<th> 이메일 </th>
-				<td>
-					<input type="email" name="cemail" id="cemail" required="required">
+					<input type="text" name="cemail" id="cemail" value="${Customer_view.cemail }">
 					<div id="emailConfirmResult"> &nbsp; </div>
-				</td>
+				</td> 			
 			</tr>
-			<tr>
-				<th>전화번호</th>
+			<tr> 
+				<th>전화번호</th> 
 				<td>
-				 	<input type="text" name="ctel" id="ctel" required="required">
-				 	<div id="telConfirmResult"> &nbsp; </div>
-				</td>
+					<input type="text" name="ctel" id="ctel" value="${Customer_view.ctel }">
+					<div id="telConfirmResult"> &nbsp; </div>
+				</td> 
 			</tr>
-			<tr>
-				<th>주소</th>
-				<td>
-					<input type="text" name="caddress" id="caddress">
-				</td>
+			<tr> 
+				<th>주소</th> 
+				<td><input type="text" name="caddress" value="${Customer_view.caddress }"></td> 
 			</tr>
-			<tr>
+			 <tr>
 				<th>생년월일</th>
 				<td>
-					<input type="text" name="cbirth" id="datepicker"><br>
+					<input type="text" name="cbirth" value="${Customer_view.cbirth }" id="datepicker"><br>
 				</td>
 			</tr>
-			<tr>
+			<tr> 
 				<td colspan="2">
-					<input type="submit" value="회원가입" class="btn">
-					<input type="button" value="로그인" class="btn" onclick="location='${conPath}/loginView.do'">
-					<input type="reset" value="가입취소" class="btn">
+					<input type="submit" value="수정" class="btn">
+					<input type="reset" value="초기화" class="btn"
+						   onclick="history.back()">
+					<c:if test="${ admin != null }">	   
+					<input type="button" value="목록" class="btn" 
+					       onclick="location='${conPath}/Customer_viewList.do?pageNum=${param.pageNum}'">
+					</c:if>
 				</td>
 			</tr>
 		</table>
-		</form>
-	 
-	<jsp:include page="../main/footer.jsp"/>	
+	
+	</form>
+	</div>
+	<jsp:include page="../main/footer.jsp"/>
 </body>
 </html>

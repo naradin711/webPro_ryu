@@ -15,8 +15,8 @@ import com.mall.dto.CustomerDto;
 public class CustomerDao {
 	public static final int SUCCESS = 1; // 회원가입 성공
 	public static final int FAIL = 0;	// 회원가입 실패
-	public static final int ID_NONEXISTENT = 1; // 중복아이디 없음
-	public static final int ID_EXISTENT = 0;	// 중복아이디 있음
+	public static final int ID_EXISTENT = 1; // 중복아이디 없음
+	public static final int ID_NONEXISTENT = 0;	// 중복아이디 있음
 	public static final int LOGIN_SUCCESS = 1;
 	public static final int LOGIN_FAIL = 0;
 	private DataSource ds;
@@ -42,7 +42,7 @@ public class CustomerDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet		  rs	= null;
-		String sql = "SELECT * FROM customer_shop WHERE CID = ?' and CPW = ? ";
+		String sql = "SELECT * FROM customer_shop WHERE CID = ? and CPW = ? ";
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -88,7 +88,7 @@ public class CustomerDao {
 			result = ID_NONEXISTENT;
 		}
 	} catch (Exception e) {
-		System.out.println(e.getMessage() + "cidConfirm");
+		System.out.println(e.getMessage() + "cidConfirm error");
 	} finally {
 		try {
 			if (rs!=null) rs.close();
@@ -106,7 +106,7 @@ public int confirmCemail(String cemail) {
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet		  rs	= null;
-		String sql = "SELECT * FROM customer_shop WHERE MEMAIL = ? ";
+		String sql = "SELECT * FROM customer_shop WHERE CEMAIL = ? ";
 	try {
 		conn = ds.getConnection();
 		pstmt = conn.prepareStatement(sql);
@@ -119,6 +119,36 @@ public int confirmCemail(String cemail) {
 		}
 	} catch (Exception e) {
 		System.out.println(e.getMessage() + "emailConfirm");
+	} finally {
+		try {
+			if (rs!=null) rs.close();
+			if (pstmt!=null) pstmt.close();
+			if (conn!=null) conn.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	return result;
+}
+//1 - 2 . 회원가입 핸드폰 중복체크
+public int confirmCtel(String ctel) {
+	int result = ID_EXISTENT;
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	ResultSet		  rs	= null;
+		String sql = "SELECT * FROM customer_shop WHERE CTEL = ? ";
+	try {
+		conn = ds.getConnection();
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, ctel);
+		rs = pstmt.executeQuery();
+		if(rs.next()) {
+			result = ID_EXISTENT;
+		} else {
+			result = ID_NONEXISTENT;
+		}
+	} catch (Exception e) {
+		System.out.println(e.getMessage() + "telConfirm");
 	} finally {
 		try {
 			if (rs!=null) rs.close();
@@ -151,8 +181,8 @@ public int JoinCustomer(CustomerDto dto) {
 		pstmt.setString	(3, dto.getCname());
 		pstmt.setString	(4, dto.getCemail());
 		pstmt.setString	(5, dto.getCtel());
-		pstmt.setDate	(6, dto.getCbirth());
-		pstmt.setString	(7, dto.getCaddress());
+		pstmt.setString	(6, dto.getCaddress());
+		pstmt.setDate	(7, dto.getCbirth());
 		result = pstmt.executeUpdate();
 		System.out.println(result==SUCCESS? "회원가입성공":"회원가입실패");
 		
@@ -218,7 +248,7 @@ public ArrayList<CustomerDto> listCustomer(int startRow, int endRow){
 			 String ctel   	 = rs.getString("ctel");
 			 String caddress = rs.getString("caddress");
 			 Date cbirth     = rs.getDate("cbirth");
-			 Date crdate     = rs.getDate("crdate ");
+			 Date crdate     = rs.getDate("crdate");
 			 Customers.add(new CustomerDto(cid, cpw, cname, cemail, ctel, caddress, cbirth, crdate));   
 		}
 	} catch (Exception e) {
@@ -329,8 +359,11 @@ public int DeleteCustomer (String cid) {
 	try {
 		conn = ds.getConnection();
 		pstmt = conn.prepareStatement(sql);
+		System.out.println(11);
 		pstmt.setString (1, cid);
+		System.out.println(22);
 		result = pstmt.executeUpdate();
+		System.out.println(33);
 		System.out.println(result==SUCCESS? "고객 정보 삭제 성공" : "고객 정보 삭제 실패");
 	
 	} catch (Exception e) {

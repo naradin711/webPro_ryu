@@ -76,8 +76,8 @@ header .lnb > ul > li:hover .hidden {
    padding: 10px;
    width: 80px;
    line-height: 40px;
-   background-color: #ffc0cb;
-   border : 1px solid #D4A190;
+   background-color: #FFCDCD;
+   border : 1px solid #FFCDCD;
    border-radius : 5px;
    z-index: 999999;
 }

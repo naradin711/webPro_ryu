@@ -21,9 +21,11 @@ SELECT * FROM customer_shop WHERE CID = 'aaa' and CPW = '111';
 --1. ID중복체크
 SELECT * FROM customer_shop WHERE CID = 'aaa';
 
---1. 1. ID중복체크
+--1. 1. 이메일중복체크
 SELECT * FROM customer_shop WHERE CEMAIL = 'honghong13@hong.com';
-
+--1. 2. 폰번호중복체크
+SELECT * FROM customer_shop WHERE CTEL = '010-9999-9999';
+ 
 --2. 회원가입        
 INSERT INTO customer_shop (CID, CPW, CNAME, CEMAIL, CTEL, CADDRESS, CBIRTH)
         VALUES ('aaa', '111', '홍길동', 'honghong11@hong.com', '010-9999-9999', 
@@ -38,7 +40,7 @@ INSERT INTO customer_shop (CID, CPW, CNAME, CEMAIL, CTEL, CADDRESS, CBIRTH)
                 
 -- 2. 1. 회원 수 세보기
 
-SELECT COUNT(*) CNT FROM CUSTOMER_SHOP ;
+SELECT COUNT(*) CNT FROM CUSTOMER_SHOP;
 
 
 -- 2. 2. 회원 목록 보기 페이징하기
@@ -124,7 +126,16 @@ INSERT INTO PRODUCT (PID, PNAME, PTYPE, pcontent, pphoto, pprice )
                 '이것은 빨간색 원피스' , 'NOIMG.JPG' , 35000 );
         INSERT INTO PRODUCT (PID, PNAME, PTYPE, pcontent, pphoto, pprice )
         VALUES (PRODUCT_SEQ.nextval , 'BLUE TOP', 'TOP', 
-                '이것은 파란색 상의입니다.', 'NOIMG.JPG', 43000 );        
+                '이것은 파란색 상의입니다.', 'NOIMG.JPG', 43000 );
+        INSERT INTO PRODUCT (PID, PNAME, PTYPE, pcontent, pphoto, pprice )
+        VALUES (PRODUCT_SEQ.nextval , 'GRAY TOP', 'TOP', 
+                '이것은 회색 상의입니다.', 'NOIMG.JPG', 60000 );
+        INSERT INTO PRODUCT (PID, PNAME, PTYPE, pcontent, pphoto, pprice )
+        VALUES (PRODUCT_SEQ.nextval , 'SILVER PANTS', 'BOT', 
+                '이것은 은색 바지입니다.', 'NOIMG.JPG', 95000 );
+        INSERT INTO PRODUCT (PID, PNAME, PTYPE, pcontent, pphoto, pprice )
+        VALUES (PRODUCT_SEQ.nextval , 'GOLD SKIRT', 'BOT', 
+                '이것은 금빛 치마입니다.', 'NOIMG.JPG', 88000 );         
                 
 -- 2. 상품 상세 조회 (PID로 DTO 출력)
 
