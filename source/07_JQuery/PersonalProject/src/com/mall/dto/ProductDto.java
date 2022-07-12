@@ -18,7 +18,15 @@ public class ProductDto {
 		 
 	}
 
-	
+	public ProductDto( String pname, String ptype, String pcontent, String pphoto, int pprice) {
+		 
+		this.pname = pname;
+		this.ptype = ptype;
+		this.pcontent = pcontent;
+		this.pphoto = pphoto;
+		this.pprice = pprice; 
+	}
+
 
 
 	public ProductDto( String pname, String ptype, String pcontent, String pphoto, int pprice, int pid) {

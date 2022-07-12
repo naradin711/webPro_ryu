@@ -18,6 +18,50 @@
 </script>
 </head>
 <body>
+	<c:if test="${not empty AdminLoginResult }">
+		<script type="text/javascript">
+			alert('관리자 로그인에 성공하셨습니다.');
+		</script>
+	</c:if>
+	<c:if test="${not empty AdminLoginError }">
+		<script type="text/javascript">
+			alert('관리자 로그인에 실패하셨습니다.');
+			history.back();
+		</script>
+	</c:if>
+	<c:if test="${not empty AddProductResult }">
+		<script type="text/javascript">
+			alert('상품 등록에 성공하셨습니다.');
+		</script>
+	</c:if>
+	<c:if test="${not empty AddProductError }">
+		<script type="text/javascript">
+			alert('상품 등록에 실패하셨습니다.');
+			history.back();
+		</script>
+	</c:if>
+	<c:if test="${not empty ModifyProductResult }">
+		<script type="text/javascript">
+			alert('상품 정보 수정에 성공하셨습니다.');
+		</script>
+	</c:if>
+	<c:if test="${not empty ModifyProductError }">
+		<script type="text/javascript">
+			alert('상품 정보 수정에 실패하셨습니다.');
+			history.back();
+		</script>
+	</c:if>
+	<c:if test="${not empty DeleteProductResult }">
+		<script type="text/javascript">
+			alert('상품 삭제에 성공하셨습니다.');
+		</script>
+	</c:if>
+	<c:if test="${not empty DeleteProductError }">
+		<script type="text/javascript">
+			alert('상품 삭제에 실패하셨습니다.');
+			history.back();
+		</script>
+	</c:if>
 	<jsp:include page="../main/header.jsp"/>
 	<div id="content_form">
 		<c:set var="SUCCESS" value="1"/>
@@ -37,8 +81,10 @@
 				<td> 
 					${dto.pid } 
 				</td>
-				<td> 
-					${dto.pname } 
+				<td>
+					<a href="${conPath }/AdminProductView.do?pid=${dto.pid}&pageNum=${pageNum}">
+						${dto.pname }
+					</a> 
 				</td>
 				<td> 
 					${dto.ptype } 
@@ -47,7 +93,9 @@
 					${dto.pcontent } 
 				</td>
 				<td>
-					<img alt="productImg" src="${conPath }/productFileUp/${dto.pphoto}" width="120">			
+					<a href="${conPath }/AdminProductView.do?pid=${dto.pid}&pageNum=${pageNum}">
+						<img alt="productImg" src="${conPath }/productFileUp/${dto.pphoto}" width="120">
+					</a>			
 				</td>
 				<td> 
 					${dto.pprice } 
@@ -62,12 +110,11 @@
 		<tr>
 			<td colspan="7">
 				<input type="button" value="물품 등록" onclick="location ='${conPath}/product/addProductView.jsp '">
-				<input type="button" value="물품 삭제" onclick="location ='${conPath}/main.do'">
 			</td>
 		</tr>
 	</table>
 			<div class="paging">
-				<a href="${conPath }/CustomerList.do?pageNum=1">◀◀</a>
+				<a href="${conPath }/ProductList.do?pageNum=1">◀◀</a>
 					&nbsp; &nbsp; &nbsp;
 				<c:if test="${startPage > BLOCKSIZE }" >
 					<a href="${conPath }/ProductList.do?pageNum=${startPage-1 }">◀</a>

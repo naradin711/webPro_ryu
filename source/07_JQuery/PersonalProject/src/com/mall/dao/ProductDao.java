@@ -106,7 +106,7 @@ public class ProductDao {
 //	INSERT INTO PRODUCT (PID, PNAME, PTYPE, pcontent, pphoto, pprice )
 //    VALUES (PRODUCT_SEQ.nextval , 'WHITE TOP' , 'TOP' , 
 //            '이것은 하얀색 상의' , 'NOIMG.JPG' , 45000 )
-	public int insertProduct(ProductDto dto) {
+	public int insertProduct(ProductDto product) {
 		int result = FAIL;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -116,11 +116,11 @@ public class ProductDao {
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, dto.getPname());
-			pstmt.setString(2, dto.getPtype());
-			pstmt.setString(3, dto.getPcontent());
-			pstmt.setString(4, dto.getPphoto());
-			pstmt.setInt	(5, dto.getPprice());
+			pstmt.setString(1, product.getPname());
+			pstmt.setString(2, product.getPtype());
+			pstmt.setString(3, product.getPcontent());
+			pstmt.setString(4, product.getPphoto());
+			pstmt.setInt	(5, product.getPprice());
 			result = pstmt.executeUpdate();
 			System.out.println(result==SUCCESS? "물품 추가 성공":"물품 추가 실패");
 			
@@ -143,7 +143,7 @@ public class ProductDao {
 		int result = FAIL;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "UPDATE FILEBOARD SET PHIT = PHIT+1 WHERE PID= ? ";
+		String sql = "UPDATE PRODUCT SET PHIT = PHIT + 1 WHERE PID = ? ";
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -152,7 +152,7 @@ public class ProductDao {
 			System.out.println(result==SUCCESS? "조회수 올리기 성공":"조회수 올리기  실패");
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage() + "hitup error");
+			System.out.println(e.getMessage() + " hit up error");
 		} finally {
 			try {
 				 
@@ -203,6 +203,44 @@ public class ProductDao {
 		
 		return dto;
 	}
+//	-- 2. 1. 상품 상세 조회 관리자용 (PID로 DTO 출력)
+//
+//		SELECT * FROM PRODUCT WHERE PID = 2;
+		public ProductDto AdminProductView(int pid){
+			ProductDto dto = null;
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet			rs  = null;
+			String sql = "SELECT * FROM PRODUCT WHERE PID = ? ";
+			try {
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt (1, pid);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					String pname	= rs.getString("pname");
+					String ptype 	= rs.getString("ptype");      
+				    String pcontent = rs.getString("pcontent");    
+				    String pphoto 	 = rs.getString("pphoto");
+				    int pprice = rs.getInt("pprice"); 
+				    int phit = rs.getInt("phit");  
+				    Date prdate = rs.getDate("prdate");
+					dto = new ProductDto(pid, pname, ptype, pcontent, pphoto, pprice, phit, prdate);
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			} finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt!=null) pstmt.close();
+					if(conn!=null) conn.close();
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				} 
+			}
+			
+			return dto;
+		}
 	
 //	-- 3-1 . 상품 목록 출력 이름 검색
 //	Select * from PRODUCT where PNAME like '%' || upper( 'WH' ) || '%';
@@ -337,7 +375,7 @@ public class ProductDao {
 	}
 //	-- 3-5 . 상품 목록 인기순
 //	SELECT * FROM PRODUCT ORDER BY PHIT DESC;
-	public ArrayList<ProductDto> BestSeller (int startRow, int endRow){
+	public ArrayList<ProductDto> BestSeller(int startRow, int endRow){
 		ArrayList<ProductDto> products = new ArrayList<ProductDto>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -520,7 +558,7 @@ public class ProductDao {
 		ResultSet			rs  = null;
 		String sql = "SELECT * FROM " + 
 				" (SELECT ROWNUM RN, A.* FROM " + 
-				" (select P.* from PRODUCT P WHERE PTYPE='BOTTOM' " + 
+				" (select P.* from PRODUCT P WHERE PTYPE='BOT' " + 
 				"                            ORDER BY PHIT DESC )A ) " + 
 				"  WHERE RN BETWEEN ? AND ? ";
 		try {

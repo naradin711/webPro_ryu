@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workbench progressCount="13" version="2.0">
 <workbenchAdvisor/>
-<window height="1027" maximized="true" width="1281" x="435" y="24">
+<window height="1027" width="1491" x="323" y="12">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="160"/>
@@ -35,7 +35,7 @@
 </folder>
 </info>
 </editorArea>
-<editor activePart="true" focus="true" id="com.tomato.exerd.editor.DiagramEditor" name="book.exerd" partName="book.exerd" path="D:/webPro_ryu/source/03_exERD/newProject/book.exerd" title="book.exerd" tooltip="newProject/book.exerd" workbook="DefaultEditorWorkbook">
+<editor id="com.tomato.exerd.editor.DiagramEditor" name="book.exerd" partName="book.exerd" path="D:/webPro_ryu/source/03_exERD/newProject/book.exerd" title="book.exerd" tooltip="newProject/book.exerd" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/newProject/book.exerd"/>
 </editor>
 <editor id="com.tomato.exerd.editor.DiagramEditor" name="dept_emp.exerd" partName="dept_emp.exerd" path="D:/webPro_ryu/source/03_exERD/newProject/dept_emp.exerd" title="dept_emp.exerd" tooltip="newProject/dept_emp.exerd" workbook="DefaultEditorWorkbook">
@@ -47,7 +47,7 @@
 <editor id="com.tomato.exerd.editor.DiagramEditor" name="7_5MAJOR.exerd" partName="7_5MAJOR.exerd" path="D:/webPro_ryu/source/03_exERD/newProject/7_5MAJOR.exerd" title="7_5MAJOR.exerd" tooltip="newProject/7_5MAJOR.exerd" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/newProject/7_5MAJOR.exerd"/>
 </editor>
-<editor id="com.tomato.exerd.editor.DiagramEditor" name="9_shoppingmall.exerd" partName="9_shoppingmall.exerd" path="D:/webPro_ryu/source/03_exERD/newProject/9_shoppingmall.exerd" title="9_shoppingmall.exerd" tooltip="newProject/9_shoppingmall.exerd" workbook="DefaultEditorWorkbook">
+<editor activePart="true" focus="true" id="com.tomato.exerd.editor.DiagramEditor" name="9_shoppingmall.exerd" partName="9_shoppingmall.exerd" path="D:/webPro_ryu/source/03_exERD/newProject/9_shoppingmall.exerd" title="9_shoppingmall.exerd" tooltip="newProject/9_shoppingmall.exerd" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/newProject/9_shoppingmall.exerd"/>
 </editor>
 <editor id="com.tomato.exerd.editor.DiagramEditor" name="220422ex2.exerd" partName="220422ex2.exerd" path="D:/webPro_ryu/source/03_exERD/newProject/220422ex2.exerd" title="220422ex2.exerd" tooltip="newProject/220422ex2.exerd" workbook="DefaultEditorWorkbook">
@@ -174,6 +174,7 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.tomato.exerd.editor.DiagramEditor" path="/newProject/9_shoppingmall.exerd"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.tomato.exerd.editor.DiagramEditor" path="/newProject/220422ex2.exerd"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.tomato.exerd.editor.DiagramEditor" path="/newProject/book.exerd"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.tomato.exerd.editor.DiagramEditor" path="/newProject/9_shoppingmall.exerd"/>
 </editors>
 <item historyLabel="book.exerd" index="0"/>
 <item historyLabel="dept_emp.exerd" index="1"/>
@@ -192,7 +193,8 @@
 <item historyLabel="book.exerd" index="0"/>
 <item historyLabel="9_shoppingmall.exerd" index="4"/>
 <item historyLabel="220422ex2.exerd" index="5"/>
-<item active="true" historyLabel="book.exerd" index="6"/>
+<item historyLabel="book.exerd" index="6"/>
+<item active="true" historyLabel="9_shoppingmall.exerd" index="7"/>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>

@@ -22,7 +22,6 @@
 		<c:if test="${empty customer && empty admin}">
 			<!-- 로그인 전 메뉴 우측부터 고객 센터 회원가입 로그인 -->
 			<ul>
-				<li><a href="${conPath }/boardList.do">고객센터</a></li>
 				<li><a href="${conPath }/joinView.do">회원가입</a></li>
 				<li><a href="${conPath }/loginView.do">로그인</a></li>
 			</ul>	
@@ -38,30 +37,31 @@
 		</c:if>
 		<c:if test="${ admin != null }">
 			<ul>
+				<li><a href="${conPath }/OrderList.do">주문 목록</a></li>
 				<li><a href="${conPath }/CustomerList.do">고객 목록</a></li>
 				<li><a href="${conPath }/ProductList.do">상품 목록</a></li>
-				<li><a href="${conPath }/boardList.do">고객센터</a></li>
+				<li><a href="${conPath }/boardList.do">고객 센터</a></li>
 				<li><a href="${conPath }/logout.do">관리자 모드 나가기</a></li>
 				<li><a href="#">${admin.aname }님 </a></li>
 			</ul>		
 		</c:if>
 		</div>
-		<div class="logo" onclick="location.href='${conPath }/main/main.jsp'">
+		<div class="logo" onclick="location='${conPath }/main.do'">
 			<img alt="로고이미지" src="${conPath}/img/logo.png">
 		</div>
 		<div class="lnb">
 			<!-- 우측부터 메뉴 : 도서보기, 도서등록(로그인 이후) -->
 			<ul>
 					
-					<li><a href="${conPath }/main/aboutUs.jsp">BestSeller</a></li>
-			 		<li><a href="${conPath }/main/aboutUs.jsp">What's New</a></li>		
+					<li><a href="${conPath }/BestSellerView.do">BestSeller</a></li>
+			 		<li><a href="${conPath }/WhatsNewView.do">What's New</a></li>		
 					<li>
-						<a href="${conPath }/main/aboutUs.jsp">Product</a>
+						<a href="${conPath }/DressView.do">Product</a>
 						<ul class="hidden">
-							<li><a href='${conPath }/main/aboutUs.jsp'>DRESS</a></li>
-							<li><a href='${conPath }/main/aboutUs.jsp'>Accessories</a></li>	
-							<li><a href='${conPath }/main/aboutUs.jsp'>TOPS</a></li>
-							<li><a href='${conPath }/main/aboutUs.jsp'>BOTTOMS</a></li>
+							<li><a href='${conPath }/DressView.do'>DRESS</a></li>
+							<li><a href='${conPath }/AccView.do'>Accessories</a></li>	
+							<li><a href='${conPath }/TopView.do'>TOPS</a></li>
+							<li><a href='${conPath }/BotView.do'>BOTTOMS</a></li>
 						</ul>
 					</li>	
 					<li>
