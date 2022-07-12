@@ -1,0 +1,125 @@
+
+	스프링
+
+1.	프레임워크 : 특정한 목적에 맞게 프로그래밍을 쉽게 하기 위한 프로그래밍 틀 
+2.	Spring이란?
+	자바(JAVA)언어를 기반으로, 다양한 어플리케이션을 제작할 때 효율적으로 빠르게 개발할 수 있도록 하는 
+	어플리케이션 프레임워크(프로그래밍 툴) ; Rod Johnson이 만든 오픈 소스 프레임워크
+
+	스프링의 경우 톰캣을 이용할 수 있으며, EJB에 비해서 코드의 경량화 
+	그리고 개발 중에 테스트가 쉽다는 점이 특징 
+
+ 	(Spring Framework는 종속성 주입, 트랜잭션 관리, 웹 앱, 데이터 액세스, 메시징 등을 위한 핵심 지원을 제공한다.)
+	(Spring Boot는 Spring 애플리케이션 구축에 대해 의견을 개진하여 가능한 한 신속하게 실행 및 실행되도록 한다.)
+
+	DI(Dependency Injection)지원
+
+	AOP(Aspect Oriented Programming)지원 : 공통기능을 쉽게 개발하고 관리하는 기능
+
+	연속성과 관련된 다양한 API 지원 : JDBC, myBatis등 
+	데이터 베이스 처리 라이브러리 연동 지원. 메일, 스케줄링 등을 지원
+	스프링의 국내에서 자바개발자들에게 웹어플리케이션 표준프레임워크
+
+	스프링의 기본을 정확히 학습한다면, 규모가 큰 다양한 어플리케이션을 효율적으로 개발할 수 있을 것 입니다.
+
+	물론 스프링학습 이전에 JAVA언어 및 JSP&Servlet, MVC(model 2) 패턴에 대한 선행학습이 반드시 필요하며, 
+	그 외에 html, javascript, jquery, css등의 스크립트 언어도 기본적인 학습이 필요합니다.
+
+
+
+
+
+
+
+스프링에서 간단한 사칙 연산을 입력한다.
+
+public class Calculation {
+	private int num1;
+	private int num2;
+	public void add () {
+		System.out.println("더하기");
+		System.out.println(num1 + " + " + num2 + " = " + (num1+num2));
+	}
+	public void sub () {
+		System.out.println("빼기");
+		System.out.println(num1 + " - " + num2 + " = " + (num1-num2));
+	}
+	public void multi () {
+		System.out.println("곱하기");
+		System.out.println(num1 + " x " + num2 + " = " + (num1*num2));
+	}
+	public void divide () {
+		System.out.println("나누기");
+		System.out.println(num1 + " / " + num2 + " = " + (num1/num2));
+	}
+
+를 입력한 뒤 다른 페이지에서 
+
+public static void main (String[] args) {
+	Calculation cal = new Calculation();
+	cal.setNum1(50);
+	cal.setNum2(10);
+	cal.add();
+	cal.sub();
+	cal.multi();
+	cal.divide();
+	System.out.println(cal);
+	}
+
+를 출력하면 아래와 같다.
+
+더하기
+50 + 10 = 60
+빼기
+50 - 10 = 40
+곱하기
+50 x 10 = 500
+나누기
+50 / 10 = 5
+Calculation(num1=50, num2=10)
+
+
+이와 같은 과정을 xml을 통해 외부에서 값을 가져오자면 아래와 같다.
+
+먼저 bean을 통해 num1 num2의 값을 지정한다.
+
+<bean id="calculation" class="com.lec.ch01.Calculation">
+		<property name="num1">
+		
+			<value>50</value>
+			
+		</property>
+		<property name="num2">
+			<value>10</value>
+		</property>
+
+이렇게 저장된 value를 아래와 같이 가져온다.
+
+AbstractApplicationContext ctx 
+		= new GenericXmlApplicationContext("classpath:applicationCTX.xml");	
+	Calculation cal = ctx.getBean("calculation", Calculation.class);
+	cal.add();
+	cal.sub();
+	cal.multi();
+	cal.divide();
+	System.out.println(cal);
+	ctx.close();
+
+해당 함수를 실행하면 출력되는 값은 아래와 같다.
+
+14:08:17,099  INFO eans.factory.xml.XmlBeanDefinitionReader: 315 - Loading XML bean definitions from class path resource [applicationCTX.xml]
+14:08:17,175  INFO ext.support.GenericXmlApplicationContext: 456 - Refreshing org.springframework.context.support.GenericXmlApplicationContext@619a5dff: startup date [Tue Jul 12 14:08:17 KST 2022]; root of context hierarchy
+14:08:17,186  INFO ctory.support.DefaultListableBeanFactory: 557 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@33a10788: defining beans [calculation]; root of factory hierarchy
+더하기
+50 + 10 = 60
+빼기
+50 - 10 = 40
+곱하기
+50 x 10 = 500
+나누기
+50 / 10 = 5
+Calculation(num1=50, num2=10)
+14:08:17,217  INFO ext.support.GenericXmlApplicationContext:1002 - Closing org.springframework.context.support.GenericXmlApplicationContext@619a5dff: startup date [Tue Jul 12 14:08:17 KST 2022]; root of context hierarchy
+14:08:17,217  INFO ctory.support.DefaultListableBeanFactory: 422 - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@33a10788: defining beans [calculation]; root of factory hierarchy
+
+
