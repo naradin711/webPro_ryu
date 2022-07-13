@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+	<bean id="proxyClass" class="com.lec.ch05.ex01.ProxyClass"/> <!-- 객체 생성 -->
+	<aop:config>
+		<aop:aspect id="aroundAspect" ref="proxyClass">
+			<aop:pointcut expression="within(com.lec.ch05.ex01.*)" id="aroundM"/>
+			<aop:around method="aroundAdvice" pointcut-ref="aroundM"/>
+		</aop:aspect>
+	</aop:config>
+	
+	
+	
+	
+	
+	
+	
+
+	<bean id="student" class="com.lec.ch05.ex01.Student">
+		<property name="name" value="홍길동"/>
+		<property name="age" value="17"/>
+		<property name="gradeNum" value="1"/>
+		<property name="classNum" value="3"/>
+	
+	</bean>
+	<bean id="worker" class="com.lec.ch05.ex01.Worker">
+		<property name="name" value="서길동"/>
+		<property name="age" value="37"/>
+		<property name="job" value="프로그래머"/>
+	
+	</bean>
+
+</beans>

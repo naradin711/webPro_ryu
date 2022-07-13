@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+	<context:annotation-config/> <!-- AutoWired -->
+	<bean id="person" class="com.lec.ch03.ex02.Person">
+		<constructor-arg value="홍길동"/>
+		<constructor-arg value="010-7777-8888"/>
+	</bean>
+	<bean id="otherperson" class="com.lec.ch03.ex02.OtherPerson">
+		<constructor-arg value="청길동"/>
+		<constructor-arg value="30"/>
+	</bean>
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,80 @@
+ 우선 DI를 이용해서 사람의 속성을 입력하고 절차를 알아본다.
+
+public class Person implements InitializingBean, DisposableBean, EnvironmentAware{
+	private String name;
+	private String tel;
+
+	@Override
+	public void setEnvironment(Environment environment) {
+		System.out.println("Person 형 빈 객체 생성하자 마자 실행 : setEnvironment 호출 " + environment);
+		
+	}
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		System.out.println("Person 형 빈 객체 생성 후 실행 : afterPropertiesSet() 호출 ");
+		
+	}
+	@Override
+	public void destroy() throws Exception {
+		System.out.println("Person 형 빈 소멸 바로 전 실행 : destroy() 호출 ");
+		
+	}
+
+public class OtherPerson {
+	private String name;
+	private int age;
+	@PostConstruct
+	public void initMethod() {
+		System.out.println("OtherPerson 형 빈 생성하자마자 자동 호출 : initMethod()  ");
+	}
+	@PreDestroy
+	public void deleteMethod() {
+		System.out.println("OtherPerson 형 빈 소멸되기 전에 호출 : deleteMethod()  ");
+	}
+}
+
+
+위 클래스를 통해 속성값을 담을 컨테이너를 설계하고 아래와 같이 속성값을 입력한다.
+
+<context:annotation-config/> <!-- AutoWired -->
+	<bean id="person" class="com.lec.ch03.ex02.Person">
+		<constructor-arg value="홍길동"/>
+		<constructor-arg value="010-7777-8888"/>
+	</bean>
+	<bean id="otherperson" class="com.lec.ch03.ex02.OtherPerson">
+		<constructor-arg value="청길동"/>
+		<constructor-arg value="30"/>
+	</bean>
+
+이렇게 속성값을 입력한 뒤 속성값의 출력과 절차를 출력한 값은 아래와 같다.
+
+public static void main(String[] args) {
+		//컨테이너 생성 (환경설정)
+		GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
+		// pathing
+		ctx.load("classpath:/META-INF/ex02/applicationCTX3.xml");
+		ctx.refresh();// 빈 생성
+		System.out.println("-----------------------------------------");
+		Person person = ctx.getBean("person", Person.class);
+		System.out.println(person);
+		OtherPerson otherperson = (OtherPerson)ctx.getBean("otherperson");
+		System.out.println(otherperson);
+		System.out.println("-----------------------------------------");
+		ctx.close();
+		System.out.println("빈 소멸");
+
+	}
+
+Person 형 빈 객체 생성하자 마자 실행 : setEnvironment 호출 StandardEnvironment {activeProfiles=[], defaultProfiles=[default], propertySources=[systemProperties,systemEnvironment]}
+Person 형 빈 객체 생성 후 실행 : afterPropertiesSet() 호출 
+OtherPerson 형 빈 생성하자마자 자동 호출 : initMethod()  
+-----------------------------------------
+Person(name=홍길동, tel=010-7777-8888)
+OtherPerson(name=청길동, age=30)
+-----------------------------------------
+INFO : org.springframework.context.support.GenericXmlApplicationContext - Closing org.springframework.context.support.GenericXmlApplicationContext@593634ad: startup date [Wed Jul 13 14:36:03 KST 2022]; root of context hierarchy
+INFO : org.springframework.beans.factory.support.DefaultListableBeanFactory - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@62ee68d8: defining beans [org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,person,otherperson,org.springframework.context.annotation.ConfigurationClassPostProcessor$ImportAwareBeanPostProcessor#0]; root of factory hierarchy
+OtherPerson 형 빈 소멸되기 전에 호출 : deleteMethod()  
+Person 형 빈 소멸 바로 전 실행 : destroy() 호출 
+빈 소멸
+

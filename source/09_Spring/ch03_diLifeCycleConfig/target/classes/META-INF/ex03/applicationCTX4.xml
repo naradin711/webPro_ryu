@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+	 
+	<bean id="family" class="com.lec.ch03.ex01.Family" scope="singleton">
+		<constructor-arg value="홍길동"/>
+		<constructor-arg value="홍엄마"/> 
+		<property name="sisname" value="홍딸들"></property>
+		<property name="broname" value="홍아들"></property>
+	</bean>
+	<bean id="familyPrototype" class="com.lec.ch03.ex01.Family" scope="prototype">
+		<constructor-arg value="김길동"/>
+		<constructor-arg value="상엄마"/> 
+		<property name="sisname" value="김딸들"></property>
+		<property name="broname" value="김아들"></property>
+	</bean>
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
