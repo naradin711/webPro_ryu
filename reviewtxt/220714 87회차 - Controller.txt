@@ -1,0 +1,145 @@
+ 200714 Controller
+
+ 아래와 같이 메인페이지를 지정하고 컨트롤러를 세팅한다.
+
+	
+
+ <h1>${greeting }</h1>
+	<hr>
+	<h3>Board 관련 요청 경로 </h3>
+	<h4><a href="${conPath }/board/write">Board의 write로 가기</a></h4>
+	<h4><a href="${conPath }/board/content">Board의 content로 가기</a></h4>
+	<h4><a href="${conPath }/board/list">Board의 list로 가기</a></h4>
+	<h4><a href="${conPath }/board/reply">Board의 reply로 가기</a></h4>
+	<br>
+	<hr>
+	<br>
+	<h3>Member 관련 요청 경로 </h3> 
+	<button onclick="location.href='${conPath}/member?method=join'">회원가입</button>
+	<button onclick="location.href='${conPath}/member?method=login'">로그인</button>
+	<button onclick="location.href='${conPath}/member?method=logout'">로그아웃</button>
+	<button onclick="location.href='${conPath}/member?method=modify'">정보수정</button>  
+
+위 메인 페이지에서 board와 member기능이 나누어지는데 이를 토대로 Controller를 따로따로 만들어서 지정한다.
+
+우선 board에 해당하는  Controller는 아래와 같다.
+
+@Controller
+@RequestMapping("board/") //공통경로
+public class BoardController {
+	 @RequestMapping("write")// 조합된 요청경로 : board/write
+	 //메소드
+	 public String write() {
+		 return "board/write"; // 뷰 : /WEB-INF/views/content.jsp
+	 }
+	  @RequestMapping(value="content", method=RequestMethod.GET)
+	  public String content(Model model/*, HttpServletRequest request */ ) {
+		  // request.setAttribute("id", "aaa");
+		  	model.addAttribute("id", "aaa");
+		  	model.addAttribute("pw", "111");
+		  	Member member = new Member("bbb", "222");
+		  	model.addAttribute("member", member);
+			return "board/content"; // 뷰 : /WEB-INF/views/content.jsp
+	  }
+	 @RequestMapping(value="list", method=RequestMethod.GET)
+	 //메소드
+	 public ModelAndView list() {
+		 ModelAndView mav = new ModelAndView();
+		 Member member = new Member("ccc", "333");
+		 ArrayList<Member> list = new ArrayList<Member>();
+		 list.add(member);
+		 mav.addObject("list", list);
+		 mav.setViewName("board/list");
+		 return mav;
+		 
+	 }
+	 @RequestMapping(value="reply", method=RequestMethod.GET)
+	 
+	 //메소드
+	 public ModelAndView reply (ModelAndView mav) {
+		 Member member = new Member("ddd", "333");
+		 mav.addObject("member", member);
+		 mav.setViewName("board/reply");
+		 return mav;
+	 }
+
+}
+
+이를 토대로 list method를  실행하는 페이지 구성과 그 출력값은 아래와 같다.
+
+<body>
+	<h2>board의 list.jsp 페이지입니다.</h2>
+	<hr>
+	<c:if test="${list.size() eq 0 }">
+		<h3>입력된 멤버가 없습니다.</h3>
+	</c:if>
+	<c:if test="${list.size() != 0 }">
+		<c:forEach var="member" items="${list }">
+			<h3>ID : ${member.id } / pw : ${member.pw }</h3>
+		</c:forEach>
+		<h3>이상 ${list.size() }명이 있습니다.</h3>
+	</c:if>
+	<h2><span onclick="location.href='${conPath}/'">메인 페이지로 가기</span></h2>
+
+</body>
+
+
+		board의 list.jsp 페이지입니다.
+		ID : ccc / pw : 333
+		이상 1명이 있습니다.
+		메인 페이지로 가기
+
+
+다음으로 member에 해당하는  Controller는 아래와 같다.
+
+@RequestMapping (params = "method=join", method=RequestMethod.GET)
+	public String join (Model model) {
+		model.addAttribute("kind", "회원");
+		return "member/join";
+	}
+	@RequestMapping (params = "method=login")
+	public String login (Model model) { 
+		model.addAttribute("result", "login");
+		return "member/result";
+	}
+	@RequestMapping (params = "method=logout")
+	public String logout (Model model) { 
+		model.addAttribute("result", "logout");
+		return "member/result";
+	}
+	@RequestMapping (params = "method=modify")
+	public String modify (Model model) { 
+		model.addAttribute("result", "modify");
+		return "member/result";
+	}
+
+이 중 join에 해당하는 페이지의 구성과 출력값은 아래와 같다.
+
+<body>
+	<h2>member의 join.jsp 페이지입니다.</h2>
+	<h3>${kind } 가입페이지</h3>
+	<h2><span onclick="location.href='${conPath}/'">메인 페이지로 가기</span></h2>
+</body>
+
+
+		member의 join.jsp 페이지입니다.
+			회원 가입페이지
+			메인 페이지로 가기
+
+이 중 login, logout, modify를 한데 몰아넣고 한 페이지에 출력한다.
+
+<body>
+	<h2>member의 ${result } 페이지입니다.</h2>
+	<h3>${result } Process</h3>
+	<h2><span onclick="location.href='${conPath}/'">메인 페이지로 가기</span></h2>
+</body>
+
+위 페이지에서 ${result } 값을 다르게 주어 출력값을 다르게 한다.
+
+member의 modify 페이지입니다.
+modify Process
+메인 페이지로 가기
+
+member의 login 페이지입니다.
+login Process
+메인 페이지로 가기

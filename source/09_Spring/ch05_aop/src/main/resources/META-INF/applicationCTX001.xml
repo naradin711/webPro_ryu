@@ -16,14 +16,6 @@
 			<aop:around method="aroundAdvice" pointcut-ref="aroundM"/>
 		</aop:aspect>
 	</aop:config>
-	
-	
-	
-	
-	
-	
-	
-
 	<bean id="student" class="com.lec.ch05.ex01.Student">
 		<property name="name" value="홍길동"/>
 		<property name="age" value="17"/>

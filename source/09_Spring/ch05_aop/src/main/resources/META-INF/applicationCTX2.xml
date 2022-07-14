@@ -9,13 +9,27 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
-	<bean id="proxyClass" class="com.lec.ch05.ex01.ProxyClass"/> <!-- 객체 생성 -->
-	<aop:config>
-		<aop:aspect id="aroundAspect" ref="proxyClass">
-			<aop:pointcut expression="within(com.lec.ch05.ex01.*)" id="aroundM"/>
-			<aop:around method="aroundAdvice" pointcut-ref="aroundM"/>
-		</aop:aspect>
-	</aop:config>
+	<bean id="proxyClass2" class="com.lec.ch05.ex02.ProxyClass2"/>
+	
+	<bean id="student2" class="com.lec.ch05.ex02.Student2">
+		<property name="name" value="홍홍홍"/>
+		<property name="age" value="21"/>
+		<property name="gradeNum" value="3"/>
+		<property name="classNum" value="2"/>
+	</bean>
+	<bean id="worker2" class="com.lec.ch05.ex02.Worker2">
+		<property name="name" value="홍홍홍"/>
+		<property name="age" value="31"/>
+		<property name="job" value="개발자"/>
+	</bean>
+	
+	
+	
+	
+	
+	
+	
+
 	<bean id="student" class="com.lec.ch05.ex01.Student">
 		<property name="name" value="홍길동"/>
 		<property name="age" value="17"/>
