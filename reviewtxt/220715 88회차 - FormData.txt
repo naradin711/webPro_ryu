@@ -1,0 +1,321 @@
+ 200715 FormData
+
+ 먼저 회원가입에 필요한 설정 값을 세팅하는 DTO클래스를 아래와 같이 만든다.
+
+@NoArgsConstructor
+@Data
+public class MemberDto {
+	private String name;
+	private String id;
+	private String pw;
+	private int age;
+	private String email;
+	private String address; 
+	// 폼데이터 사용을 위해 @Data를 넣어서 getter, setter 에 매개변수 없는 생성자.
+	
+}
+
+DTO에 있는 개체값을 입력할 input 페이지를 만든다.
+
+<body>
+	<h2>항상 cnt, list 출력</h2>
+	<h3>cnt : ${cnt }</h3>
+	<h3>list : ${list } </h3>
+	<hr><br>
+	<form action="member/join6">
+	<table>
+		<caption>개인 정보 입력</caption>
+		<tr><th>이름</th><td><input type="text" name="name"></td></tr>
+		<tr><th>아이디</th><td><input type="text" name="id"></td></tr>
+		<tr><th>비밀번호</th><td><input type="text" name="pw"></td></tr>
+		<tr><th>나이</th><td><input type="text" name="age"></td></tr>
+		<tr><th>메일</th><td><input type="text" name="email"></td></tr>
+		<tr><th>주소</th><td><input type="text" name="address"></td></tr>
+		<tr><td colspan="2"><input type="submit" value=join> </td></tr>
+	</table>
+	</form>
+	<a href="${conPath }/studentId/aaa">studentId에 aaa로 전송</a>
+	<a href="${conPath }/studentId/bbb">studentId에 bbb로 전송</a>
+	<a href="${conPath }/studentId/홍홍홍">studentId에 홍홍홍으로 전송</a>
+</body>
+
+위에서 입력받은 개체값을 등록할 controller를 아래와 같이 구성한다.
+
+@Controller
+@RequestMapping("member")
+public class MemberController {
+	@ModelAttribute("cnt")
+	public int cnt() { //cnt 값 5로 지정
+		return 5;
+	}
+	@ModelAttribute("list")
+	public ArrayList<String> list(){
+		ArrayList<String> list = new ArrayList<String>();
+		list.add("test1"); list.add("test2");
+		return list;
+	}
+	@RequestMapping(value="join1") // 요청경로 : member/join1
+	public String join1(HttpServletRequest request, Model model) {
+		String name = request.getParameter("name");
+		String id = request.getParameter("id");
+		String pw = request.getParameter("pw");
+		int age = Integer.parseInt(request.getParameter("age"));
+		String email = request.getParameter("email");
+		String address = request.getParameter("address");
+		model.addAttribute("name", name);
+		model.addAttribute("id", id);
+		model.addAttribute("pw", pw);
+		model.addAttribute("age", age);
+		model.addAttribute("email", email);
+		model.addAttribute("address", address);
+		return "member/result1";
+		
+	}
+	@RequestMapping(value="join2") // 요청경로 : member/join1
+	public String join2(@RequestParam ("name") String membername,
+						@RequestParam ("id") String memberid,
+						@RequestParam ("pw") String memberpw,
+						@RequestParam ("age") int memberage,
+						@RequestParam ("email") String memberemail,
+						@RequestParam ("address") String memberaddress, Model model) {
+		
+		model.addAttribute("name", membername);
+		model.addAttribute("id", memberid);
+		model.addAttribute("pw", memberpw);
+		model.addAttribute("age", memberage);
+		model.addAttribute("email", memberemail);
+		model.addAttribute("address", memberaddress);
+		
+		 
+		return "member/result1";
+		
+	}
+	@RequestMapping(value="join3") // 요청경로 : member/join1
+	public String join3(String name, String id, String pw, int age, String email, String address, Model model) {
+		
+		model.addAttribute("name", name);
+		model.addAttribute("id", id);
+		model.addAttribute("pw", pw);
+		model.addAttribute("age", age);
+		model.addAttribute("email", email);
+		model.addAttribute("address", address);
+		
+		 
+		return "member/result1";
+		
+	} 
+	@RequestMapping(value="join4") // 요청경로 : member/join4
+	public String join4(MemberDto memberDto, Model model) { 
+		model.addAttribute("memberDto", memberDto); 
+		return "member/result4"; 
+	}
+	@RequestMapping(value="join5") // 요청경로 : member/join4
+	public String join5(MemberDto memberDto) {  
+		return "member/result5"; 
+	}
+	@RequestMapping(value="join6") // 요청경로 : member/join4
+	public String join6(@ModelAttribute("member") MemberDto memberDto) {  
+		return "member/result4"; 
+	}
+	
+}
+
+해당 컨트롤러로 출력되는 값은 아래와 같다.
+
+			항상 cnt, list 출력
+			       cnt : 5
+			list : [test1, test2]
+
+		     여기는 result4.jsp 페이지 입니다.
+
+			이름 : 홍길동
+			아이디 : dasdfasf
+			비밀번호 : 111
+			나이 : 11
+			이메일 : dda@ddddd.com
+			주소 : ㅇㅇㅇㅇ
+
+			뒤로 가기 메인 페이지로
+
+Validator 인터페이스를 통해 입력된 설정값의 당위성을 파악하고 이를 프린트한다.
+
+먼저 해당 설정 값을 받을 input페이지와 DTO 클래스를 생성한다.
+
+<body>
+	<form action="${conPath }/input2.do" method="get">
+		<p>이름 : <input type="text" name="name" value=${student.name }> </p>	
+		<input type="hidden" name="id" value='1' >
+		<p>국어 : <input type="number" name="kor" value=${student.kor }  > </p>
+		<p>영어 : <input type="number" name="eng" value=${student.eng }  > </p>
+		<p>수학 : <input type="number" name="mat" value=${student.mat }  > </p>  
+		<input type="submit" value="제출하기">		
+	</form>
+	<hr><br>
+	<h4>${nameError }</h4>
+	<h4>${korError }</h4>
+	<h4>${engError }</h4>
+	<h4>${matError }</h4>
+</body>
+
+
+@Data
+public class Student {
+	private String name;
+	private int id;
+	private int kor;
+	private int eng;
+	private int mat;
+	private int sum;
+	private double avg;
+	
+	
+}
+
+위와 같이 입력받은 설정 값을 등록할 컨트롤러 클래스를 구성하고 이를 검사할 validator class를 생성한다.
+
+@Controller
+public class MyController {
+	@ModelAttribute("cnt")
+	public int cnt() { //cnt 값 5로 지정
+		return 4;
+	}
+	
+	@RequestMapping(value = "inputForm.do", method = RequestMethod.GET)
+	public String inputForm() {
+		return "ex/inputForm";
+	}
+	@RequestMapping(value = "input.do", method = RequestMethod.GET)
+	public String input(Student student, Errors err, Model model) {
+		// 검증 객체를 통해서 검증 method 호출
+		StudentValidator validator = new StudentValidator();
+		validator.validate(student, err);
+		if(err.hasErrors()) {
+			if(err.getFieldError("name") !=null) {
+				model.addAttribute("nameError", "name은 필수 입력입니다.");
+			}
+			if(err.getFieldError("id") !=null) {
+				model.addAttribute("idError", "id는 자연수 정수입니다.");
+			}
+			return "ex/inputForm";
+			
+		}	
+		return "ex/inputResult";
+	}
+	@RequestMapping(value = "inputForm2.do", method = RequestMethod.GET)
+	public String inputForm2() {
+		return "quiz/inputForm";
+	}
+	@RequestMapping(value = "input2.do", method = RequestMethod.GET)
+	public String input2(Student student, Errors err, Model model) {
+		// 검증 객체를 통해서 검증 method 호출
+		StudentValidator validator = new StudentValidator();
+		validator.validate(student, err);
+		if(err.hasErrors()) {
+			if(err.getFieldError("name") !=null) {
+				model.addAttribute("nameError", "name은 필수 입력입니다.");
+			}
+			if(err.getFieldError("kor") !=null) {
+				model.addAttribute("korError", "kor는 0~100 사이 정수입니다.");
+			}
+			if(err.getFieldError("eng") !=null) {
+				model.addAttribute("engError", "eng는 0~100 사이 정수입니다.");
+			}
+			if(err.getFieldError("mat") !=null) {
+				model.addAttribute("matError", "mat는 0~100 사이 정수입니다.");
+			} 
+			return "quiz/inputForm";
+			
+		}	
+		return "quiz/inputResult";
+	}
+
+
+}
+
+@Data
+public class StudentValidator implements Validator {
+	private String name;
+	private int id;
+	
+	@Override
+	public boolean supports(Class<?> clazz) {
+		// TODO Auto-generated method stub
+		return Student.class.isAssignableFrom(clazz); // 검증할 객체의 클래스 타입 명시
+	}
+	@Override
+	public void validate(Object target, Errors err) {
+		//컨트롤러에서 호출 : validate (student, err) 호출
+		Student student = (Student)target;
+		String name = student.getName();
+		int id = student.getId();
+		int kor = student.getKor();
+		int eng = student.getEng();
+		int mat = student.getMat();
+//		if(name == null || name.trim().isEmpty()) {
+//			// name 에러
+//			err.rejectValue("name", "no");
+//		}
+		ValidationUtils.rejectIfEmptyOrWhitespace(err, "name", "no");
+		if(id <=0) {
+			err.rejectValue("id", "id error");
+		}
+		if(kor <0 || kor > 100) {
+			err.rejectValue("kor", "kor error");
+		}
+		if(eng <0 || eng > 100) {
+			err.rejectValue("eng", "eng error");
+		}
+		if(mat <0 || mat > 100) {
+			err.rejectValue("mat", "mat error");
+		}
+		
+	}
+}
+
+이제 input 페이지에서 설정값을 입력하고 계산값을 출력한다.
+
+검증이 완료된 결과 페이지입니다.
+"현재 총 4명"
+이름 : 홍길동
+국어 : 88
+영어 : 95
+수학 : 67
+총점 : 250
+평균 : 83.3
+
+여기서 만약 입력한 설정값이 적절하지 않으면 아래와 같이 출력한다
+
+이름 : 
+홍길동
+
+국어 : 
+111
+
+영어 : 
+95
+
+수학 : 
+67
+
+
+kor는 0~100 사이 정수입니다.
+
+또는
+
+이름 : 
+
+국어 : 
+100
+
+영어 : 
+95
+
+수학 : 
+67
+
+
+name은 필수 입력입니다.
+
+
+
+ 
