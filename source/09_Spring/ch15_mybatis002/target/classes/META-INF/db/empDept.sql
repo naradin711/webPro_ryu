@@ -1,6 +1,9 @@
 -- empDept.sql 입니다.
 --Dept.xml  id=deptList
 SELECT * FROM DEPT;
+
+
+
 -- Emp.xml ID = empList
 SELECT * FROM EMP ORDER BY EMPNO; -- 출력 조건
 SELECT * FROM

@@ -18,6 +18,6 @@
 </script>
 </head>
 <body>
-	<jsp:forward page="home.do"/>
+	<jsp:forward page="empDeptList.do"/>
 </body>
 </html>

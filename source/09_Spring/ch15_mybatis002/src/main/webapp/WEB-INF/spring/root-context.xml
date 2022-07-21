@@ -17,5 +17,12 @@
 		<property name="password" value="${db.password}"/>
 	</bean>
 	<!-- sqlSessionFactory 빈 생성 --> 
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	 	<property name="dataSource" ref="dataSource"/>
+	 	<property name="configLocation" value="classpath:META-INF/sqlmap/config/mybatis-config.xml"/>
+	</bean>
 	<!-- sqlSessiontemplate 빈 생성 --> 
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+	 	<constructor-arg ref="sqlSessionFactory" />  
+	</bean>
 </beans>
