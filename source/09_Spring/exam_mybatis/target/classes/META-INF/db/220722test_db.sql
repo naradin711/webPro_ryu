@@ -1,0 +1,66 @@
+-- 이것은 테스트를 위한 디비입니다.
+DROP TABLE MVC_TEST CASCADE CONSTRAINTS;
+DROP SEQUENCE MVC_TEST_SEQ;
+CREATE SEQUENCE MVC_TEST_SEQ MAXVALUE 999999 NOCACHE NOCYCLE ;
+CREATE TABLE MVC_TEST(
+        bID NUMBER(6),
+        bNAME VARCHAR2(50) NOT NULL,
+        bTITLE VARCHAR2(100) NOT NULL,
+        bCONTENT VARCHAR2(1000),
+        bDATE DATE DEFAULT SYSDATE NOT NULL,
+        bHIT NUMBER(6) DEFAULT 0 NOT NULL,
+        bGROUP NUMBER(6) NOT NULL,
+        bSTEP NUMBER(3) NOT NULL,
+        bINDENT NUMBER(3) NOT NULL,
+        bIP VARCHAR2(20) NOT NULL,
+        PRIMARY KEY(bID)
+            );
+ 
+SELECT * FROM MVC_TEST;   
+            
+INSERT INTO MVC_TEST (bID, bNAME, bTITLE, bCONTENT, bGROUP, bSTEP, bINDENT, bIP)
+        VALUES (MVC_TEST_SEQ.NEXTVAL, '홍길동','제목3','본문',MVC_TEST_SEQ.CURRVAL, 0, 0, '127.0.0.1');
+
+-- 글 목록
+SELECT * FROM (SELECT ROWNUM RN, A.* 
+            FROM (SELECT * FROM MVC_TEST ORDER BY BGROUP DESC, BSTEP) A)
+        WHERE RN BETWEEN 1 AND 60;
+        
+-- 전체 글 갯수
+SELECT COUNT(*) CNT FROM MVC_TEST;        
+
+-- 원글쓰기
+INSERT INTO MVC_TEST (bID, bNAME, bTITLE, bCONTENT, bGROUP, bSTEP, bINDENT, bIP)
+        VALUES (MVC_TEST_SEQ.NEXTVAL, '홍길동','제목7','본문',MVC_TEST_SEQ.CURRVAL, 0, 0, '127.0.0.1');
+
+-- bID글 조회수 1회 올리기
+UPDATE MVC_TEST SET bHIT = bHIT+1 WHERE bID=2;
+
+-- bID로 DTO가져오기(상세글 보기)
+SELECT * FROM MVC_TEST WHERE BID=2;
+
+-- 답변글 쓰기전 step A
+UPDATE MVC_TEST SET BSTEP=BSTEP+1 WHERE BGROUP=2 AND BSTEP>0;
+
+-- 답변글 쓰기(2번글의 답변)
+INSERT INTO MVC_TEST (bID, bNAME, bTITLE, bCONTENT, bGROUP, bSTEP, bINDENT, bIP)
+    VALUES (MVC_TEST_SEQ.NEXTVAL, '답변자','글2첫답','본문2답변',2,1,1,'127.0.0.1');
+
+-- 글 수정하기
+UPDATE MVC_TEST SET BNAME='수정용',
+                    BTITLE = '바뀐제목',
+                    BCONTENT = '바뀐내용',
+                    BIP = '192.168.20.44'
+        WHERE BID=2;
+        
+-- 글삭제하기
+DELETE FROM MVC_TEST WHERE BID=55; 
+
+SELECT to_char(bdate,'yyyy/mm/dd hh:mi') FROM MVC_TEST ORDER BY BGROUP DESC, BSTEP;
+
+commit;
+
+
+
+
+

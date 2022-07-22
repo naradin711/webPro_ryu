@@ -44,8 +44,7 @@ public class EmpController {
 		return "update";
 	}
 	@RequestMapping(value = "update" , method = RequestMethod.POST)
-	public String update(Emp emp , String tempHiredate, Model model) {
-		emp.setHiredate(Timestamp.valueOf(tempHiredate + " 00:00:00"));
+	public String update(Emp emp , Model model) { 
 		try {
 			model.addAttribute("updateResult", empService.update(emp));
 		} catch (Exception e) {
@@ -60,14 +59,24 @@ public class EmpController {
 		return "forward:empDeptList.do";
 	}
 	@RequestMapping(value = "writeView" , method = {RequestMethod.GET, RequestMethod.POST})
-	public String writeView(Model model) {
+	public String writeView( Model model) {
 		model.addAttribute("managerList", empService.managerList());
 		model.addAttribute("deptList", empService.deptList());
 		return "write";
 	}
+	@RequestMapping(value = "write" , method =  RequestMethod.POST) 
+	public String write(Emp emp, Model model) {  
+		try {
+			model.addAttribute("writeResult", empService.insert(emp));
+		} catch (Exception e) {
+			model.addAttribute("writeResult", "필드 값이 유효하지 않습니다.");
+			return "forward:writeView.do";
+		} 
+		return "forward:empDeptList.do";
+	}
 	@RequestMapping(value = "confirmNo" , method =  RequestMethod.GET)
-	public String confirmNo(int empno, Model model) {
-		if(empService.detail(empno) == null) {
+	public String confirmNo(Emp emp, Model model) {
+		if(empService.detail(emp) == null) {
 			model.addAttribute("msg", "사용 가능한 사번입니다.");
 		} else {
 			model.addAttribute("msg", "중복된 사번입니다.");

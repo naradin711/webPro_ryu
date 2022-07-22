@@ -1,6 +1,5 @@
 package com.lec.ch15.service;
-
-import java.sql.Timestamp;
+ 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,22 +71,18 @@ public class EmpServiceImpl implements EmpService {
 	@Override
 	public int delete(int empno) { 
 		return empDao.delete(empno);
-	} 
-	@Override
-	public void dummyDataInsert50() { 
-		Emp emp = new Emp();
-		for (int i=5002 ; i < 5052; i++) {
-			emp.setEmpno(i);
-			emp.setEname("홍" + i);
-			emp.setJob("IT");
-			emp.setMgr(7566);
-			emp.setHiredate(Timestamp.valueOf("2022-07-21 14:00:00"));
-			emp.setSal(i);
-			emp.setComm(i/10);
-			emp.setDeptno(40);
-			int result = empDao.insert(emp);
-			System.out.println(result == 1 ? i+"번째 성공":i+"번째 실패" );
-		}
 	}
+
+	@Override
+	public void dummyDataInsert50() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Object detail(Emp emp) {
+		// TODO Auto-generated method stub
+		return null;
+	}  
 
 }

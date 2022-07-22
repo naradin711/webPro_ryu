@@ -1,0 +1,495 @@
+ 200718 Spring Mybatis
+
+먼저 외부에서 SQL을 통해서 기본 데이터베이스에 테이블을 입력한 후
+db 폴더에 해당 sql 파일을 배치하여 기본 베이스를 이룬다.
+
+이제 데이터 베이스에 접속하기 위한 driver 정보를 아래와 같이 입력한다.
+이후 해당 파일을 properties 파일로 배치한다.
+
+db.driverClassName=oracle.jdbc.driver.OracleDriver
+db.url=jdbc:oracle:thin:@localhost:1521:xe
+db.username=scott
+db.password=tiger
+
+root-context.xml에 아래와 같은 구성을 입력하여
+해당 프로젝트에 모든 구성에 db를 입력하여 드라이버 접속을 가능하게 한다.
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<context:property-placeholder location="classpath:META-INF/property/db.properties"/>
+ 
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${db.driverClassName}"/>
+		<property name="url" value="${db.url}"/>
+		<property name="username" value="${db.username}"/>
+		<property name="password" value="${db.password}"/>
+	</bean>
+
+이제 아래와 같이 dto 파일을 구성하고
+
+	@Data
+	public class Board {
+		private int bid; 
+		private String bname;
+		private String btitle;
+		private String bcontent ;
+		private Date bdate ;
+   		 private int bhit;
+    		private int bgroup ;
+    		private int bstep ;
+    		private int bindent;
+   		 private String bip;
+    		private int startRow;
+    		private int endRow; 
+}
+
+이 해당 dto를 토대로 mybatis-configuration 을 아래와 같이 지정한다.
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.lec.exam220722.model.Board" alias="Board" />
+	</typeAliases>
+	<mappers>
+		<mapper resource="META-INF/sqlmap/mapper/Board.xml"/>
+	</mappers>
+</configuration>
+
+이때 DTO 경로를 설정하기 위해 root-context에 아래와 같은 구성을 삽입한다.
+
+	<!-- sqlSessionFactory 빈 생성 --> 
+	 <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	 	<property name="dataSource" ref="dataSource"/>
+	 	<property name="configLocation" value="classpath:META-INF/sqlmap/config/mybatis-config.xml"/>
+	 </bean>
+	<!-- sqlSessiontemplate 빈 생성 --> 
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" >
+		<constructor-arg ref="sqlSessionFactory"/>
+	</bean>
+
+위와 같은 설정을 바탕으로 mapper를 지정한다.
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.lec.exam220722.dao.BoardDao">
+    	<resultMap type="Board" id="BoardResult">
+    		<result property="bid" column="bid"/>
+    		<result property="bname" column="bname"/>
+    		<result property="btitle" column="btitle"/>
+    		<result property="bcontent" column="bcontent"/>
+    		<result property="bdate" column="bdate"/>
+    		<result property="bhit" column="bhit"/>
+    		<result property="bgroup" column="bgroup"/>
+    		<result property="bstep" column="bstep"/>
+    		<result property="bindent" column="bindent"/>
+    		<result property="bip" column="bip"/>
+    		 
+    	</resultMap>
+    	<select id="boardList" parameterType="Board" resultMap="BoardResult">
+    		SELECT * FROM (SELECT ROWNUM RN, A.* 
+            FROM (SELECT * FROM MVC_TEST ORDER BY BGROUP DESC, BSTEP) A)
+       		WHERE RN BETWEEN #{startRow} AND #{endRow}
+    	</select>
+    	<select id="totCnt" resultType="int">
+    		SELECT COUNT(*)CNT FROM MVC_TEST
+    	</select>
+    	<select id="detail1" parameterType="int" resultType="Board">
+    		SELECT * FROM MVC_TEST WHERE BID=#{bid}
+    	</select>
+    	<select id="detail" parameterType="int" resultType="Board">
+    		SELECT * FROM MVC_TEST WHERE BID=#{bid}
+    	</select>
+    	<insert id="insert" parameterType="Board">
+    		INSERT INTO MVC_TEST (bID, bNAME, bTITLE, bCONTENT, bGROUP, bSTEP, bINDENT, bIP)
+        VALUES (MVC_TEST_SEQ.NEXTVAL, #{bname}, #{btitle}, #{bcontent}, MVC_TEST_SEQ.CURRVAL, 0, 0, #{bip})
+    	</insert>
+    	<update id="hitup" parameterType="int">
+    		UPDATE MVC_TEST SET bHIT = bHIT+1 WHERE bID= #{bid}
+    	</update> 
+    	<insert id="reply" parameterType="Board" >
+    	<![CDATA[  
+    		INSERT INTO MVC_TEST (bID, bNAME, bTITLE, bCONTENT, 
+    							bGROUP, bSTEP, bINDENT, bIP)
+    		VALUES (MVC_TEST_SEQ.NEXTVAL, #{bname}, #{btitle}, 
+    		#{bcontent}, #{bgroup}, #{bstep}+1 , #{bindent}+1 , #{bip}) 
+		]]> 
+    		
+    	</insert>
+    	<update id="modify" parameterType="Board">
+    		UPDATE MVC_TEST SET BNAME= #{bname},
+                    	BTITLE = #{btitle},
+                    	BCONTENT = #{bcontent},
+                    	BIP = #{bip}
+        			WHERE BID= #{bid}
+    	</update>
+    	<delete id="delete" parameterType="int" >
+    		DELETE FROM MVC_TEST WHERE BID=#{bid}
+    	</delete>
+    	
+    </mapper>
+
+
+이 때 service에 쓰일 sql문을 삽입한다.
+아래와 같이  DAO 파일을 작성한 후 mapper의 sql문을 이어받는다.
+
+package com.lec.exam220722.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.lec.exam220722.model.Board;
+
+@Mapper
+public interface BoardDao {
+	public List<Board> boardList(Board board);
+	public int totCnt();
+	public Board detail(int bid);
+	public int hitup(int bid);
+	public int stepA(Board board);
+	public int reply(Board board);
+	public int insert(Board board);
+	public int modify(Board board);
+	public int delete(int bid);
+}
+
+아래와 같이 paging을 위한 java파일을 작성한다.
+
+package com.lec.exam220722.util;
+
+import lombok.Data;
+
+@Data
+public class Paging {
+	private int currentPage = 1;
+	private int pageSize;
+	private int blockSize;
+	private int startRow;
+	private int endRow;
+	private int totCnt;
+	private int pageCnt;
+	private int startPage;
+	private int endPage;
+	
+	public Paging (int totCnt, String pageNum, int pageSize, int blockSize) {
+		if(pageNum!=null) {
+			currentPage = Integer.parseInt(pageNum);
+		}
+		this.pageSize = pageSize;
+		this.blockSize = blockSize;
+		startRow = (currentPage - 1 ) * pageSize + 1;
+		endRow = startRow + pageSize - 1;
+		this.totCnt = totCnt;
+		pageCnt = (int)Math.ceil((double)totCnt / pageSize);
+		startPage = ((currentPage -1)/ blockSize) * blockSize +1;
+		endPage = startPage + blockSize - 1 ;
+		if(endPage>pageCnt) {
+			endPage = pageCnt;
+		}
+	}
+	public Paging (int totCnt, String pageNum) {
+		if(pageNum!=null) {
+			currentPage = Integer.parseInt(pageNum);
+		}
+		this.pageSize = 5;
+		this.blockSize = 5;
+		startRow = (currentPage - 1 ) * pageSize + 1;
+		endRow = startRow + pageSize - 1;
+		this.totCnt = totCnt;
+		pageCnt = (int)Math.ceil((double)totCnt / pageSize);
+		startPage = ((currentPage -1)/ blockSize) * blockSize +1;
+		endPage = startPage + blockSize - 1 ;
+		if(endPage>pageCnt) {
+			endPage = pageCnt;
+		}
+	}
+
+}
+
+
+Service파일은 아래와 같다.
+
+package com.lec.exam220722.service;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.lec.exam220722.dao.BoardDao;
+import com.lec.exam220722.model.Board;
+import com.lec.exam220722.util.Paging;
+@Service
+public class BoardServiceImpl implements BoardService {
+	@Autowired
+	private BoardDao boardDao;
+	
+	@Override
+	public List<Board> boardList(String pageNum) {
+		Paging paging = new Paging(boardDao.totCnt(), pageNum, 5 ,5);
+		Board board = new Board();
+		board.setStartRow(paging.getStartRow());
+		board.setEndRow(paging.getEndRow());
+		return boardDao.boardList(board) ;
+	}
+
+	@Override
+	public int totCnt() { 
+		return boardDao.totCnt();
+	}
+
+	@Override
+	public Board detail(int bid) {
+		// TODO Auto-generated method stub
+		return boardDao.detail(bid);
+	}
+
+	@Override
+	public int hitup(int bid) {
+		// TODO Auto-generated method stub
+		return boardDao.hitup(bid) ;
+	}
+ 
+	@Override 
+	public int reply(Board board, HttpServletRequest request) {  
+		return boardDao.reply(board)  ;
+	}
+
+	@Override
+	public int insert(Board board, HttpServletRequest request) {
+		
+		return boardDao.insert(board);
+	}
+
+	@Override
+	public int modify(Board board, HttpServletRequest request) { 
+		return boardDao.modify(board);
+	}
+
+	@Override
+	public int delete(int bid) { 
+		return boardDao.delete(bid);
+	}
+ 
+ 
+
+}
+
+
+
+이제 Controller 파일구성은 아래와 같다.
+
+package com.lec.exam220722.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+ 
+import com.lec.exam220722.model.Board;
+import com.lec.exam220722.service.BoardService;
+import com.lec.exam220722.util.Paging;
+
+@Controller
+public class BoardController {
+	@Autowired
+	private BoardService boardService;
+	
+	@RequestMapping (value = "boardList", method = {RequestMethod.GET, RequestMethod.POST })
+	public String boardList(String pageNum, Model model) {
+		model.addAttribute("boardList", boardService.boardList(pageNum)  );
+		model.addAttribute("paging", new Paging(boardService.totCnt(), pageNum, 5 , 5 ));
+		return "list";
+	}
+	@RequestMapping (value ="detail1", method = RequestMethod.GET )
+	public String detail1 (int bid, Model model) {
+		boardService.hitup(bid);
+		model.addAttribute("board", boardService.detail(bid));
+		return "content_view";
+	}
+	@RequestMapping (value ="detail", method = RequestMethod.GET )
+	public String detail (int bid, Model model) {
+		model.addAttribute("board", boardService.detail(bid));
+		return "content_view";
+	}
+	@RequestMapping(value = "modifyView" , method = {RequestMethod.GET, RequestMethod.POST})
+	public String updateView(int bid, Model model) {
+		model.addAttribute("board", boardService.detail(bid));
+		return "modify";
+	}
+	@RequestMapping(value = "modify" , method = RequestMethod.POST)
+	public String update(Board board, HttpServletRequest request, Model model) {
+		board.setBip(request.getRemoteAddr());
+		try {
+			model.addAttribute("modifyResult", boardService.modify(board, request));
+		} catch (Exception e) {
+			model.addAttribute("modifyResult", "필드 값이 유효하지 않습니다.");
+			return "forward:modifyView.do";
+		} 
+		return "forward:boardList.do";
+	}
+	@RequestMapping(value = "delete" , method = RequestMethod.GET)
+	public String delete(int bid, Model model ) {
+		model.addAttribute("deleteResult", boardService.delete(bid));
+		return "forward:boardList.do";
+	}
+	@RequestMapping(value = "writeView" , method = {RequestMethod.GET, RequestMethod.POST})
+	public String writeView( Model model) {
+		 return "write_view";
+	}
+	@RequestMapping(value = "write" , method =  RequestMethod.POST) 
+	public String write(Board board, HttpServletRequest request ,Model model) {  
+		try {
+			board.setBip(request.getRemoteAddr());
+			model.addAttribute("writeResult", boardService.insert(board, request));
+		} catch (Exception e) {
+			model.addAttribute("writeResult", "필드 값이 유효하지 않습니다.");
+			return "forward:writeView.do";
+		} 
+		return "forward:boardList.do";
+	}
+	@RequestMapping(value = "replyView" , method = {RequestMethod.GET, RequestMethod.POST})
+	public String replyView(int bid, Model model) {
+		 model.addAttribute("board", boardService.detail(bid));
+		 return "reply_view";
+	}
+	@RequestMapping(value = "reply" , method =  RequestMethod.POST) 
+	public String reply(Board board, HttpServletRequest request ,Model model) {  
+		try { 
+			board.setBip(request.getRemoteAddr());
+			model.addAttribute("replyResult", boardService.reply(board, request));
+		} catch (Exception e) {
+			model.addAttribute("replyResult", "필드 값이 유효하지 않습니다.");
+			return "forward:replyView.do";
+		} 
+		return "forward:boardList.do";
+	}
+
+}
+
+마지막으로 jsp파일을 아래와 같이 구성하여 출력을 한다.
+
+<link href="${conPath }/css/style.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+			/*$('tr').click(function() {
+				var bid = Number($(this).children().eq(2).text());
+				if(!isNaN(bid)){
+					location.href= '${conPath}/mvcboard/content.do?bid='+bid+'&pageNum=${pageNum}'
+				}
+				 
+			})*/
+	});
+	function trclicked(bid) {
+		location.href = '${conPath}/detail1.do?bid=' + bid + '&pageNum=${paging.currentPage}';
+		
+	}
+</script>
+</head>
+<body>
+	<h1 align="center">게 시 판</h1>
+	<c:set var="SUCCESS" value ="1"/>
+	<c:set var="FAIL" value ="0"/>
+	
+	<!-- 글수정 성공 / 실패 -->
+	<c:if test="${modifyResult eq SUCCESS }">
+		<script type="text/javascript">
+			alert("글 수정 성공");
+		</script>
+	</c:if>
+	<!-- 글쓰기 성공 / 실패 -->
+	<c:if test="${writeResult eq SUCCESS }">
+		<script type="text/javascript">
+			alert("글쓰기 성공");
+		</script>
+	</c:if>
+	<!-- 글삭제 성공 / 실패 -->
+	<c:if test="${deleteResult eq SUCCESS }">
+		<script type="text/javascript">
+			alert("글 삭제 성공");
+		</script>
+	</c:if>
+	<!-- 답글쓰기 성공 / 실패 -->
+	<c:if test="${replyResult eq SUCCESS }">
+		<script type="text/javascript">
+			alert("답글 작성 성공");
+		</script>
+	</c:if> 
+	<table style="margin : 0 auto;">
+		<tr>
+			<th colspan="6"><a href="${conPath }/writeView.do">글쓰기</a></th> 
+		</tr>
+		<tr>
+			<th>글번호</th><th>글쓴이</th>
+			<th>제목</th><th>작성일</th><th>조회수</th> <th>아이피</th> 
+		</tr>
+		<c:if test="${totCnt eq 0 }">
+			<tr> <th colspan="6">등록된 글이 없습니다.</th> </tr>
+		</c:if>
+		<c:if test="${totCnt != 0 }">
+			<c:forEach items="${boardList }" var="board">
+				<tr onclick="trclicked(${board.bid})"> 
+					<td>${board.bid }</td>
+					<td>${board.bname }</td>
+					<td class = "left">
+						<c:forEach var="i" begin="1" end="${board.bindent }" step="1">
+						 	<c:if test="${i == board.bindent  }">
+						 		└─
+						 	</c:if>
+						 	<c:if test="${i != board.bindent  }">
+						 		&nbsp; &nbsp; &nbsp; 
+						 	</c:if> 
+						 	
+						</c:forEach>
+						${board.btitle }
+					</td>  
+					<td>
+						<fmt:formatDate value="${board.bdate }" pattern="yy년MM월dd일(E)"/>
+					 <td>
+						<fmt:formatNumber value="${board.bhit }" groupingUsed="true"/>
+					</td>
+					<td>${board.bip }</td>
+				</tr> 
+			</c:forEach>
+		</c:if>
+	</table>
+	<div id="paging" align="center">
+		<c:if test="${paging.startPage> paging.blockSize }">
+		[<a href="${conPath }/boardList.do?pageNum=${paging.startPage-1}">이전</a>]
+		</c:if>
+		<c:forEach var="i" begin="${paging.startPage }" end="${paging.endPage}">
+			<c:if test="${i eq paging.currentPage }">
+			[<b>${i}</b>]
+			</c:if>
+			<c:if test="${i != paging.currentPage }">
+			[<a href="${conPath }/boardList.do?pageNum=${i}">${i}</a>]
+			</c:if>
+		</c:forEach>
+		<c:if test="${paging.endPage < paging.pageCnt }">
+		[<a href="${conPath }/boardList.do?pageNum=${paging.endPage +1}">다음</a>]
+		</c:if>
+	</div>
+</body>
+</html>
+
+						게 시 판
+						글쓰기
+			글번호	글쓴이	제목		작성일		조회수	아이피
+			54	작성준	테스트용 제목	22년07월22일(금)	55	127.0.0.1
+			53	홍길동	다시 수정된 제목	22년07월22일(금)	2	127.0.0.1
+			51	홍길동	홍수정	22년07월22일(금)	0	127.0.0.1
+			56	답지원	└─ 답) 홍수정	22년07월22일(금)	0	127.0.0.1
+			58	답지원	      └─ 답) 답) 홍수정	22년07월22일(금)	0	127.0.0.1
+					[1] [2] [3] [4] [5] [다음]

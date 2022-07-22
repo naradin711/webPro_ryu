@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.lec.exam220722.dao.BoardDao">
+    	<resultMap type="Board" id="BoardResult">
+    		<result property="bid" column="bid"/>
+    		<result property="bname" column="bname"/>
+    		<result property="btitle" column="btitle"/>
+    		<result property="bcontent" column="bcontent"/>
+    		<result property="bdate" column="bdate"/>
+    		<result property="bhit" column="bhit"/>
+    		<result property="bgroup" column="bgroup"/>
+    		<result property="bstep" column="bstep"/>
+    		<result property="bindent" column="bindent"/>
+    		<result property="bip" column="bip"/>
+    		 
+    	</resultMap>
+    	<select id="boardList" parameterType="Board" resultMap="BoardResult">
+    		SELECT * FROM (SELECT ROWNUM RN, A.* 
+            FROM (SELECT * FROM MVC_TEST ORDER BY BGROUP DESC, BSTEP) A)
+       		WHERE RN BETWEEN #{startRow} AND #{endRow}
+    	</select>
+    	<select id="totCnt" resultType="int">
+    		SELECT COUNT(*)CNT FROM MVC_TEST
+    	</select>
+    	<select id="detail1" parameterType="int" resultType="Board">
+    		SELECT * FROM MVC_TEST WHERE BID=#{bid}
+    	</select>
+    	<select id="detail" parameterType="int" resultType="Board">
+    		SELECT * FROM MVC_TEST WHERE BID=#{bid}
+    	</select>
+    	<insert id="insert" parameterType="Board">
+    		INSERT INTO MVC_TEST (bID, bNAME, bTITLE, bCONTENT, bGROUP, bSTEP, bINDENT, bIP)
+        VALUES (MVC_TEST_SEQ.NEXTVAL, #{bname}, #{btitle}, #{bcontent}, MVC_TEST_SEQ.CURRVAL, 0, 0, #{bip})
+    	</insert>
+    	<update id="hitup" parameterType="int">
+    		UPDATE MVC_TEST SET bHIT = bHIT+1 WHERE bID= #{bid}
+    	</update> 
+    	<insert id="reply" parameterType="Board" >
+    	<![CDATA[  
+    		INSERT INTO MVC_TEST (bID, bNAME, bTITLE, bCONTENT, 
+    							bGROUP, bSTEP, bINDENT, bIP)
+    		VALUES (MVC_TEST_SEQ.NEXTVAL, #{bname}, #{btitle}, 
+    		#{bcontent}, #{bgroup}, #{bstep}+1 , #{bindent}+1 , #{bip}) 
+		]]> 
+    		
+    	</insert>
+    	<update id="modify" parameterType="Board">
+    		UPDATE MVC_TEST SET BNAME= #{bname},
+                    BTITLE = #{btitle},
+                    BCONTENT = #{bcontent},
+                    BIP = #{bip}
+        			WHERE BID= #{bid}
+    	</update>
+    	<delete id="delete" parameterType="int" >
+    		DELETE FROM MVC_TEST WHERE BID=#{bid}
+    	</delete>
+    	
+    </mapper>

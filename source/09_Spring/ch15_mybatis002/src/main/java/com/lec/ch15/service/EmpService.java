@@ -16,4 +16,5 @@ public interface EmpService {
 	public int update(Emp emp);
 	public int delete(int empno);
 	void dummyDataInsert50();
+	public Object detail(Emp emp);
 }
