@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+    <configuration>
+    	<typeAliases>
+    		<typeAlias type="com.lec.ch19.dto.BookDto" alias="BookDto"/>
+    		<typeAlias type="com.lec.ch19.dto.MemberDto" alias="MemberDto"/>
+    	</typeAliases>
+    	<mappers>
+    		<mapper resource="META-INF/sqlmap/mapper/BookDto.xml"/>
+    		<mapper resource="META-INF/sqlmap/mapper/MemberDto.xml"/>
+    	</mappers>
+    </configuration>
