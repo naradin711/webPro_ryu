@@ -14,6 +14,7 @@ public class MainController {
 	private BookService bookService;
 	@RequestMapping(value = "main", method = {RequestMethod.GET, RequestMethod.POST})
 	public String main(Model model) {
+		System.out.println("main.do 로 왔다");
 		model.addAttribute("mainList", bookService.mainList());
 		return "main/main"; 
 	}

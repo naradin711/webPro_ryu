@@ -8,8 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessagePreparator;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository; 
 
 import com.lec.ch19.dao.MemberDao;
 import com.lec.ch19.dto.MemberDto;
@@ -63,8 +62,10 @@ public class MemberServiceImpl implements MemberService {
 		mailSender.send(message);
 		httpSession.setAttribute("mid", memberDto.getMid());// 세션에 id 속성 추가
 	
-		 
-		return memberDao.joinMember(memberDto) ; // member insert
+		System.out.println("서비스에서 DB 저장전 에러날껄 : " + memberDto);
+		int result = memberDao.joinMember(memberDto);
+		System.out.println("서비스에서 이건 안 출력돌 듯");
+		return  result; // member insert
 		
 	}
 

@@ -11,7 +11,7 @@ import com.lec.ch19.dto.BookDto;
 public interface BookDao {
 	public List<BookDto> mainList(BookDto bookDto);
 	public List<BookDto> bookList(BookDto bookDto);
-	public int totCntBook();
+	public int totCntBook(BookDto bookDto);
 	public BookDto getDetailBook(int bnum);
 	public int registerBook(BookDto bookDto);
 	public int modifyBook(BookDto bookDto);

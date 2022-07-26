@@ -33,17 +33,16 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<BookDto> bookList(String pageNum) {
-		Paging paging = new Paging(bookDao.totCntBook(), pageNum, 3, 3);
-		BookDto bookDto = new BookDto();
+	public List<BookDto> bookList(String pageNum, BookDto bookDto) {
+		Paging paging = new Paging(bookDao.totCntBook(bookDto), pageNum, 3, 3);
 		bookDto.setStartRow(paging.getStartRow());
 		bookDto.setEndRow(paging.getEndRow());
 		return bookDao.bookList(bookDto);
 	}
 
 	@Override
-	public int totCntBook() { 
-		return bookDao.totCntBook();
+	public int totCntBook(BookDto bookDto) { 
+		return bookDao.totCntBook(bookDto);
 	}
 
 	@Override
@@ -51,41 +50,8 @@ public class BookServiceImpl implements BookService {
 		return bookDao.getDetailBook(bnum);
 	}
 
-//	@Override
-//	public int registerBook(BookDto bookDto, MultipartHttpServletRequest mRequest) {
-//		String uploadPath = mRequest.getRealPath("bookImgFileUpload/");
-//		Iterator<String> params = mRequest.getFileNames(); // tempBimg1, temptBimg2
-//		String[] bimg = new String[2];
-//		int idx  = 0;
-//		while (params.hasNext()) {
-//			String param = params.next(); // 마라미터의 다음 객체
-//			MultipartFile mFile = mRequest.getFile(param);// 파라미터에 첨부된 파일 객체
-//			bimg[idx] = mFile.getOriginalFilename();
-//			if(bimg[idx]!=null && !bimg[idx].equals("")) {
-//				if(new File(uploadPath + bimg[idx]).exists()) {
-//					bimg[idx] = System.currentTimeMillis() + "_" + bimg[idx];
-//					
-//				}// if
-//				try {
-//					mFile.transferTo(new File(uploadPath + bimg[idx]));
-//					System.out.println("서버파일 : "+ uploadPath + bimg[idx]);
-//					System.out.println("백업파일 : "+ backupPath + bimg[idx]);
-//					Boolean result = fileCopy(uploadPath + bimg[idx], backupPath + bimg[idx] );
-//					System.out.println(result ? idx+"번째 백업 성공": idx+"번째 백업 실패");
-//				} catch (Exception e) {
-//					System.out.println(e.getMessage()+"BookService register error");
-//				}  
-//			} else {
-//				
-//			}// if
-//			idx++;
-//		}//while - bimg 배열에 파일 이름 저장
-//		bookDto.setBimg1(bimg[0]); // 첫번째 청구할 파일 이름
-//		bookDto.setBimg2(bimg[1]); // 두번째 청구할 파일 이름
-//		return bookDao.registerBook(bookDto); // DB INSERT
-//	}
 	@Override
-	public int registerBook(BookDto bookDto, MultipartHttpServletRequest mRequest) {
+	public int registerBook(MultipartHttpServletRequest mRequest, BookDto bookDto) {
 		String uploadPath = mRequest.getRealPath("bookImgFileUpload/");
 		Iterator<String> params = mRequest.getFileNames(); // tempBimg1, temptBimg2
 		String[] bimg = new String[2];
@@ -113,15 +79,51 @@ public class BookServiceImpl implements BookService {
 			}// if
 			idx++;
 		}//while - bimg 배열에 파일 이름 저장
-		bookDto = new BookDto();
-		bookDto.setBnum(Integer.parseInt(mRequest.getParameter("bnum")));
-		bookDto.setBtitle(mRequest.getParameter("btitle"));
-		bookDto.setBwriter(mRequest.getParameter("bwriter"));
 		bookDto.setBimg1(bimg[0]); // 첫번째 청구할 파일 이름
 		bookDto.setBimg2(bimg[1]); // 두번째 청구할 파일 이름
-		bookDto.setBinfo(mRequest.getParameter("binfo"));
-		return bookDao.registerBook(bookDto); // DB INSERT
+		System.out.println("서비스 저장 전 : " + bookDto);
+		int result = bookDao.registerBook(bookDto);
+		System.out.println("서비스 저장 후 : " + result);
+		return result; // DB INSERT
 	}
+//	@Override
+//	public int registerBook(MultipartHttpServletRequest mRequest, BookDto bookDto) {
+//		String uploadPath = mRequest.getRealPath("bookImgFileUpload/");
+//		Iterator<String> params = mRequest.getFileNames(); // tempBimg1, temptBimg2
+//		String[] bimg = new String[2];
+//		int idx  = 0;
+//		while (params.hasNext()) {
+//			String param = params.next(); // 마라미터의 다음 객체
+//			MultipartFile mFile = mRequest.getFile(param);// 파라미터에 첨부된 파일 객체
+//			bimg[idx] = mFile.getOriginalFilename();
+//			if(bimg[idx]!=null && !bimg[idx].equals("")) {
+//				if(new File(uploadPath + bimg[idx]).exists()) {
+//					bimg[idx] = System.currentTimeMillis() + "_" + bimg[idx];
+//					
+//				}// if
+//				try {
+//					mFile.transferTo(new File(uploadPath + bimg[idx]));
+//					System.out.println("서버파일 : "+ uploadPath + bimg[idx]);
+//					System.out.println("백업파일 : "+ backupPath + bimg[idx]);
+//					Boolean result = fileCopy(uploadPath + bimg[idx], backupPath + bimg[idx] );
+//					System.out.println(result ? idx+"번째 백업 성공": idx+"번째 백업 실패");
+//				} catch (Exception e) {
+//					System.out.println(e.getMessage()+"BookService register error");
+//				}  
+//			} else {
+//				
+//			}// if
+//			idx++;
+//		}//while - bimg 배열에 파일 이름 저장
+//		bookDto = new BookDto();
+//		bookDto.setBnum(Integer.parseInt(mRequest.getParameter("bnum")));
+//		bookDto.setBtitle(mRequest.getParameter("btitle"));
+//		bookDto.setBwriter(mRequest.getParameter("bwriter"));
+//		bookDto.setBimg1(bimg[0]); // 첫번째 청구할 파일 이름
+//		bookDto.setBimg2(bimg[1]); // 두번째 청구할 파일 이름
+//		bookDto.setBinfo(mRequest.getParameter("binfo"));
+//		return bookDao.registerBook(bookDto); // DB INSERT
+//	}
 	private boolean fileCopy(String serverFile, String backupFile) {
 		boolean isCopy = false;
 		InputStream is = null; 
@@ -171,7 +173,7 @@ public class BookServiceImpl implements BookService {
 					Boolean result = fileCopy(uploadPath + bimg[idx], backupPath + bimg[idx] );
 					System.out.println(result ? idx+"번째 백업 성공": idx+"번째 백업 실패");
 				} catch (Exception e) {
-					System.out.println(e.getMessage()+"BookService register error");
+					System.out.println(e.getMessage()+"BookService modify error");
 				}  
 			} else {
 				

@@ -18,8 +18,11 @@
 </style>
 </head>
 <body>
-	<c:if test="${not empty modifyResult }">
-		<script> alert("정보 수정이 돤료 되었습니다");</script>
+	<c:if test="${not empty joinResult }">
+		<script> alert("회원가입이 완료되었습니다.");</script>
+	</c:if>
+	<c:if test="${not empty loginResult }">
+		<script> alert("로그인이 완료되었습니다.");</script>
 	</c:if>
 	<jsp:include page="header.jsp"/>
 	<div id="content">
@@ -30,7 +33,7 @@
 			<c:forEach var="bookDto" items="${mainList }" begin="0" end="4">
 				<td>
 				   ${bookDto.btitle }<br>
-				   <a href="${conPath }/book.do?method=detail&bnum=${bookDto.bnum}&pageNum=1">
+				   <a href="${conPath }/book.do?method=getDetailBook&bnum=${bookDto.bnum}&pageNum=1">
 				   <img src="${conPath }/bookImgFileUpload/${bookDto.bimg1}"></a><br>
 				   ${bookDto.bwriter } 著 <br>
 				   출판일 : ${bookDto.brdate }
