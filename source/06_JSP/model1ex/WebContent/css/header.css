@@ -33,16 +33,19 @@ header .lnb {
 }
 header .lnb ul{
 	overflow: hidden;
-	width:300px;
+	width:1000px;
 	margin: 0 auto;
 }
 header .lnb ul li {
 	margin: 5px;
-	float:right;
+	width: 110px;
+	height: 25px;
+	float:left;
 	padding:5px 40px;
 	line-height: 25px;
 }
 header .lnb a {
+	float:left;
 	height:1.1em;
 	color: #003300;
 	font-size:1.1em;

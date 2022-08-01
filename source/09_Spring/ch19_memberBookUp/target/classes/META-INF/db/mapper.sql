@@ -38,6 +38,10 @@ SELECT * FROM
 
 -- totCntBook
 select count(*) cnt from book;
+select count(*) cnt from book  WHERE BTITLE LIKE '%'||'작가'||'%' or BWRITER LIKE '%'||'작가'||'%';  
+select count(*) cnt from book  WHERE BTITLE LIKE '%'||'oll'||'%';
+select count(*) cnt from book WHERE BWRITER LIKE '%'||'작가'||'%';
+
 -- getDetailBook
 select * from book where bnum = 1;
 -- registerBook
