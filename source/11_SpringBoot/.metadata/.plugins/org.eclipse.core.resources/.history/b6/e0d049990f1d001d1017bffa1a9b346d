@@ -1,0 +1,12 @@
+package com.lec.hello.controller;
+
+import org.springframework.stereotype.Controller;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+// 메세지 출력
+@Slf4j
+public class HelloController {
+
+}
